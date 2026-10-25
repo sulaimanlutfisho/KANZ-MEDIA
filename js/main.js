@@ -390,6 +390,451 @@ document.addEventListener("DOMContentLoaded", () => {
     return visitorId;
   }
 
+  // قاموس موثق 100% لتحويل رموز موديلات المصنع (Build.MODEL) إلى الاسم التجاري الرسمي المعروف بدون أي تخمين
+  const VERIFIED_MODEL_NAMES = {
+    // Xiaomi / Redmi / POCO
+    "2407FPN8EG": "Xiaomi 14T Pro",
+    "2407FPN8ER": "Xiaomi 14T Pro",
+    "2406APNFAG": "Xiaomi 14T",
+    "23127PN0CG": "Xiaomi 14",
+    "24030PN60G": "Xiaomi 14 Ultra",
+    "23078PND5G": "Xiaomi 13T Pro",
+    "2306EPN60G": "Xiaomi 13T",
+    "2210132G": "Xiaomi 13",
+    "2211133G": "Xiaomi 13 Pro",
+    "2304FPN6DG": "Xiaomi 13 Ultra",
+    "2201123G": "Xiaomi 12",
+    "2201122G": "Xiaomi 12 Pro",
+    "22071212AG": "Xiaomi 12T Pro",
+    "22081212UG": "Xiaomi 12T",
+    "23090RA98G": "Redmi Note 13 Pro+ 5G",
+    "2312DRA50G": "Redmi Note 13 Pro 5G",
+    "23117RA68G": "Redmi Note 13 Pro",
+    "23129RAA4G": "Redmi Note 13",
+    "23124RA7EO": "Redmi Note 13 5G",
+    "22101316UG": "Redmi Note 12 Pro+ 5G",
+    "22101316G": "Redmi Note 12 Pro 5G",
+    "2209116AG": "Redmi Note 12 Pro",
+    "23021RAA2Y": "Redmi Note 12",
+    "2201116SG": "Redmi Note 11 Pro 5G",
+    "2201116TG": "Redmi Note 11 Pro",
+    "2201117TG": "Redmi Note 11",
+    "2201117SY": "Redmi Note 11S",
+    "M2101K6G": "Redmi Note 10 Pro",
+    "M2101K7AG": "Redmi Note 10",
+    "M2007J20CG": "POCO X3 NFC",
+    "M2102J20SG": "POCO X3 Pro",
+    "2201116PG": "POCO X4 Pro 5G",
+    "22111317PG": "POCO X5 Pro 5G",
+    "2311DRK48G": "POCO X6 Pro 5G",
+    "23122PCD1G": "POCO X6 5G",
+    "23049PCD8G": "POCO F5",
+    "23013PC75G": "POCO F5 Pro",
+    "24069PC21G": "POCO F6",
+    "23113RKC6G": "POCO F6 Pro",
+    "M2012K11AG": "POCO F3",
+    "22021211RG": "POCO F4",
+    // HIKING
+    "A49": "HIKING A49",
+  };
+
+  function resolveCommercialModelName(rawModel) {
+    if (!rawModel) return "";
+    const clean = rawModel.trim();
+    if (!clean || clean === "K" || clean.length < 2) return "";
+
+    const upper = clean.toUpperCase();
+    if (VERIFIED_MODEL_NAMES[upper]) {
+      return `${VERIFIED_MODEL_NAMES[upper]} (${clean})`;
+    }
+
+    // Samsung Official SM-* Prefix Series Mapping
+    if (upper.startsWith("SM-")) {
+      const prefix = upper.slice(0, 7);
+      const samsungMap = {
+        "SM-S938": "Samsung Galaxy S25 Ultra",
+        "SM-S936": "Samsung Galaxy S25+",
+        "SM-S931": "Samsung Galaxy S25",
+        "SM-S928": "Samsung Galaxy S24 Ultra",
+        "SM-S926": "Samsung Galaxy S24+",
+        "SM-S921": "Samsung Galaxy S24",
+        "SM-S721": "Samsung Galaxy S24 FE",
+        "SM-S918": "Samsung Galaxy S23 Ultra",
+        "SM-S916": "Samsung Galaxy S23+",
+        "SM-S911": "Samsung Galaxy S23",
+        "SM-S711": "Samsung Galaxy S23 FE",
+        "SM-S908": "Samsung Galaxy S22 Ultra",
+        "SM-S906": "Samsung Galaxy S22+",
+        "SM-S901": "Samsung Galaxy S22",
+        "SM-G998": "Samsung Galaxy S21 Ultra",
+        "SM-G996": "Samsung Galaxy S21+",
+        "SM-G991": "Samsung Galaxy S21",
+        "SM-G990": "Samsung Galaxy S21 FE",
+        "SM-G988": "Samsung Galaxy S20 Ultra",
+        "SM-G986": "Samsung Galaxy S20+",
+        "SM-G985": "Samsung Galaxy S20+",
+        "SM-G981": "Samsung Galaxy S20",
+        "SM-G980": "Samsung Galaxy S20",
+        "SM-G781": "Samsung Galaxy S20 FE 5G",
+        "SM-G780": "Samsung Galaxy S20 FE",
+        "SM-N986": "Samsung Galaxy Note 20 Ultra",
+        "SM-N985": "Samsung Galaxy Note 20 Ultra",
+        "SM-N981": "Samsung Galaxy Note 20",
+        "SM-N980": "Samsung Galaxy Note 20",
+        "SM-N975": "Samsung Galaxy Note 10+",
+        "SM-N970": "Samsung Galaxy Note 10",
+        "SM-F956": "Samsung Galaxy Z Fold6",
+        "SM-F946": "Samsung Galaxy Z Fold5",
+        "SM-F936": "Samsung Galaxy Z Fold4",
+        "SM-F741": "Samsung Galaxy Z Flip6",
+        "SM-F731": "Samsung Galaxy Z Flip5",
+        "SM-A556": "Samsung Galaxy A55 5G",
+        "SM-A546": "Samsung Galaxy A54 5G",
+        "SM-A536": "Samsung Galaxy A53 5G",
+        "SM-A528": "Samsung Galaxy A52s 5G",
+        "SM-A525": "Samsung Galaxy A52",
+        "SM-A515": "Samsung Galaxy A51",
+        "SM-A505": "Samsung Galaxy A50",
+        "SM-A356": "Samsung Galaxy A35 5G",
+        "SM-A346": "Samsung Galaxy A34 5G",
+        "SM-A336": "Samsung Galaxy A33 5G",
+        "SM-A325": "Samsung Galaxy A32",
+        "SM-A256": "Samsung Galaxy A25 5G",
+        "SM-A245": "Samsung Galaxy A24",
+        "SM-A166": "Samsung Galaxy A16 5G",
+        "SM-A165": "Samsung Galaxy A16",
+        "SM-A156": "Samsung Galaxy A15 5G",
+        "SM-A155": "Samsung Galaxy A15",
+        "SM-A146": "Samsung Galaxy A14 5G",
+        "SM-A145": "Samsung Galaxy A14",
+        "SM-A135": "Samsung Galaxy A13",
+        "SM-A127": "Samsung Galaxy A12",
+        "SM-A125": "Samsung Galaxy A12",
+        "SM-A057": "Samsung Galaxy A05s",
+        "SM-A055": "Samsung Galaxy A05",
+        "SM-M556": "Samsung Galaxy M55 5G",
+        "SM-M546": "Samsung Galaxy M54 5G",
+        "SM-M346": "Samsung Galaxy M34 5G",
+        "SM-M336": "Samsung Galaxy M33 5G",
+      };
+      if (samsungMap[prefix]) {
+        return `${samsungMap[prefix]} (${clean})`;
+      }
+      return `Samsung (${clean})`;
+    }
+
+    if (upper.startsWith("PIXEL")) {
+      return `Google ${clean}`;
+    }
+
+    return clean;
+  }
+
+  function cleanGpuName(rawVendor, rawRenderer) {
+    let r = (rawRenderer || "").trim();
+    if (!r) return "غير متاح";
+    // Unwrap ANGLE (Vendor, Card Name Direct3D11..., D3D11)
+    const angleMatch = r.match(/ANGLE\s*\([^,]+,\s*([^,]+?)(?:\s+Direct3D|\s+OpenGL|\s+Vulkan|,|$)/i);
+    if (angleMatch && angleMatch[1]) {
+      r = angleMatch[1].trim();
+    }
+    r = r
+      .replace(/\(TM\)/gi, "")
+      .replace(/\(R\)/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    return r || "غير متاح";
+  }
+
+  function detectEntrySource() {
+    try {
+      const ua = navigator.userAgent || "";
+      const ref = (document.referrer || "").toLowerCase();
+      const search = (window.location.search || "").toLowerCase();
+
+      // 1. Check URL tracking parameters first
+      const params = new URLSearchParams(window.location.search);
+      const utm = params.get("utm_source") || params.get("ref") || params.get("source") || "";
+      if (utm) {
+        const u = utm.toLowerCase();
+        if (u.includes("telegram") || u === "tg") return "تيليجرام (Telegram)";
+        if (u.includes("whatsapp") || u === "wa") return "واتساب (WhatsApp)";
+        if (u.includes("instagram") || u === "ig") return "إنستغرام (Instagram)";
+        if (u.includes("facebook") || u === "fb") return "فيسبوك (Facebook)";
+        if (u.includes("tiktok") || u === "tt") return "تيك توك (TikTok)";
+        if (u.includes("youtube") || u === "yt") return "يوتيوب (YouTube)";
+        return `رابط مخصص (${utm})`;
+      }
+
+      if (search.includes("fbclid=")) return "فيسبوك (Facebook)";
+      if (search.includes("igshid=")) return "إنستغرام (Instagram)";
+      if (search.includes("ttclid=")) return "تيك توك (TikTok)";
+      if (search.includes("gclid=")) return "إعلانات/بحث Google";
+
+      // 2. Check In-App Browser signatures in User-Agent / Window
+      if (/Telegram/i.test(ua) || typeof window.TelegramWebviewProxy !== "undefined" || typeof window.TelegramWebview !== "undefined") {
+        return "تيليجرام (Telegram)";
+      }
+      if (/WhatsApp/i.test(ua)) return "واتساب (WhatsApp)";
+      if (/Instagram/i.test(ua)) return "إنستغرام (Instagram)";
+      if (/FBAN|FBAV|FB_IAB/i.test(ua)) return "فيسبوك (Facebook)";
+      if (/BytedanceWebview|TikTok|musical_ly/i.test(ua)) return "تيك توك (TikTok)";
+      if (/Snapchat/i.test(ua)) return "سناب شات (Snapchat)";
+
+      // 3. Check document.referrer
+      if (ref) {
+        if (ref.includes("t.me") || ref.includes("telegram.")) return "تيليجرام (Telegram)";
+        if (ref.includes("whatsapp.")) return "واتساب (WhatsApp)";
+        if (ref.includes("instagram.")) return "إنستغرام (Instagram)";
+        if (ref.includes("facebook.") || ref.includes("fb.com") || ref.includes("m.me")) return "فيسبوك (Facebook)";
+        if (ref.includes("tiktok.")) return "تيك توك (TikTok)";
+        if (ref.includes("youtube.") || ref.includes("youtu.be")) return "يوتيوب (YouTube)";
+        if (ref.includes("t.co") || ref.includes("twitter.") || ref.includes("x.com")) return "منصة X (تويتر)";
+        if (ref.includes("google.")) return "بحث Google";
+        if (ref.includes("bing.")) return "بحث Bing";
+        if (ref.includes("yahoo.")) return "بحث Yahoo";
+        if (ref.includes("duckduckgo.")) return "بحث DuckDuckGo";
+        try {
+          const refHost = new URL(document.referrer).hostname.replace(/^www\./, "");
+          if (refHost && refHost !== window.location.hostname) {
+            return `موقع خارجي (${refHost})`;
+          }
+        } catch (_) {}
+      }
+    } catch (_) {}
+    return "دخول مباشر (الرابط مباشرة)";
+  }
+
+  async function collectVisitorHardwareSpecs() {
+    const { typeCode, osName } = detectDeviceTypeAndOs();
+    const ua = navigator.userAgent || "";
+
+    let rawModel = "";
+    let platformVer = "";
+    let arch = "";
+    let bitness = "";
+
+    try {
+      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+        const hi = await navigator.userAgentData.getHighEntropyValues([
+          "model",
+          "platform",
+          "platformVersion",
+          "architecture",
+          "bitness",
+        ]);
+        rawModel = (hi.model || "").trim();
+        platformVer = (hi.platformVersion || "").trim();
+        arch = (hi.architecture || "").trim();
+        bitness = (hi.bitness || "").trim();
+      }
+    } catch (_) {}
+
+    // Fallback model extraction from User-Agent for browsers without Client Hints
+    if (!rawModel || rawModel === "K") {
+      const androidMatch = ua.match(/\((?:Linux; )?Android ([^;]+); ([^)]+)\)/i);
+      if (androidMatch) {
+        if (!platformVer) platformVer = (androidMatch[1] || "").trim();
+        let mCandidate = (androidMatch[2] || "")
+          .replace(/Build\/.*$/i, "")
+          .replace(/;\s*wv/i, "")
+          .trim();
+        // Remove locale tokens like "ar-eg; " if present
+        if (mCandidate.includes(";")) {
+          const parts = mCandidate.split(";").map((s) => s.trim()).filter(Boolean);
+          mCandidate = parts[parts.length - 1] || "";
+        }
+        if (mCandidate && mCandidate !== "K") {
+          rawModel = mCandidate;
+        }
+      }
+    }
+
+    // GPU Extraction via WebGL
+    let gpuClean = "غير متاح";
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (gl) {
+        const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+        const vendor = dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR);
+        const renderer = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+        gpuClean = cleanGpuName(vendor, renderer);
+      }
+    } catch (_) {}
+
+    // OS Version Resolution (Exact & Zero Hallucination)
+    let osVersionLabel = osName;
+    if (osName === "Android") {
+      const majorVer = platformVer ? platformVer.split(".")[0] : "";
+      osVersionLabel = majorVer && majorVer !== "0" ? `Android ${majorVer}` : "Android";
+    } else if (osName === "Windows") {
+      // Official Microsoft Client Hints spec: platformVersion >= 13.0.0 is Windows 11
+      const majorNum = parseInt((platformVer || "0").split(".")[0], 10);
+      let winVer = "Windows 10/11";
+      if (majorNum >= 13) winVer = "Windows 11";
+      else if (majorNum >= 1) winVer = "Windows 10";
+      else if (/Windows NT 10\.0/i.test(ua)) winVer = "Windows 10/11";
+      else if (/Windows NT 6\.3/i.test(ua)) winVer = "Windows 8.1";
+      else if (/Windows NT 6\.1/i.test(ua)) winVer = "Windows 7";
+      const bitLabel = bitness === "64" || /Win64|x64|WOW64/i.test(ua) ? " (64-bit)" : "";
+      osVersionLabel = `${winVer}${bitLabel}`;
+    } else if (osName === "iOS") {
+      const iosMatch = ua.match(/OS (\d+[_\d]*) like Mac OS X/i);
+      if (iosMatch && iosMatch[1]) {
+        osVersionLabel = `iOS ${iosMatch[1].replace(/_/g, ".")}`;
+      } else if (platformVer) {
+        osVersionLabel = `iOS ${platformVer}`;
+      }
+    } else if (osName === "Mac") {
+      if (platformVer) {
+        osVersionLabel = `macOS ${platformVer}`;
+      } else {
+        const macMatch = ua.match(/Mac OS X (\d+[_\d]*)/i);
+        osVersionLabel = macMatch && macMatch[1] ? `macOS ${macMatch[1].replace(/_/g, ".")}` : "macOS";
+      }
+    }
+
+    // Device Model Label
+    let deviceModelLabel = "";
+    if (typeCode === "mob") {
+      if (osName === "Android") {
+        deviceModelLabel = resolveCommercialModelName(rawModel) || "هاتف Android";
+      } else if (osName === "iOS") {
+        const sw = Math.min(window.screen.width || 0, window.screen.height || 0);
+        const sh = Math.max(window.screen.width || 0, window.screen.height || 0);
+        deviceModelLabel = /iPad/i.test(ua)
+          ? `Apple iPad (${sw}×${sh})`
+          : `Apple iPhone (${sw}×${sh})`;
+      } else {
+        deviceModelLabel = rawModel || `هاتف (${osName})`;
+      }
+    } else {
+      if (osName === "Windows") {
+        deviceModelLabel = `كمبيوتر ${osVersionLabel.replace(/\s*\(64-bit\)/, "")}`;
+      } else if (osName === "Mac") {
+        deviceModelLabel = gpuClean.startsWith("Apple M")
+          ? `كمبيوتر Mac (${gpuClean})`
+          : "كمبيوتر Apple Mac";
+      } else {
+        deviceModelLabel = `كمبيوتر ${osName}`;
+      }
+    }
+
+    // CPU Info (Exact cores + architecture + verified SoC if uniquely identifiable)
+    const cores = navigator.hardwareConcurrency || 0;
+    let archLabel = "";
+    if (arch) {
+      archLabel = arch.toUpperCase() === "ARM"
+        ? (bitness === "64" ? "ARM64" : "ARM")
+        : `${arch.toUpperCase()}${bitness === "64" ? "_64" : ""}`;
+    } else if (/aarch64|arm64/i.test(ua)) {
+      archLabel = "ARM64";
+    } else if (/x86_64|Win64|x64/i.test(ua)) {
+      archLabel = "x86_64";
+    }
+
+    // Exact GPU-to-SoC mapping only when 100% deterministic
+    let knownSoc = "";
+    const upperModel = (rawModel || "").toUpperCase();
+    if (upperModel === "2407FPN8EG" || upperModel === "2407FPN8ER" || /Immortalis-G720/i.test(gpuClean)) {
+      knownSoc = "Dimensity 9300+";
+    } else if (/Adreno\s*830/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 8 Elite";
+    } else if (/Adreno\s*750/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 8 Gen 3";
+    } else if (/Adreno\s*740/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 8 Gen 2";
+    } else if (/Xclipse\s*940/i.test(gpuClean)) {
+      knownSoc = "Exynos 2400";
+    } else if (/Xclipse\s*920/i.test(gpuClean)) {
+      knownSoc = "Exynos 2200";
+    } else if (/Apple M[1-9]/i.test(gpuClean)) {
+      knownSoc = gpuClean;
+    }
+
+    let cpuLabel = "";
+    if (knownSoc && cores > 0) {
+      cpuLabel = `${knownSoc} (${cores} أنوية)`;
+    } else if (cores > 0 && archLabel) {
+      cpuLabel = `${cores} أنوية (${archLabel})`;
+    } else if (cores > 0) {
+      cpuLabel = `${cores} أنوية`;
+    } else if (archLabel) {
+      cpuLabel = archLabel;
+    } else {
+      cpuLabel = "غير متاح";
+    }
+
+    // RAM Info (navigator.deviceMemory)
+    let ramLabel = "غير متاح بالمتصفح";
+    const mem = Number(navigator.deviceMemory || 0);
+    if (mem > 0) {
+      // Browser spec caps navigator.deviceMemory at 8 for devices with >= 8GB RAM
+      ramLabel = mem >= 8 ? "8+ GB" : `${mem} GB`;
+    }
+
+    // Battery Info (navigator.getBattery)
+    let batteryLabel = "غير متاح بالمتصفح";
+    try {
+      if (typeof navigator.getBattery === "function") {
+        const bat = await navigator.getBattery();
+        if (bat && typeof bat.level === "number" && !isNaN(bat.level)) {
+          const pct = Math.round(bat.level * 100);
+          if (typeCode === "pc" && pct === 100 && bat.charging) {
+            batteryLabel = `⚡ 100% (متصل بالكهرباء)`;
+          } else if (bat.charging) {
+            batteryLabel = `⚡ ${pct}% (يشحن الآن)`;
+          } else {
+            batteryLabel = `🔋 ${pct}%`;
+          }
+        }
+      }
+    } catch (_) {}
+
+    const entrySource = detectEntrySource();
+
+    return {
+      deviceModel: deviceModelLabel,
+      osVersion: osVersionLabel,
+      cpuInfo: cpuLabel,
+      gpuInfo: gpuClean,
+      ramInfo: ramLabel,
+      batteryInfo: batteryLabel,
+      entrySource,
+    };
+  }
+
+  async function sendVisitorRpcPayload(payload) {
+    try {
+      const res = await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/rpc/record_website_visit`, {
+        method: "POST",
+        keepalive: true,
+        headers: {
+          apikey: SUPABASE_PUB_KEY,
+          Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      // Fallback to 1-parameter call if SQL upgrade hasn't been executed yet
+      if (!res.ok && (res.status === 404 || res.status === 400) && payload.p_device_hash && !payload.p_downloaded_source) {
+        await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/rpc/record_website_visit`, {
+          method: "POST",
+          keepalive: true,
+          headers: {
+            apikey: SUPABASE_PUB_KEY,
+            Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            p_device_hash: payload.p_device_hash,
+          }),
+        });
+      }
+    } catch (_) {}
+  }
+
   async function recordWebsiteVisit() {
     try {
       // Prevent duplicate firing within the same 1.5s page load
@@ -406,23 +851,66 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (_) {}
 
       const visitorId = await computeAnonymousDeviceVisitorId();
+      const specs = await collectVisitorHardwareSpecs();
 
-      // Atomic server-side increment via PostgreSQL RPC (record_website_visit)
-      // 1 single lightweight request, 0 SELECT queries, 0 data leakage
-      await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/rpc/record_website_visit`, {
-        method: "POST",
-        keepalive: true,
-        headers: {
-          apikey: SUPABASE_PUB_KEY,
-          Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          p_device_hash: visitorId,
-        }),
+      await sendVisitorRpcPayload({
+        p_device_hash: visitorId,
+        p_device_model: specs.deviceModel,
+        p_os_version: specs.osVersion,
+        p_cpu_info: specs.cpuInfo,
+        p_gpu_info: specs.gpuInfo,
+        p_ram_info: specs.ramInfo,
+        p_battery_info: specs.batteryInfo,
+        p_entry_source: specs.entrySource,
+        p_downloaded_source: null,
       });
     } catch (_) {}
   }
+
+  async function recordWebsiteDownloadClick(sourceLocationName) {
+    try {
+      const visitorId = await computeAnonymousDeviceVisitorId();
+      const specs = await collectVisitorHardwareSpecs();
+      await sendVisitorRpcPayload({
+        p_device_hash: visitorId,
+        p_device_model: specs.deviceModel,
+        p_os_version: specs.osVersion,
+        p_cpu_info: specs.cpuInfo,
+        p_gpu_info: specs.gpuInfo,
+        p_ram_info: specs.ramInfo,
+        p_battery_info: specs.batteryInfo,
+        p_entry_source: specs.entrySource,
+        p_downloaded_source: sourceLocationName || "زر تحميل في الموقع",
+      });
+    } catch (_) {}
+  }
+
+  // تتبع النقرات على جميع أزرار تحميل التطبيق في كل مكان داخل الموقع (بما فيها النوافذ المنبثقة)
+  document.addEventListener("click", (e) => {
+    const target = e.target && e.target.closest
+      ? e.target.closest('[data-download-source], a[href*="kanz_media.apk"]')
+      : null;
+    if (!target) return;
+
+    let sourceName = target.getAttribute("data-download-source") || "";
+    if (!sourceName) {
+      if (target.closest(".glass-modal-backdrop")) {
+        const modalTitleEl = document.getElementById("modalTitle");
+        const mTitle = modalTitleEl ? modalTitleEl.textContent.trim() : "";
+        sourceName = mTitle ? `نافذة: ${mTitle}` : "نافذة التفاصيل المنبثقة";
+      } else if (target.closest("header")) {
+        sourceName = "شريط التنقل العلوي";
+      } else if (target.closest("#hero")) {
+        sourceName = "الزر الرئيسي (أعلى الصفحة)";
+      } else if (target.closest("footer")) {
+        sourceName = "الفوتر السفلي";
+      } else {
+        sourceName = "زر تحميل التطبيق";
+      }
+    }
+
+    recordWebsiteDownloadClick(sourceName);
+  });
 
   // Run network tasks asynchronously after initial render so page load is 100% instant
   const scheduleIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 150));
