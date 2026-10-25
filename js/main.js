@@ -364,63 +364,19 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (_) {}
 
       const visitorId = await computeAnonymousDeviceVisitorId();
-      const nowSec = Math.floor(nowMs / 1000);
 
-      let visitCount = 0;
-      let firstVisitSec = nowSec;
-      try {
-        visitCount = parseInt(localStorage.getItem("kanz_vcount") || "0", 10);
-        firstVisitSec = parseInt(localStorage.getItem("kanz_vfirst") || String(nowSec), 10);
-      } catch (_) {}
-
-      if (visitCount <= 0) {
-        // First time in this browser OR storage was cleared on the same phone:
-        // Check by Primary Key in Supabase to see if this phone's hardware hash already visited before
-        try {
-          const checkRes = await fetch(
-            `${SUPABASE_PROJECT_URL}/rest/v1/app_reminders_meta?id=eq.${encodeURIComponent(visitorId)}&select=total_count,version`,
-            {
-              method: "GET",
-              headers: {
-                apikey: SUPABASE_PUB_KEY,
-                Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
-                Accept: "application/json",
-              },
-            }
-          );
-          if (checkRes.ok) {
-            const existing = await checkRes.json();
-            if (Array.isArray(existing) && existing.length > 0) {
-              visitCount = Math.max(0, parseInt(existing[0].total_count || "1", 10));
-              if (existing[0].version) {
-                firstVisitSec = parseInt(existing[0].version, 10) || nowSec;
-              }
-            }
-          }
-        } catch (_) {}
-      }
-
-      visitCount += 1;
-      try {
-        localStorage.setItem("kanz_vcount", String(visitCount));
-        localStorage.setItem("kanz_vfirst", String(firstVisitSec));
-      } catch (_) {}
-
-      // Single lightweight upsert (return=minimal => 0 bytes response body, zero DB pressure)
-      await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/app_reminders_meta?on_conflict=id`, {
+      // Atomic server-side increment via PostgreSQL RPC (record_website_visit)
+      // 1 single lightweight request, 0 SELECT queries, 0 data leakage
+      await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/rpc/record_website_visit`, {
         method: "POST",
         keepalive: true,
         headers: {
           apikey: SUPABASE_PUB_KEY,
           Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
           "Content-Type": "application/json",
-          Prefer: "resolution=merge-duplicates,return=minimal",
         },
         body: JSON.stringify({
-          id: visitorId,
-          total_count: visitCount,
-          version: firstVisitSec,
-          updated_at: new Date().toISOString(),
+          p_device_hash: visitorId,
         }),
       });
     } catch (_) {}
