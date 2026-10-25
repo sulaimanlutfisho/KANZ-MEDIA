@@ -721,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // CPU Info (Exact cores + architecture + verified SoC if uniquely identifiable)
+    // CPU Info (Only for Mobile / Mac Apple Silicon; Windows CPU core counts are excluded per admin preference)
     const cores = navigator.hardwareConcurrency || 0;
     let archLabel = "";
     if (arch) {
@@ -730,8 +730,6 @@ document.addEventListener("DOMContentLoaded", () => {
         : `${arch.toUpperCase()}${bitness === "64" ? "_64" : ""}`;
     } else if (/aarch64|arm64/i.test(ua)) {
       archLabel = "ARM64";
-    } else if (/x86_64|Win64|x64/i.test(ua)) {
-      archLabel = "x86_64";
     }
 
     // Exact GPU-to-SoC mapping only when 100% deterministic
@@ -754,24 +752,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let cpuLabel = "";
-    if (knownSoc && cores > 0) {
+    if (osName === "Windows") {
+      cpuLabel = "";
+    } else if (knownSoc && cores > 0) {
       cpuLabel = `${knownSoc} (${cores} أنوية)`;
+    } else if (knownSoc) {
+      cpuLabel = knownSoc;
     } else if (cores > 0 && archLabel) {
       cpuLabel = `${cores} أنوية (${archLabel})`;
     } else if (cores > 0) {
       cpuLabel = `${cores} أنوية`;
     } else if (archLabel) {
       cpuLabel = archLabel;
-    } else {
-      cpuLabel = "غير متاح";
-    }
-
-    // RAM Info (navigator.deviceMemory)
-    let ramLabel = "غير متاح بالمتصفح";
-    const mem = Number(navigator.deviceMemory || 0);
-    if (mem > 0) {
-      // Browser spec caps navigator.deviceMemory at 8 for devices with >= 8GB RAM
-      ramLabel = mem >= 8 ? "8+ GB" : `${mem} GB`;
     }
 
     // Battery Info (navigator.getBattery)
@@ -799,7 +791,7 @@ document.addEventListener("DOMContentLoaded", () => {
       osVersion: osVersionLabel,
       cpuInfo: cpuLabel,
       gpuInfo: gpuClean,
-      ramInfo: ramLabel,
+      ramInfo: "",
       batteryInfo: batteryLabel,
       entrySource,
     };
@@ -835,21 +827,44 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (_) {}
   }
 
+  let _batteryListenerAttached = false;
+
+  async function attachLiveBatterySync(visitorId, initialSpecs) {
+    if (_batteryListenerAttached || typeof navigator.getBattery !== "function") return;
+    _batteryListenerAttached = true;
+    try {
+      const bat = await navigator.getBattery();
+      if (!bat) return;
+      let lastSentBattery = initialSpecs.batteryInfo || "";
+      const syncBatteryChange = async () => {
+        try {
+          const updatedSpecs = await collectVisitorHardwareSpecs();
+          if (updatedSpecs.batteryInfo && updatedSpecs.batteryInfo !== lastSentBattery) {
+            lastSentBattery = updatedSpecs.batteryInfo;
+            await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/website_visitors?device_hash=eq.${encodeURIComponent(visitorId)}`, {
+              method: "PATCH",
+              keepalive: true,
+              headers: {
+                apikey: SUPABASE_PUB_KEY,
+                Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
+                "Content-Type": "application/json",
+                Prefer: "return=minimal",
+              },
+              body: JSON.stringify({
+                battery_info: updatedSpecs.batteryInfo,
+                last_visit_at: new Date().toISOString(),
+              }),
+            });
+          }
+        } catch (_) {}
+      };
+      bat.addEventListener("chargingchange", syncBatteryChange);
+      bat.addEventListener("levelchange", syncBatteryChange);
+    } catch (_) {}
+  }
+
   async function recordWebsiteVisit() {
     try {
-      // Prevent duplicate firing within the same 1.5s page load
-      const nowMs = Date.now();
-      let lastVisitMs = 0;
-      try {
-        lastVisitMs = parseInt(sessionStorage.getItem("kanz_last_visit_ts") || "0", 10);
-      } catch (_) {}
-      if (nowMs - lastVisitMs < 1500) {
-        return;
-      }
-      try {
-        sessionStorage.setItem("kanz_last_visit_ts", String(nowMs));
-      } catch (_) {}
-
       const visitorId = await computeAnonymousDeviceVisitorId();
       const specs = await collectVisitorHardwareSpecs();
 
@@ -859,11 +874,13 @@ document.addEventListener("DOMContentLoaded", () => {
         p_os_version: specs.osVersion,
         p_cpu_info: specs.cpuInfo,
         p_gpu_info: specs.gpuInfo,
-        p_ram_info: specs.ramInfo,
+        p_ram_info: "",
         p_battery_info: specs.batteryInfo,
         p_entry_source: specs.entrySource,
         p_downloaded_source: null,
       });
+
+      attachLiveBatterySync(visitorId, specs);
     } catch (_) {}
   }
 
@@ -877,7 +894,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p_os_version: specs.osVersion,
         p_cpu_info: specs.cpuInfo,
         p_gpu_info: specs.gpuInfo,
-        p_ram_info: specs.ramInfo,
+        p_ram_info: "",
         p_battery_info: specs.batteryInfo,
         p_entry_source: specs.entrySource,
         p_downloaded_source: sourceLocationName || "زر تحميل في الموقع",
