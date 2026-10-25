@@ -221,7 +221,39 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  function detectDeviceTypeAndOs() {
+    const ua = navigator.userAgent || "";
+    let isMobile = false;
+    try {
+      if (navigator.userAgentData && typeof navigator.userAgentData.mobile === "boolean") {
+        isMobile = navigator.userAgentData.mobile;
+      } else {
+        isMobile =
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(ua) ||
+          (navigator.maxTouchPoints > 1 &&
+            Math.min(window.screen.width || 9999, window.screen.height || 9999) <= 840);
+      }
+    } catch (_) {}
+
+    let osName = "Other";
+    if (/Android/i.test(ua)) osName = "Android";
+    else if (/iPhone|iPad|iPod/i.test(ua)) osName = "iOS";
+    else if (/Windows/i.test(ua)) osName = "Windows";
+    else if (/Mac OS X|Macintosh/i.test(ua)) {
+      osName = navigator.maxTouchPoints > 1 ? "iOS" : "Mac";
+      if (osName === "iOS") isMobile = true;
+    } else if (/CrOS/i.test(ua)) osName = "ChromeOS";
+    else if (/Linux/i.test(ua)) osName = "Linux";
+
+    return {
+      typeCode: isMobile ? "mob" : "pc",
+      osName,
+    };
+  }
+
   async function computeAnonymousDeviceVisitorId() {
+    const { typeCode, osName } = detectDeviceTypeAndOs();
+
     // 1. Check existing persistent device hash (localStorage or 400-day 1st-party Cookie)
     let storedId = "";
     try {
@@ -230,12 +262,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!storedId) {
       storedId = getCookieValue("kanz_vid");
     }
-    if (storedId && /^web_v_[0-9a-f]{16}$/.test(storedId)) {
+    if (storedId && /^web_v_(mob|pc)_[A-Za-z]+_[0-9a-f]{16}$/.test(storedId)) {
       try {
         localStorage.setItem("kanz_vid", storedId);
       } catch (_) {}
       setLongLivedCookie("kanz_vid", storedId);
       return storedId;
+    }
+    // Upgrade legacy web_v_<16_hex> IDs seamlessly while keeping the same device hash
+    if (storedId && /^web_v_[0-9a-f]{16}$/.test(storedId)) {
+      const legacyHex = storedId.slice(-16);
+      const upgradedId = `web_v_${typeCode}_${osName}_${legacyHex}`;
+      try {
+        localStorage.setItem("kanz_vid", upgradedId);
+      } catch (_) {}
+      setLongLivedCookie("kanz_vid", upgradedId);
+      return upgradedId;
     }
 
     // 2. Collect anonymous hardware & screen characteristics (never leaves the phone unhashed)
@@ -338,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ].join("::");
 
     const hex16 = await sha256Hex16(rawFingerprint);
-    const visitorId = `web_v_${hex16}`;
+    const visitorId = `web_v_${typeCode}_${osName}_${hex16}`;
 
     try {
       localStorage.setItem("kanz_vid", visitorId);
@@ -350,13 +392,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function recordWebsiteVisit() {
     try {
-      // Anti-spam cooldown: ignore rapid F5 reloads within 15 seconds
+      // Prevent duplicate firing within the same 1.5s page load
       const nowMs = Date.now();
       let lastVisitMs = 0;
       try {
         lastVisitMs = parseInt(sessionStorage.getItem("kanz_last_visit_ts") || "0", 10);
       } catch (_) {}
-      if (nowMs - lastVisitMs < 15000) {
+      if (nowMs - lastVisitMs < 1500) {
         return;
       }
       try {
