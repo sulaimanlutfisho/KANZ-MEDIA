@@ -894,12 +894,12 @@ a {
 .drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(4, 7, 16, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(2, 4, 10, 0.88) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
   z-index: 1019;
 }
 
@@ -908,7 +908,7 @@ a {
   visibility: visible;
 }
 
-/* Mobile Drawer (Gorilla Frosted Glass) */
+/* Mobile Drawer (Identical Opaque Style to Flutter App Popup Dialogs - AppColors.dialogBackground #141526) */
 .mobile-drawer {
   position: fixed;
   top: 0;
@@ -916,11 +916,10 @@ a {
   width: min(86vw, 340px);
   height: 100vh;
   height: 100dvh;
-  background: linear-gradient(165deg, rgba(16, 21, 38, 0.94) 0%, rgba(9, 13, 24, 0.97) 100%);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  border-right: none;
+  background-color: #141526 !important;
+  background: linear-gradient(180deg, #181a30 0%, #141526 40%, #0d0e1c 100%) !important;
+  border-left: 1.5px solid rgba(139, 92, 246, 0.45) !important;
+  border-right: none !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -929,7 +928,10 @@ a {
   text-align: right;
   overflow: hidden;
   transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: -14px 0 55px rgba(0, 0, 0, 0.85), inset 1px 0 0 rgba(255, 255, 255, 0.08);
+  box-shadow:
+    -25px 0 70px rgba(0, 0, 0, 0.95),
+    0 0 45px rgba(139, 92, 246, 0.22),
+    inset 1px 0 1px rgba(255, 255, 255, 0.12) !important;
 }
 
 .mobile-drawer.open {
@@ -3745,12 +3747,17 @@ button.m-link {
 .cta-content-wrapper {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 /* Sparkle Release Badge */
 .final-sparkle-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 5px 14px;
   border-radius: var(--radius-full);
@@ -3760,7 +3767,7 @@ button.m-link {
   font-size: 0.78rem;
   color: var(--primary-light);
   font-weight: 600;
-  margin-bottom: 22px;
+  margin: 0 auto 18px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
@@ -3771,8 +3778,11 @@ button.m-link {
 /* App Icon Pedestal & Halo */
 .final-logo-wrapper {
   position: relative;
-  display: inline-block;
-  margin-bottom: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto 20px;
 }
 
 .final-logo-pedestal {
@@ -5808,13 +5818,16 @@ button.m-link {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, auto)) !important;
     gap: 8px 10px !important;
-    justify-content: flex-start !important;
-    margin-top: 10px !important;
+    justify-content: center !important;
+    margin: 12px auto 0 !important;
+    width: 100% !important;
+    max-width: 420px !important;
   }
 
   .trust-badge {
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 6px !important;
     font-size: 0.78rem !important;
     padding: 5px 10px !important;
@@ -6401,13 +6414,16 @@ button.m-link {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, auto)) !important;
     gap: 6px 8px !important;
-    justify-content: flex-start !important;
-    margin-top: 8px !important;
+    justify-content: center !important;
+    margin: 10px auto 0 !important;
+    width: 100% !important;
+    max-width: 360px !important;
   }
 
   .trust-badge {
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 5px !important;
     font-size: 0.72rem !important;
     padding: 4px 8px !important;
@@ -7058,13 +7074,16 @@ button.m-link {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, auto)) !important;
     gap: 5px 6px !important;
-    justify-content: flex-start !important;
-    margin-top: 8px !important;
+    justify-content: center !important;
+    margin: 8px auto 0 !important;
+    width: 100% !important;
+    max-width: 320px !important;
   }
 
   .trust-badge {
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 4px !important;
     font-size: 0.70rem !important;
     padding: 3px 7px !important;
