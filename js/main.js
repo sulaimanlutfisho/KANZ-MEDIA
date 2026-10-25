@@ -5,6 +5,436 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
+  // 0. Unified Version Control (Single Source of Truth + Supabase Delta Sync)
+  // =========================================================================
+  const SUPABASE_PROJECT_URL = "https://cviwcitikudsxwmvjozu.supabase.co";
+  const SUPABASE_PUB_KEY = "sb_publishable_szRd3eKZXpO2OVjsyMptsQ_xT7lPTxl";
+  const DEFAULT_APP_VERSION = "1.0.0";
+  const DEFAULT_APK_URL = "https://kanz.sulaimansho.com/kanz_media.apk";
+
+  let currentAppVersion = DEFAULT_APP_VERSION;
+  let currentApkUrl = DEFAULT_APK_URL;
+  let cachedUpdatedAt = "";
+
+  try {
+    const savedVer = localStorage.getItem("kanz_cached_version");
+    const savedUrl = localStorage.getItem("kanz_cached_apk_url");
+    const savedTs = localStorage.getItem("kanz_cached_updated_at");
+    if (savedVer && /^[0-9]+\.[0-9]+/.test(savedVer)) {
+      currentAppVersion = savedVer;
+    }
+    if (savedUrl && savedUrl.startsWith("http")) {
+      currentApkUrl = savedUrl;
+    }
+    if (savedTs) {
+      cachedUpdatedAt = savedTs;
+    }
+  } catch (_) {}
+
+  function applyUnifiedVersion(versionStr, apkUrlStr) {
+    if (versionStr && /^[0-9]+\.[0-9]+/.test(versionStr)) {
+      currentAppVersion = versionStr.trim();
+    }
+    if (apkUrlStr && apkUrlStr.startsWith("http")) {
+      currentApkUrl = apkUrlStr.trim();
+    }
+
+    document.querySelectorAll("[data-version-template]").forEach((el) => {
+      const tpl = el.getAttribute("data-version-template");
+      if (tpl) {
+        el.textContent = tpl.replace(/\{v\}/g, currentAppVersion);
+      }
+    });
+
+    document.querySelectorAll('a[href*="kanz_media.apk"]').forEach((link) => {
+      link.href = currentApkUrl;
+    });
+  }
+
+  // Apply cached version immediately (0ms, zero network wait)
+  applyUnifiedVersion(currentAppVersion, currentApkUrl);
+
+  // Conditional Delta Sync: only fetches data if latest_version or updated_at changed in Supabase
+  async function syncVersionIfChanged() {
+    try {
+      // Avoid redundant checks on every reload within the same active tab session
+      if (sessionStorage.getItem("kanz_ver_checked_session") === "1" && cachedUpdatedAt) {
+        return;
+      }
+
+      let endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/app_version_control?id=eq.app_version&select=latest_version,android_download_url,updated_at`;
+      if (cachedUpdatedAt && currentAppVersion) {
+        const encVer = encodeURIComponent(currentAppVersion);
+        const encTs = encodeURIComponent(cachedUpdatedAt);
+        endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/app_version_control?id=eq.app_version&or=(latest_version.neq.${encVer},updated_at.gt.${encTs})&select=latest_version,android_download_url,updated_at`;
+      }
+
+      const res = await fetch(endpoint, {
+        method: "GET",
+        headers: {
+          apikey: SUPABASE_PUB_KEY,
+          Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (res.ok) {
+        sessionStorage.setItem("kanz_ver_checked_session", "1");
+        const rows = await res.json();
+        // If rows is [] (2 bytes), nothing changed in Supabase!
+        if (Array.isArray(rows) && rows.length > 0) {
+          const rec = rows[0];
+          const newVer = rec.latest_version || DEFAULT_APP_VERSION;
+          const newUrl = rec.android_download_url || DEFAULT_APK_URL;
+          const newTs = rec.updated_at || "";
+
+          cachedUpdatedAt = newTs;
+          try {
+            localStorage.setItem("kanz_cached_version", newVer);
+            localStorage.setItem("kanz_cached_apk_url", newUrl);
+            if (newTs) localStorage.setItem("kanz_cached_updated_at", newTs);
+          } catch (_) {}
+
+          applyUnifiedVersion(newVer, newUrl);
+        }
+      }
+    } catch (_) {}
+  }
+
+  // Live Realtime WebSocket listener: pushes version changes from Supabase immediately
+  function connectVersionRealtime() {
+    if (typeof WebSocket === "undefined") return;
+    try {
+      const wsUrl = `${SUPABASE_PROJECT_URL.replace("https://", "wss://")}/realtime/v1/websocket?apikey=${SUPABASE_PUB_KEY}&vsn=1.0.0`;
+      const ws = new WebSocket(wsUrl);
+      let hbInterval = null;
+
+      ws.addEventListener("open", () => {
+        ws.send(
+          JSON.stringify({
+            topic: "realtime:public:app_version_control",
+            event: "phx_join",
+            payload: {
+              config: {
+                broadcast: { self: false },
+                presence: { key: "" },
+                postgres_changes: [
+                  {
+                    event: "*",
+                    schema: "public",
+                    table: "app_version_control",
+                  },
+                ],
+              },
+            },
+            ref: "web_ver_1",
+          })
+        );
+
+        hbInterval = setInterval(() => {
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(
+              JSON.stringify({
+                topic: "phoenix",
+                event: "heartbeat",
+                payload: {},
+                ref: "hb",
+              })
+            );
+          }
+        }, 25000);
+      });
+
+      ws.addEventListener("message", (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg && msg.event === "postgres_changes") {
+            const record = msg.payload && msg.payload.data && msg.payload.data.record;
+            if (record && record.latest_version) {
+              const newVer = String(record.latest_version);
+              const newUrl = record.android_download_url
+                ? String(record.android_download_url)
+                : currentApkUrl;
+              const newTs = record.updated_at ? String(record.updated_at) : "";
+              cachedUpdatedAt = newTs;
+              try {
+                localStorage.setItem("kanz_cached_version", newVer);
+                localStorage.setItem("kanz_cached_apk_url", newUrl);
+                if (newTs) localStorage.setItem("kanz_cached_updated_at", newTs);
+              } catch (_) {}
+              applyUnifiedVersion(newVer, newUrl);
+            }
+          }
+        } catch (_) {}
+      });
+
+      ws.addEventListener("close", () => {
+        if (hbInterval) clearInterval(hbInterval);
+      });
+    } catch (_) {}
+  }
+
+  // =========================================================================
+  // 0.5 Privacy-First Website Visitor Analytics (Same Phone vs Different Phones)
+  // =========================================================================
+  function getCookieValue(name) {
+    try {
+      const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+      return match ? decodeURIComponent(match[2]) : "";
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function setLongLivedCookie(name, value) {
+    try {
+      const maxAge = 400 * 24 * 60 * 60; // 400 days
+      document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAge}; path=/; SameSite=Lax`;
+    } catch (_) {}
+  }
+
+  async function sha256Hex16(input) {
+    try {
+      if (window.crypto && window.crypto.subtle) {
+        const buf = new TextEncoder().encode(input);
+        const hashBuf = await window.crypto.subtle.digest("SHA-256", buf);
+        const hashArr = Array.from(new Uint8Array(hashBuf));
+        return hashArr
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("")
+          .slice(0, 16);
+      }
+    } catch (_) {}
+    // Fallback deterministic 64-bit FNV-1a twin hash
+    let h1 = 0x811c9dc5;
+    let h2 = 0x811c9dc5;
+    for (let i = 0; i < input.length; i++) {
+      const c = input.charCodeAt(i);
+      h1 ^= c;
+      h1 = Math.imul(h1, 0x01000193);
+      h2 ^= c ^ (i & 0xff);
+      h2 = Math.imul(h2, 0x01000193);
+    }
+    return (
+      (h1 >>> 0).toString(16).padStart(8, "0") +
+      (h2 >>> 0).toString(16).padStart(8, "0")
+    );
+  }
+
+  async function computeAnonymousDeviceVisitorId() {
+    // 1. Check existing persistent device hash (localStorage or 400-day 1st-party Cookie)
+    let storedId = "";
+    try {
+      storedId = localStorage.getItem("kanz_vid") || "";
+    } catch (_) {}
+    if (!storedId) {
+      storedId = getCookieValue("kanz_vid");
+    }
+    if (storedId && /^web_v_[0-9a-f]{16}$/.test(storedId)) {
+      try {
+        localStorage.setItem("kanz_vid", storedId);
+      } catch (_) {}
+      setLongLivedCookie("kanz_vid", storedId);
+      return storedId;
+    }
+
+    // 2. Collect anonymous hardware & screen characteristics (never leaves the phone unhashed)
+    let modelToken = "";
+    try {
+      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+        const hi = await navigator.userAgentData.getHighEntropyValues([
+          "model",
+          "platformVersion",
+          "architecture",
+        ]);
+        modelToken = [hi.model || "", hi.platformVersion || "", hi.architecture || ""].join("|");
+      }
+    } catch (_) {}
+
+    if (!modelToken) {
+      const ua = navigator.userAgent || "";
+      const androidMatch = ua.match(/\((?:Linux; )?Android [^;]+; ([^)]+)\)/i);
+      if (androidMatch && androidMatch[1]) {
+        modelToken = androidMatch[1].replace(/Build\/.*$/i, "").trim();
+      } else {
+        modelToken = ua.replace(/\/[0-9.]+/g, "");
+      }
+    }
+
+    // WebGL unmasked GPU renderer
+    let gpuInfo = "";
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (gl) {
+        const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+        const vendor = dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR);
+        const renderer = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+        gpuInfo = `${vendor || ""}|${renderer || ""}`;
+      }
+    } catch (_) {}
+
+    // Orientation-independent physical screen resolution & pixel ratio
+    const sw = Math.min(window.screen.width || 0, window.screen.height || 0);
+    const sh = Math.max(window.screen.width || 0, window.screen.height || 0);
+    const dpr = Number(window.devicePixelRatio || 1).toFixed(2);
+    const screenSpec = `${sw}x${sh}@${dpr}c${window.screen.colorDepth || 24}`;
+
+    // CPU cores, RAM tier, touch points, timezone
+    const cores = navigator.hardwareConcurrency || 0;
+    const mem = navigator.deviceMemory || 0;
+    const touch = navigator.maxTouchPoints || 0;
+    let tz = "";
+    try {
+      tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    } catch (_) {}
+
+    // Sub-pixel Canvas 2D rendering signature
+    let canvasSig = "";
+    try {
+      const c2 = document.createElement("canvas");
+      c2.width = 120;
+      c2.height = 28;
+      const ctx = c2.getContext("2d");
+      if (ctx) {
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = "#7c3aed";
+        ctx.fillRect(10, 2, 45, 18);
+        ctx.fillStyle = "#22d3ee";
+        ctx.font = "13px sans-serif";
+        ctx.fillText("KanzMedia_v1", 4, 18);
+        canvasSig = c2.toDataURL().slice(-48);
+      }
+    } catch (_) {}
+
+    // On generic iOS UAs where Apple hides the exact model name, add a persistent salt so different iPhones never collide
+    let iosDeviceSalt = "";
+    if (/iPhone|iPad/i.test(navigator.userAgent || "")) {
+      iosDeviceSalt = getCookieValue("kanz_ios_salt");
+      if (!iosDeviceSalt) {
+        try {
+          iosDeviceSalt = localStorage.getItem("kanz_ios_salt") || "";
+        } catch (_) {}
+      }
+      if (!iosDeviceSalt) {
+        iosDeviceSalt = Math.random().toString(36).slice(2) + Date.now().toString(36);
+        setLongLivedCookie("kanz_ios_salt", iosDeviceSalt);
+        try {
+          localStorage.setItem("kanz_ios_salt", iosDeviceSalt);
+        } catch (_) {}
+      }
+    }
+
+    const rawFingerprint = [
+      modelToken,
+      gpuInfo,
+      screenSpec,
+      cores,
+      mem,
+      touch,
+      tz,
+      canvasSig,
+      iosDeviceSalt,
+    ].join("::");
+
+    const hex16 = await sha256Hex16(rawFingerprint);
+    const visitorId = `web_v_${hex16}`;
+
+    try {
+      localStorage.setItem("kanz_vid", visitorId);
+    } catch (_) {}
+    setLongLivedCookie("kanz_vid", visitorId);
+
+    return visitorId;
+  }
+
+  async function recordWebsiteVisit() {
+    try {
+      // Anti-spam cooldown: ignore rapid F5 reloads within 15 seconds
+      const nowMs = Date.now();
+      let lastVisitMs = 0;
+      try {
+        lastVisitMs = parseInt(sessionStorage.getItem("kanz_last_visit_ts") || "0", 10);
+      } catch (_) {}
+      if (nowMs - lastVisitMs < 15000) {
+        return;
+      }
+      try {
+        sessionStorage.setItem("kanz_last_visit_ts", String(nowMs));
+      } catch (_) {}
+
+      const visitorId = await computeAnonymousDeviceVisitorId();
+      const nowSec = Math.floor(nowMs / 1000);
+
+      let visitCount = 0;
+      let firstVisitSec = nowSec;
+      try {
+        visitCount = parseInt(localStorage.getItem("kanz_vcount") || "0", 10);
+        firstVisitSec = parseInt(localStorage.getItem("kanz_vfirst") || String(nowSec), 10);
+      } catch (_) {}
+
+      if (visitCount <= 0) {
+        // First time in this browser OR storage was cleared on the same phone:
+        // Check by Primary Key in Supabase to see if this phone's hardware hash already visited before
+        try {
+          const checkRes = await fetch(
+            `${SUPABASE_PROJECT_URL}/rest/v1/app_reminders_meta?id=eq.${encodeURIComponent(visitorId)}&select=total_count,version`,
+            {
+              method: "GET",
+              headers: {
+                apikey: SUPABASE_PUB_KEY,
+                Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
+                Accept: "application/json",
+              },
+            }
+          );
+          if (checkRes.ok) {
+            const existing = await checkRes.json();
+            if (Array.isArray(existing) && existing.length > 0) {
+              visitCount = Math.max(0, parseInt(existing[0].total_count || "1", 10));
+              if (existing[0].version) {
+                firstVisitSec = parseInt(existing[0].version, 10) || nowSec;
+              }
+            }
+          }
+        } catch (_) {}
+      }
+
+      visitCount += 1;
+      try {
+        localStorage.setItem("kanz_vcount", String(visitCount));
+        localStorage.setItem("kanz_vfirst", String(firstVisitSec));
+      } catch (_) {}
+
+      // Single lightweight upsert (return=minimal => 0 bytes response body, zero DB pressure)
+      await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/app_reminders_meta?on_conflict=id`, {
+        method: "POST",
+        keepalive: true,
+        headers: {
+          apikey: SUPABASE_PUB_KEY,
+          Authorization: `Bearer ${SUPABASE_PUB_KEY}`,
+          "Content-Type": "application/json",
+          Prefer: "resolution=merge-duplicates,return=minimal",
+        },
+        body: JSON.stringify({
+          id: visitorId,
+          total_count: visitCount,
+          version: firstVisitSec,
+          updated_at: new Date().toISOString(),
+        }),
+      });
+    } catch (_) {}
+  }
+
+  // Run network tasks asynchronously after initial render so page load is 100% instant
+  const scheduleIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 150));
+  scheduleIdle(() => {
+    syncVersionIfChanged();
+    connectVersionRealtime();
+    recordWebsiteVisit();
+  });
+
+  // =========================================================================
   // 1. Mobile Menu Drawer Management
   // =========================================================================
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -578,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const downloadBtn = document.createElement("a");
         downloadBtn.className = "app-btn-primary";
         downloadBtn.textContent = "تحميل APK";
-        downloadBtn.href = "https://kanz.sulaimansho.com/kanz_media.apk";
+        downloadBtn.href = currentApkUrl;
         downloadBtn.target = "_blank";
         downloadBtn.rel = "noopener";
 
@@ -645,37 +1075,37 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           </div>
           <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            مهندس ومطور أنظمة وتطبيقات ذكية، متخصص في بناء حلول هجينة تجمع بين محركات بايثون الأصلية وأحدث واجهات دارت وفلاتر، مع التركيز على الخصوصية والسرعة الفائقة وتصميم الغوريلا جلاس الفاخر.
+            مهندس ومطور أنظمة وتطبيقات ذكية، متخصص في ابتكار وتطوير حلول الوسائط المتقدمة، مع التركيز الكامل على الخصوصية وحماية البيانات، والسرعة الفائقة، وتجربة الاستخدام السلسة والتصميم العصري الفاخر.
           </p>
         </div>
 
         <div class="modal-info-grid">
           <div class="modal-info-item">
             <span>إصدار التطبيق</span>
-            <strong>v1.0.0 Stable</strong>
+            <strong>v${currentAppVersion} المستقر</strong>
           </div>
           <div class="modal-info-item">
-            <span>البيئة واللغات</span>
-            <strong>Flutter & Python 3.11</strong>
+            <span>توافق النظام</span>
+            <strong>Android 7.0 فما فوق</strong>
           </div>
           <div class="modal-info-item">
-            <span>المحرك العتادي</span>
-            <strong>Native MediaMuxer / FFmpeg</strong>
+            <span>حالة الإعلانات</span>
+            <strong style="color: var(--emerald-light);">خالٍ تماماً 100%</strong>
           </div>
           <div class="modal-info-item">
-            <span>السحابة والتحديثات</span>
-            <strong>Cloudflare R2 & Supabase</strong>
+            <span>الأمان والتراخيص</span>
+            <strong style="color: var(--cyan-light);">مجاني وآمن بالكامل</strong>
           </div>
         </div>
 
         <div class="app-subcard">
-          <div style="font-weight: 700; font-size: 0.88rem; color: #ffffff; margin-bottom: 8px;">أبرز الركائز الهندسية للمشروع:</div>
+          <div style="font-weight: 700; font-size: 0.88rem; color: #ffffff; margin-bottom: 8px;">أبرز مميزات وقدرات المنظومة:</div>
           <ul class="modal-features-list">
-            <li><span class="modal-check-bullet">✓</span> تحميل متفجر عبر Burst Range Streaming لكسر خنق سرعة يوتيوب.</li>
-            <li><span class="modal-check-bullet">✓</span> محرك اقتطاع الفيديو الذكي بدون إعادة ترميز (Lossless Zero-Reencode).</li>
-            <li><span class="modal-check-bullet">✓</span> مستعرض وحافظ حالات واتساب لجميع النسخ والحسابات المزدوجة.</li>
-            <li><span class="modal-check-bullet">✓</span> تخطي حماية القنوات المقيدة في تيليجرام (Restricted Channels).</li>
-            <li><span class="modal-check-bullet">✓</span> خالٍ تماماً 100% من الإعلانات والتتبع وحماية تامة للخصوصية.</li>
+            <li><span class="modal-check-bullet">✓</span> تحميل فائق السرعة يدعم أعلى جودات الفيديو (حتى 8K) وتنزيل الصوت النقي.</li>
+            <li><span class="modal-check-bullet">✓</span> ميزة اقتطاع وقص الفيديوهات بدقة متناهية قبل التنزيل لحفظ باقة الإنترنت.</li>
+            <li><span class="modal-check-bullet">✓</span> استعراض وحفظ حالات الأصدقاء في واتساب لكافة النسخ بنقرة زر واحدة.</li>
+            <li><span class="modal-check-bullet">✓</span> حفظ الوسائط وتصديرها مباشرة إلى استوديو الهاتف بدون أي علامات مائية.</li>
+            <li><span class="modal-check-bullet">✓</span> تجربة استخدام نظيفة تماماً بدون أي إعلانات أو نوافذ منبثقة أو أدوات تتبع.</li>
           </ul>
         </div>
       `,
@@ -688,7 +1118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           text: "تحميل APK",
           className: "app-btn-primary",
-          href: "https://kanz.sulaimansho.com/kanz_media.apk",
+          href: currentApkUrl,
         },
       ],
     });
@@ -698,7 +1128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showDownloadModal() {
     openGlassModal({
       title: "تنزيل تطبيق كَنْز المَيديا (APK)",
-      subtitle: "الحزمة الرسمية المستقرة والمباشرة بنظام التحديث الهوائي",
+      subtitle: `الحزمة الرسمية المستقرة (v${currentAppVersion}) بنظام التحديث الهوائي`,
       iconHtml: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="modal-icon-svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>`,
       bodyHtml: `
         <div class="modal-info-grid">
@@ -736,7 +1166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           text: "تحميل APK",
           className: "app-btn-primary",
-          href: "https://kanz.sulaimansho.com/kanz_media.apk",
+          href: currentApkUrl,
         },
       ],
     });
@@ -933,7 +1363,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const footerCopyUrlBtn = document.getElementById("footerCopyUrlBtn");
   if (footerCopyUrlBtn) {
     footerCopyUrlBtn.addEventListener("click", () => {
-      const url = "https://kanz.sulaimansho.com/kanz_media.apk";
+      const url = currentApkUrl;
       function setSuccess() {
         const origHtml = footerCopyUrlBtn.innerHTML;
         footerCopyUrlBtn.innerHTML = '<i class="fa-solid fa-check" style="color: #34d399;"></i>';
