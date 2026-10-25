@@ -1,0 +1,9 @@
+{
+  "id": "app_version",
+  "latest_version": "1.0.0",
+  "min_supported_version": "1.0.0",
+  "is_force_update": false,
+  "release_notes": "الإصدار الرسمي لتطبيق كنز الميديا مع محرك التحميل عالي السرعة، ميزة اقتطاع المقاطع قبل التنزيل، حفظ حالات واتساب، والتذكير الإيماني المبارك.",
+  "android_download_url": "https://kanz.sulaimansho.com/kanz_media.apk",
+  "updated_at": "2026-10-23T06:00:00Z"
+}

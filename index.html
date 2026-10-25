@@ -39,12 +39,15 @@
 
   <link rel="icon" type="image/png" href="assets/icons/app_icon.png">
 
-  <!-- Google Fonts: Readex Pro & Cairo -->
+  <!-- Google Fonts: Cairo & Tajawal -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap"
     rel="stylesheet">
+
+  <!-- Font Awesome 6.5.1 Brands & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
@@ -69,7 +72,7 @@
         </div>
         <div class="brand-text">
           <span class="brand-title">كَنْز المَيديا</span>
-          <span class="brand-badge">KANZ MEDIA v1.0.0</span>
+          <span class="brand-badge"><span class="badge-dot"></span> KANZ MEDIA</span>
         </div>
       </a>
 
@@ -81,6 +84,7 @@
         <a href="#reminders" class="nav-link">التذكير الإيماني</a>
         <a href="#interactive-demo" class="nav-link">المعاينة الحية</a>
         <a href="#faq" class="nav-link">الأسئلة الشائعة</a>
+        <button class="nav-link nav-btn-about" id="aboutBtnDesktop" type="button">حول التطبيق</button>
       </nav>
 
       <!-- CTA Button in Header -->
@@ -103,38 +107,126 @@
       </div>
     </div>
 
-    <!-- Mobile Navigation Drawer -->
+    <!-- Mobile Navigation Drawer Backdrop -->
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <!-- Mobile Navigation Drawer (Legendary Gorilla Glass Drawer) -->
     <div class="mobile-drawer" id="mobileDrawer">
+      <!-- Ambient Drawer Glow -->
+      <div class="drawer-glow-orb"></div>
+
+      <!-- Drawer Header -->
       <div class="drawer-header">
         <div class="drawer-brand">
-          <img src="assets/icons/app_icon.png" alt="شعار كنز ميديا" class="drawer-icon">
-          <span>كَنْز المَيديا</span>
+          <div class="drawer-icon-box">
+            <img src="assets/icons/app_icon.png" alt="شعار كنز ميديا" class="drawer-icon">
+          </div>
+          <div class="drawer-brand-text">
+            <span class="drawer-title">كَنْز المَيديا</span>
+            <span class="drawer-tagline">المساعد الإعلامي الذكي</span>
+          </div>
         </div>
-        <button class="drawer-close" id="drawerCloseBtn" aria-label="إغلاق القائمة">&times;</button>
+        <button class="drawer-close" id="drawerCloseBtn" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="drawer-close-svg">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
-      <nav class="mobile-nav-links">
-        <a href="#platforms" class="m-link">🌐 المنصات المدعومة</a>
-        <a href="#features" class="m-link">✨ مميزات التطبيق الخارقة</a>
-        <a href="#trimmer" class="m-link">✂️ اقتطاع الفيديو الذكي</a>
-        <a href="#reminders" class="m-link">🌿 التذكير الإيماني (20 موعظة)</a>
-        <a href="#interactive-demo" class="m-link">📱 المعاينة والتجربة الحية</a>
-        <a href="#faq" class="m-link">❓ الأسئلة الشائعة</a>
-      </nav>
+
+      <!-- Navigation Content -->
+      <div class="drawer-body">
+        <span class="drawer-section-label">أقسام الموقع</span>
+        <nav class="mobile-nav-links">
+          <a href="#platforms" class="m-link">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-shapes"></i>
+              </span>
+              <span class="m-link-text">المنصات المدعومة</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </a>
+
+          <a href="#features" class="m-link">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </span>
+              <span class="m-link-text">المميزات المتقدمة</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </a>
+
+          <a href="#trimmer" class="m-link">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-scissors"></i>
+              </span>
+              <span class="m-link-text">اقتطاع الفيديو الذكي</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </a>
+
+          <a href="#reminders" class="m-link">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-seedling"></i>
+              </span>
+              <span class="m-link-text">قسم التذكير الإيماني</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </a>
+
+          <a href="#interactive-demo" class="m-link">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-mobile-screen"></i>
+              </span>
+              <span class="m-link-text">المعاينة والتجربة الحية</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </a>
+
+          <a href="#faq" class="m-link">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-circle-question"></i>
+              </span>
+              <span class="m-link-text">الأسئلة الشائعة</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </a>
+
+          <button class="m-link m-btn-about" id="aboutBtnMobile" type="button">
+            <div class="m-link-right">
+              <span class="m-link-icon-wrap">
+                <i class="fa-solid fa-circle-info"></i>
+              </span>
+              <span class="m-link-text">حول التطبيق والمطور</span>
+            </div>
+            <i class="fa-solid fa-chevron-left m-link-arrow"></i>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Drawer Footer Action -->
       <div class="drawer-footer">
-        <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="btn-hero-cta" target="_blank" rel="noopener">
-          <div class="cta-inner">
-            <div class="cta-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-            </div>
-            <div class="cta-texts">
-              <span class="cta-top">تحميل مباشر للأندرويد</span>
-              <span class="cta-main">تثبيت التطبيق الآن APK</span>
-            </div>
+        <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="drawer-cta-btn" target="_blank" rel="noopener">
+          <div class="drawer-cta-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+          </div>
+          <div class="drawer-cta-texts">
+            <span class="drawer-cta-title">تثبيت التطبيق (APK)</span>
+            <span class="drawer-cta-sub">تحميل مباشر وسريع للأندرويد</span>
           </div>
         </a>
+        <div class="drawer-footer-meta">
+          <span>v1.0.0 Stable • كنز ميديا</span>
+        </div>
       </div>
     </div>
   </header>
@@ -148,21 +240,22 @@
 
         <!-- Hero Text & Actions (Right side in RTL) -->
         <div class="hero-content">
-          <div class="hero-pill">
-            <span class="pill-sparkle">✨</span>
-            <span class="pill-text">الإصدار الأول v1.0.0 بمحرك فائق السرعة وخالٍ تماماً من الإعلانات</span>
+          <div class="hero-pill" id="heroPill" role="button" tabindex="0"
+            title="انقر لعرض تفاصيل الإصدار وحزمة التثبيت">
+            <span class="pill-dot"></span>
+            <span class="pill-text">الإصدار v1.0.0 بمحرك فائق السرعة وخالٍ تماماً من الإعلانات</span>
           </div>
 
           <h1 class="hero-title">
             تطبيق <span class="gradient-text-purple">كَنْز المَيديا</span>
             <br>
             حَمّل ما تشاء من أي منصة،
-            <span class="gradient-text-gold">بأعلى جودة وبأقصى سرعة</span>
+            <span class="gradient-text-highlight">بأعلى جودة وبأقصى سرعة</span>
           </h1>
 
           <p class="hero-description">
             تطبيق متكامل للأندرويد مصمم بعناية فائقة؛ يتيح لك تحميل الفيديوهات والصوتيات من يوتيوب، إنستغرام، تيك توك،
-            وحفظ حالات واتساب بلمسة واحدة، مع ميزة اقتطاع المقطع قبل التنزيل، ومواعظ إيمانية متجددة تبارك لك وقتك.
+            وحفظ حالات واتساب بلمسة واحدة، مع ميزة اقتطاع المقطع قبل التنزيل، وتذكير إيماني مبارك يرافقك.
           </p>
 
           <!-- Action Buttons Group (Gorilla Glass & Frosted Glass) -->
@@ -176,16 +269,15 @@
                   </svg>
                 </div>
                 <div class="cta-texts">
-                  <span class="cta-top">تحميل مجاني مباشر للأندرويد</span>
+                  <span class="cta-top">تحميل مباشر للأندرويد</span>
                   <span class="cta-main">تثبيت التطبيق الآن APK</span>
                 </div>
               </div>
-              <div class="cta-glow"></div>
             </a>
 
             <a href="#interactive-demo" class="btn-secondary-glass">
-              <svg class="btn-secondary-svg" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="5 3 19 12 5 21 5 3" />
+              <svg class="btn-secondary-play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="6 4 20 12 6 20 6 4" />
               </svg>
               <span>جرّب المعاينة التفاعلية</span>
             </a>
@@ -194,20 +286,20 @@
           <!-- Feature Trust Badges -->
           <div class="hero-badges">
             <div class="trust-badge">
-              <span class="badge-dot green"></span>
+              <span class="trust-check">✓</span>
               <span>بدون أي إعلانات</span>
             </div>
             <div class="trust-badge">
-              <span class="badge-dot cyan"></span>
-              <span>دقة فائقة تصل إلى 4K/8K</span>
+              <span class="trust-check">✓</span>
+              <span>دقة فائقة تصل إلى 8K</span>
             </div>
             <div class="trust-badge">
-              <span class="badge-dot purple"></span>
-              <span>إلغاء فوري بلمسة واحدة</span>
-            </div>
-            <div class="trust-badge">
-              <span class="badge-dot gold"></span>
+              <span class="trust-check">✓</span>
               <span>آمن ومجاني 100%</span>
+            </div>
+            <div class="trust-badge">
+              <span class="trust-check">✓</span>
+              <span>إلغاء فوري بلمسة واحدة</span>
             </div>
           </div>
         </div>
@@ -216,108 +308,228 @@
         <div class="hero-mockup-wrapper">
           <div class="phone-frame">
 
-            <!-- Titanium Outer Ring & Dynamic Island -->
-            <div class="phone-island-wrapper">
-              <div class="phone-island">
-                <div class="island-camera"></div>
-                <div class="island-sensor"></div>
-              </div>
-            </div>
-
             <!-- Screen Gloss Reflection Overlay -->
             <div class="phone-glass-reflection"></div>
 
-            <!-- Phone Top Status Bar -->
+            <!-- Phone Top Status Bar (Real Android Status Bar Parity) -->
             <div class="phone-status-bar">
-              <span class="status-time">09:41</span>
+              <span class="status-time">1:11</span>
               <div class="status-icons">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="status-ico">
-                  <path d="M12 3C7.5 3 3.7 4.9 1 8l11 13L23 8c-2.7-3.1-6.5-5-11-5z" />
-                </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" class="status-ico">
-                  <path d="M2 22h20V2L2 22z" />
-                </svg>
-                <div class="battery-ico">
-                  <div class="battery-level"></div>
+                <!-- Network Speed -->
+                <div class="status-net-speed">
+                  <span class="speed-num">51.0</span>
+                  <span class="speed-unit">KB/s</span>
                 </div>
-              </div>
-            </div>
 
-            <!-- Real App Screen Header -->
-            <div class="mockup-app-header">
-              <div class="mockup-app-brand">
-                <img src="assets/icons/app_icon.png" alt="كنز" class="mockup-logo-mini">
-                <div class="mockup-title-block">
-                  <span class="app-name">كَنْز المَيديا</span>
-                  <span class="app-status">جاهز للتحميل ⚡</span>
-                </div>
-              </div>
-              <div class="mockup-quick-badge">تحليل ذكي</div>
-            </div>
-
-            <!-- Mockup Input Box with Paste Button -->
-            <div class="mockup-input-box">
-              <div class="mockup-input-label">
-                <span>الصق رابط الفيديو أو الحالة</span>
-                <span class="clipboard-tag">التقاط تلقائي</span>
-              </div>
-              <div class="mockup-field">
-                <span class="mockup-url-sample">https://www.instagram.com/reel/C8k9x...</span>
-                <button class="mockup-paste-btn" id="mockupPasteDemoBtn">لصق</button>
-              </div>
-            </div>
-
-            <!-- Mockup Dynamic Platform Badges -->
-            <div class="mockup-platforms-row">
-              <span class="m-plat-pill active">Instagram</span>
-              <span class="m-plat-pill">TikTok</span>
-              <span class="m-plat-pill">YouTube</span>
-              <span class="m-plat-pill">WhatsApp</span>
-            </div>
-
-            <!-- Mockup Download Process Card -->
-            <div class="mockup-download-card">
-              <div class="mockup-thumb-row">
-                <div class="mockup-thumb">
-                  <img src="assets/icons/app_icon.png" alt="معاينة" class="thumb-inner-img">
-                  <div class="thumb-play-overlay">▶</div>
-                </div>
-                <div class="mockup-video-info">
-                  <div class="mockup-video-title">رحلة إبداعية ملهمة | دقة فائقة 1080p FHD</div>
-                  <div class="mockup-video-meta">
-                    <span>⏱ 0:58 دقيقة</span>
-                    <span>💾 24.8 MB</span>
+                <!-- SIM 1: VoLTE + 5G + Signal -->
+                <div class="status-sim-group">
+                  <div class="volte-badge">
+                    <span>Vo</span>
+                    <span>LTE</span>
+                  </div>
+                  <div class="net-gen-arrows">
+                    <span class="net-gen">5G</span>
+                    <span class="net-arrows">▲<br>▼</span>
+                  </div>
+                  <div class="signal-bars">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                    <span class="bar bar-4"></span>
                   </div>
                 </div>
-              </div>
 
-              <!-- Animated Progress Bar -->
-              <div class="mockup-progress-wrapper">
-                <div class="progress-labels">
-                  <span class="p-status">جاري التحميل بأقصى سرعة...</span>
-                  <span class="p-percent">84%</span>
+                <!-- SIM 2: VoLTE + Signal -->
+                <div class="status-sim-group">
+                  <div class="volte-badge">
+                    <span>Vo</span>
+                    <span>LTE</span>
+                  </div>
+                  <div class="signal-bars">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                    <span class="bar bar-4"></span>
+                  </div>
                 </div>
-                <div class="progress-track">
-                  <div class="progress-fill" style="width: 84%;"></div>
-                </div>
-                <div class="progress-subinfo">
-                  <span>⚡ 9.4 MB/s</span>
-                  <span>⏳ متبقي ثانيتين</span>
+
+                <!-- Battery 57% & Charging Bolt -->
+                <div class="status-battery-group">
+                  <div class="battery-green-capsule">
+                    <span class="battery-percent-num">57</span>
+                    <div class="battery-cap-tip"></div>
+                  </div>
+                  <svg viewBox="0 0 10 16" fill="currentColor" class="status-charging-bolt-svg">
+                    <path d="M6 0L0 9h5l-1 7 6-9H5l1-7z" />
+                  </svg>
                 </div>
               </div>
             </div>
 
-            <!-- Mockup Floating Islamic Reminder Card -->
-            <div class="mockup-floating-blessing">
-              <span class="bless-icon">🌿</span>
-              <span class="bless-text">"اللهم اجعل ما حملته نافعاً لي في ديني ودنياي"</span>
+            <!-- Real App Top Bar (Menu Button on Right, Title Beside It) -->
+            <div class="mockup-app-topbar">
+              <button class="mockup-menu-icon" aria-label="قائمة التطبيق">
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+              </button>
+              <span class="mockup-app-title">كَنْز المَيديا</span>
+            </div>
+
+            <!-- App Screen Scrollable / Content Body -->
+            <div class="mockup-screen-body">
+
+              <!-- Input Box with Paste Button & Link Icon -->
+              <div class="mockup-input-container">
+                <div class="mockup-input-right">
+                  <i class="fa-solid fa-link mockup-link-icon"></i>
+                  <span class="mockup-input-placeholder">أدخل رابط الفيديو...</span>
+                </div>
+                <button class="mockup-paste-icon-btn" id="mockupPasteDemoBtn" title="لصق الرابط">
+                  <i class="fa-regular fa-clipboard"></i>
+                </button>
+              </div>
+
+              <!-- Quick Action Row: Save Link & Links List -->
+              <div class="mockup-actions-row">
+                <button class="mockup-action-btn">
+                  <i class="fa-regular fa-bookmark"></i>
+                  <span>حفظ الرابط</span>
+                </button>
+                <button class="mockup-action-btn">
+                  <i class="fa-regular fa-clone"></i>
+                  <span>قائمة الروابط (1)</span>
+                </button>
+              </div>
+
+              <!-- Primary Download Button -->
+              <button class="mockup-download-cta-btn">
+                <span>تحميل الفيديو</span>
+                <i class="fa-solid fa-download"></i>
+              </button>
+
+              <!-- Islamic Reminder & Admonition Card -->
+              <div class="mockup-reminder-card" id="mockupReminderCard">
+                <div class="mockup-reminder-header">
+                  <div class="mockup-reminder-title-wrap">
+                    <span class="mockup-reminder-badge">
+                      <i class="fa-solid fa-seedling"></i>
+                    </span>
+                    <strong class="mockup-reminder-title">تذكرة إيمانية وموعظة</strong>
+                  </div>
+                  <button class="mockup-reminder-close" id="mockupReminderCloseBtn" aria-label="إغلاق التذكرة">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <p class="mockup-reminder-text">
+                  تذكّر نعمة البصر والسمع وأدّ شكرها بتسخيرها في مباح يقرّبك إلى الجنة.
+                </p>
+              </div>
+
+              <!-- Latest Downloaded Video Card -->
+              <div class="mockup-recent-card">
+                <!-- Status Badge -->
+                <div class="mockup-recent-badge">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>أحدث فيديو تم تحميله</span>
+                </div>
+
+                <!-- Video Meta & Thumbnail Row -->
+                <div class="mockup-recent-content">
+                  <div class="mockup-recent-thumb">
+                    <div class="thumb-black-frame">
+                      <div class="thumb-play-circle">
+                        <i class="fa-solid fa-play"></i>
+                      </div>
+                      <span class="thumb-quran-text">بني أقم الصلاة</span>
+                    </div>
+                  </div>
+                  <div class="mockup-recent-info">
+                    <div class="mockup-recent-title">
+                      ﴿ يَا بُنَيَّ أَقِمِ الصَّلَاةَ وَأْمُرْ بِالْمَعْرُوفِ وَانْهَ عَنِ الْمُنْكَرِ ﴾
+                    </div>
+                    <div class="mockup-recent-meta">
+                      <span>الحجم: 1.5 MB</span>
+                      <span>التاريخ: 2026-10-25 04:01</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quick Direct Share Heading -->
+                <div class="mockup-share-heading">مشاركة سريعة ومباشرة:</div>
+
+                <!-- Three Share Platforms Grid -->
+                <div class="mockup-share-grid">
+                  <button class="mockup-share-tile share-wa">
+                    <div class="share-icon-circle wa-bg">
+                      <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <span>واتساب</span>
+                  </button>
+                  <button class="mockup-share-tile share-tg">
+                    <div class="share-icon-circle tg-bg">
+                      <i class="fa-brands fa-telegram"></i>
+                    </div>
+                    <span>تيليجرام</span>
+                  </button>
+                  <button class="mockup-share-tile share-ig">
+                    <div class="share-icon-circle ig-bg">
+                      <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <span>إنستغرام</span>
+                  </button>
+                </div>
+
+                <!-- General Share Button -->
+                <button class="mockup-general-share-btn">
+                  <i class="fa-solid fa-share-nodes"></i>
+                  <span>مشاركة عامة عبر تطبيق آخر</span>
+                </button>
+              </div>
+
+              <!-- Phone App Bottom Navigation Bar -->
+              <div class="mockup-bottom-nav">
+                <div class="mockup-nav-item active">
+                  <div class="nav-icon-pill">
+                    <i class="fa-solid fa-house"></i>
+                  </div>
+                  <span>الرئيسية</span>
+                </div>
+                <div class="mockup-nav-item">
+                  <i class="fa-brands fa-telegram"></i>
+                  <span>تيليجرام</span>
+                </div>
+                <div class="mockup-nav-item">
+                  <i class="fa-brands fa-whatsapp"></i>
+                  <span>واتساب</span>
+                </div>
+                <div class="mockup-nav-item">
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                  <span>التحميلات</span>
+                </div>
+                <div class="mockup-nav-item">
+                  <i class="fa-solid fa-chart-simple"></i>
+                  <span>الإحصائيات</span>
+                </div>
+              </div>
+
+              <!-- Bottom Indicator Bar -->
+              <div class="mockup-home-indicator"></div>
+
             </div>
 
           </div>
 
           <!-- Decorative Glass Floating Badges Beside Phone -->
           <div class="floating-badge badge-top-left">
-            <span class="fb-icon">✂️</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fb-icon-svg"
+              style="width: 18px; height: 18px;">
+              <circle cx="6" cy="6" r="3" />
+              <circle cx="6" cy="18" r="3" />
+              <line x1="20" y1="4" x2="8.12" y2="15.88" />
+              <line x1="14.47" y1="14.48" x2="20" y2="20" />
+              <line x1="8.12" y1="8.12" x2="12" y2="12" />
+            </svg>
             <div>
               <strong>اقتطاع ذكي</strong>
               <small>قص قبل التنزيل</small>
@@ -325,7 +537,11 @@
           </div>
 
           <div class="floating-badge badge-bottom-right">
-            <span class="fb-icon">⚡</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fb-icon-svg"
+              style="width: 18px; height: 18px;">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+            </svg>
             <div>
               <strong>فحص لحظي</strong>
               <small>إلغاء فوري بلمسة</small>
@@ -347,128 +563,199 @@
 
         <div class="platforms-grid">
 
-          <!-- Instagram -->
-          <div class="platform-card" data-platform="instagram">
+          <!-- 1. TikTok -->
+          <div class="platform-card" data-platform="tiktok" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
-            <div class="plat-icon-box ig-gradient">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="svg-brand-icon">
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-tiktok"></i>
+            </div>
+            <div class="plat-info">
+              <h3 class="plat-name">تيك توك (TikTok)</h3>
+              <p class="plat-desc">تنزيل فائق السرعة وبدون أي علامة مائية بدقة 1080p نقية مع دعم حفظ ألبومات الصور
+                والمقاطع الصوتية.</p>
+              <div class="plat-features-tags">
+                <span>بدون علامة مائية</span>
+                <span>دقة 1080p</span>
+                <span>ألبومات الصور</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Instagram -->
+          <div class="platform-card" data-platform="instagram" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
+            <div class="card-glass-glow"></div>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-instagram"></i>
             </div>
             <div class="plat-info">
               <h3 class="plat-name">إنستغرام (Instagram)</h3>
               <p class="plat-desc">تحميل الريلز، المنشورات، وألبومات الكاروسيل الكاملة بجميع صورها وفيديوهاتها مع
-                استخراج المدة والحجم والغلاف بدقة.</p>
+                استخراج الصوت بدقة.</p>
               <div class="plat-features-tags">
                 <span>ريلز</span>
-                <span>ألبومات كاملة</span>
+                <span>ألبومات كاروسيل</span>
                 <span>قصص</span>
               </div>
-            </div>
-          </div>
-
-          <!-- TikTok -->
-          <div class="platform-card" data-platform="tiktok">
-            <div class="card-glass-glow"></div>
-            <div class="plat-icon-box tiktok-color">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="svg-brand-icon">
-                <path
-                  d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-              </svg>
-            </div>
-            <div class="plat-info">
-              <h3 class="plat-name">تيك توك (TikTok)</h3>
-              <p class="plat-desc">تحميل فائق السرعة وبدون العلامة المائية المزعجة نهائياً وبأعلى دقة نقية للصوت والصورة
-                مباشرة.</p>
-              <div class="plat-features-tags">
-                <span>بدون علامة مائية</span>
-                <span>دقة أصلية</span>
-                <span>فحص فوري</span>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
               </div>
             </div>
           </div>
 
-          <!-- YouTube -->
-          <div class="platform-card" data-platform="youtube">
+          <!-- 3. YouTube -->
+          <div class="platform-card" data-platform="youtube" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
-            <div class="plat-icon-box yt-color">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="svg-brand-icon">
-                <path
-                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-              </svg>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-youtube"></i>
             </div>
             <div class="plat-info">
               <h3 class="plat-name">يوتيوب والشورتس (YouTube)</h3>
-              <p class="plat-desc">دعم شامل للفيديوهات الطويلة والشورتس، مع إمكانية اختيار الجودة (1080p, 2K, 4K, 8K) أو
-                استخراج الصوت بصيغة MP3.</p>
+              <p class="plat-desc">تنزيل الفيديوهات والشورتس بدقات فائقة حتى 4K أو استخراج صوت MP3 نقي مع ميزة الاقتطاع
+                المسبق.</p>
               <div class="plat-features-tags">
-                <span>جودات حتى 8K</span>
-                <span>صوت MP3 نقي</span>
-                <span>شورتس كاملة</span>
+                <span>دقات حتى 4K</span>
+                <span>صوت MP3</span>
+                <span>اقتطاع ذكي</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
               </div>
             </div>
           </div>
 
-          <!-- WhatsApp Status -->
-          <div class="platform-card" data-platform="whatsapp">
+          <!-- 4. WhatsApp Status -->
+          <div class="platform-card" data-platform="whatsapp" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
-            <div class="plat-icon-box wa-color">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="svg-brand-icon">
-                <path
-                  d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-              </svg>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-whatsapp"></i>
             </div>
             <div class="plat-info">
-              <h3 class="plat-name">حالات واتساب (WhatsApp Status)</h3>
-              <p class="plat-desc">مستعرض ومحفظ حالات واتساب المطور؛ استعرض الصور والفيديوهات واحفظها في الاستوديو بلمسة
-                واحدة بدون إشعار الطرف الآخر.</p>
+              <h3 class="plat-name">حالات واتساب (WhatsApp)</h3>
+              <p class="plat-desc">مستعرض وحافظ حالات واتساب الرسمي والأعمال والنسخ المزدوجة؛ حفظ فوري في المعرض بلمسة
+                واحدة.</p>
               <div class="plat-features-tags">
-                <span>حفظ بلمسة واحدة</span>
-                <span>فيديو وصور</span>
+                <span>حفظ فوري</span>
+                <span>واتساب الأعمال</span>
                 <span>مباشر في المعرض</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
               </div>
             </div>
           </div>
 
-          <!-- X / Twitter -->
-          <div class="platform-card" data-platform="x">
+          <!-- 5. Telegram -->
+          <div class="platform-card" data-platform="telegram" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
-            <div class="plat-icon-box x-color">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="svg-brand-icon">
-                <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="plat-info">
+              <h3 class="plat-name">تيليجرام (Telegram)</h3>
+              <p class="plat-desc">تخطي قيود القنوات المقيدة التي تمنع الحفظ والمشاركة وتنزيل الملفات الضخمة حتى 2GB
+                بأقصى سرعة.</p>
+              <div class="plat-features-tags">
+                <span>تخطي الحظر</span>
+                <span>ملفات حتى 2GB</span>
+                <span>استئناف التحميل</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Facebook -->
+          <div class="platform-card" data-platform="facebook" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
+            <div class="card-glass-glow"></div>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-facebook-f"></i>
+            </div>
+            <div class="plat-info">
+              <h3 class="plat-name">فيسبوك (Facebook)</h3>
+              <p class="plat-desc">تحميل مقاطع الريلز والفيديوهات العامة والقصص بأعلى دقة HD أصلية بدون إعلانات وبنقرة
+                واحدة.</p>
+              <div class="plat-features-tags">
+                <span>فيسبوك ريلز</span>
+                <span>فيديوهات HD</span>
+                <span>حفظ فوري</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. X / Twitter -->
+          <div class="platform-card" data-platform="x" role="button" tabindex="0" title="انقر لعرض المواصفات البرمجية">
+            <div class="card-glass-glow"></div>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-x-twitter"></i>
             </div>
             <div class="plat-info">
               <h3 class="plat-name">إكس / تويتر (X / Twitter)</h3>
-              <p class="plat-desc">استخراج وتنزيل المقاطع المرفقة بالتغريدات بأعلى دقة متوفرة مع اختيار خيارات الفيديو
-                والصوت المباشر.</p>
+              <p class="plat-desc">استخراج وتنزيل مقاطع الفيديو والتغريدات المرئية ومعارض الصور بأعلى جودة متوفرة بسرعة
+                البرق.</p>
               <div class="plat-features-tags">
                 <span>فيديو التغريدات</span>
-                <span>سرعة معالجة</span>
-                <span>حفظ فوري</span>
+                <span>معارض الصور</span>
+                <span>فحص فوري</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
               </div>
             </div>
           </div>
 
-          <!-- Telegram & Additional Platforms -->
-          <div class="platform-card" data-platform="telegram">
+          <!-- 8. Snapchat -->
+          <div class="platform-card" data-platform="snapchat" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
-            <div class="plat-icon-box tg-color">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="svg-brand-icon">
-                <path
-                  d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.943z" />
-              </svg>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-snapchat"></i>
             </div>
             <div class="plat-info">
-              <h3 class="plat-name">فيسبوك، سناب شات وبينتريست</h3>
-              <p class="plat-desc">تكامل فريد يدعم مقاطع فيسبوك ريلز، قصص وسنابات المشاهير، ومقاطع بينتريست بأعلى نقاوة
-                أصلية.</p>
+              <h3 class="plat-name">سناب شات (Snapchat)</h3>
+              <p class="plat-desc">تحميل سنابات وقصص المشاهير وفيديوهات Spotlight العامة وحفظها مباشرة في ألبوم
+                الكاميرا.</p>
               <div class="plat-features-tags">
-                <span>فيسبوك ريلز</span>
-                <span>بينتريست</span>
-                <span>سناب شات</span>
+                <span>قصص المشاهير</span>
+                <span>أضواء Spotlight</span>
+                <span>دقة أصلية</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. Pinterest -->
+          <div class="platform-card" data-platform="pinterest" role="button" tabindex="0"
+            title="انقر لعرض المواصفات البرمجية">
+            <div class="card-glass-glow"></div>
+            <div class="plat-icon-wrap">
+              <i class="fa-brands fa-pinterest-p"></i>
+            </div>
+            <div class="plat-info">
+              <h3 class="plat-name">بينتريست (Pinterest)</h3>
+              <p class="plat-desc">حفظ مقاطع الفيديو والقصص والصور الإبداعية عالية الجودة مباشرة بدون أي قيود أو علامات.
+              </p>
+              <div class="plat-features-tags">
+                <span>فيديو عالي الدقة</span>
+                <span>صور نقية</span>
+                <span>تنزيل مباشر</span>
+              </div>
+              <div class="plat-interactive-badge">
+                <span>استعراض المحرك والمواصفات</span>
               </div>
             </div>
           </div>
@@ -583,7 +870,7 @@
 
         <div class="trimmer-content">
           <span class="sub-badge gold">ميزة حصرية واستثنائية</span>
-          <h2 class="section-title">اقتطاع الفيديو وقصّه قبل التحميل ✂️</h2>
+          <h2 class="section-title">اقتطاع ذكي لأي جزء من الفيديو</h2>
           <p class="section-lead">
             لماذا تقوم بتحميل مقطع مدته ساعة كاملة بينما أنت بحاجة إلى 30 ثانية فقط منه؟ مع ميزة الاقتطاع الذكي في كنز
             ميديا، حدد الجزء الذي تريده بدقة، واستلم المقطع مقصوصاً وجاهزاً دون استهلاك باقتك أو ملء ذاكرة هاتفك.
@@ -619,110 +906,241 @@
           </a>
         </div>
 
-        <!-- Interactive Trimmer Simulator Widget -->
-        <div class="trimmer-demo-panel">
+        <!-- Authentic Flutter App Trimmer Bottom Sheet Mockup -->
+        <div class="trimmer-sheet-wrapper">
           <div class="card-glass-glow"></div>
-          <div class="demo-card-header">
-            <span class="demo-indicator"></span>
-            <span>محاكي أداة الاقتطاع التفاعلي الحقيقي</span>
+          
+          <div class="trimmer-sheet-card">
+            <!-- Sheet Drag Handle -->
+            <div class="trimmer-sheet-handle"></div>
+
+            <!-- Video Info Preview Card -->
+            <div class="trimmer-video-card">
+              <div class="trimmer-thumb-wrap">
+                <img src="assets/trimmer-thumb.png" alt="معاينة الفيديو" class="trimmer-video-thumb" loading="lazy">
+              </div>
+              <div class="trimmer-video-meta">
+                <h4 class="trimmer-video-name" title="شرح كتاب ابدأ بلماذا؟ لسيمون سينك...">شرح كتاب ابدأ بلماذا؟ لسيمون سينك...</h4>
+                <div class="trimmer-total-pill">
+                  <svg class="pill-clock-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>المدة الإجمالية: 27:18</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Toggle Switch Row -->
+            <div class="trimmer-toggle-row">
+              <div class="trimmer-toggle-info">
+                <div class="trimmer-scissors-icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="6" cy="6" r="3"></circle>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                    <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                    <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+                  </svg>
+                </div>
+                <div class="trimmer-toggle-texts">
+                  <div class="trimmer-toggle-title">اقتطاف جزء من الفيديو</div>
+                  <div class="trimmer-toggle-subtitle" id="trimToggleSubtitle">تم تفعيل الاقتطاف: حدد وقت البداية والنهاية</div>
+                </div>
+              </div>
+              <label class="trimmer-switch" title="تفعيل أو إلغاء الاقتطاف">
+                <input type="checkbox" id="trimToggleCheckbox" checked>
+                <span class="trimmer-slider"></span>
+              </label>
+            </div>
+
+            <!-- Start & End Time Cards (Stacked Vertically) -->
+            <div class="trimmer-time-stack" id="trimmerTimeControls">
+              <!-- Start Time Card -->
+              <div class="trimmer-time-card start-card">
+                <div class="trimmer-time-header">
+                  <span class="time-header-icon green">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                      <polygon points="6 4 20 12 6 20 6 4" />
+                    </svg>
+                  </span>
+                  <span class="time-label">وقت البداية (من)</span>
+                </div>
+                <div class="trimmer-digits-container">
+                  <div class="digit-group">
+                    <input type="number" id="startMin" class="digit-input" min="0" max="27" value="00" aria-label="دقائق البداية">
+                    <span class="digit-unit">دقيقة</span>
+                  </div>
+                  <span class="digit-separator green">:</span>
+                  <div class="digit-group">
+                    <input type="number" id="startSec" class="digit-input" min="0" max="59" value="00" aria-label="ثواني البداية">
+                    <span class="digit-unit">ثانية</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- End Time Card -->
+              <div class="trimmer-time-card end-card">
+                <div class="trimmer-time-header">
+                  <span class="time-header-icon purple">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <circle cx="12" cy="12" r="9" />
+                      <circle cx="12" cy="12" r="3" fill="currentColor" />
+                    </svg>
+                  </span>
+                  <span class="time-label">وقت النهاية (إلى)</span>
+                </div>
+                <div class="trimmer-digits-container">
+                  <div class="digit-group">
+                    <input type="number" id="endMin" class="digit-input" min="0" max="27" value="27" aria-label="دقائق النهاية">
+                    <span class="digit-unit">دقيقة</span>
+                  </div>
+                  <span class="digit-separator purple">:</span>
+                  <div class="digit-group">
+                    <input type="number" id="endSec" class="digit-input" min="0" max="59" value="18" aria-label="ثواني النهاية">
+                    <span class="digit-unit">ثانية</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Presets (Multi-row centered chips) -->
+            <div class="trimmer-presets-wrapper" id="trimmerPresets">
+              <div class="presets-row">
+                <button type="button" class="preset-chip active" data-start="0" data-end="1638">
+                  <span class="preset-symbol">∞</span>
+                  <span>كامل المقطع</span>
+                </button>
+                <button type="button" class="preset-chip" data-start="0" data-end="60">
+                  <span class="preset-symbol">⏱</span>
+                  <span>أول دقيقة</span>
+                </button>
+              </div>
+              <div class="presets-row">
+                <button type="button" class="preset-chip" data-start="0" data-end="180">
+                  <span class="preset-symbol">⏱</span>
+                  <span>أول 3 دقائق</span>
+                </button>
+                <button type="button" class="preset-chip" data-start="0" data-end="300">
+                  <span class="preset-symbol">⏳</span>
+                  <span>أول 5 دقائق</span>
+                </button>
+              </div>
+              <div class="presets-row">
+                <button type="button" class="preset-chip" data-start="1578" data-end="1638">
+                  <span class="preset-symbol">⏱</span>
+                  <span>آخر دقيقة</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Trimmer Result Duration Pill -->
+            <div class="trimmer-result-pill">
+              <span class="result-check-icon">✓</span>
+              <span class="result-label">مدة المقطع بعد الاقتطاف:</span>
+              <strong class="result-value" id="trimResultDuration">27:18</strong>
+            </div>
+
           </div>
-
-          <div class="trimmer-preview-screen">
-            <div class="video-overlay-timer">
-              <span id="trimCurrentDisplay">00:15 / 03:40</span>
-            </div>
-            <div class="trimmer-waveform">
-              <div class="wave-bar" style="height: 40%;"></div>
-              <div class="wave-bar" style="height: 70%;"></div>
-              <div class="wave-bar" style="height: 90%;"></div>
-              <div class="wave-bar highlight" style="height: 100%;"></div>
-              <div class="wave-bar highlight" style="height: 85%;"></div>
-              <div class="wave-bar highlight" style="height: 95%;"></div>
-              <div class="wave-bar highlight" style="height: 75%;"></div>
-              <div class="wave-bar" style="height: 50%;"></div>
-              <div class="wave-bar" style="height: 30%;"></div>
-            </div>
-          </div>
-
-          <!-- Interactive Range Sliders -->
-          <div class="trimmer-controls">
-            <div class="slider-row">
-              <label for="trimStart">وقت البداية: <strong id="startValText">00:10</strong></label>
-              <input type="range" id="trimStart" min="0" max="60" value="10">
-            </div>
-
-            <div class="slider-row">
-              <label for="trimEnd">وقت النهاية: <strong id="endValText">00:45</strong></label>
-              <input type="range" id="trimEnd" min="10" max="90" value="45">
-            </div>
-
-            <div class="trimmer-calc-summary">
-              <span>المدة المقتطعة: <strong id="durationText" class="text-emerald">35 ثانية</strong></span>
-              <span>الحجم المتوقع: <strong id="savedSizeText" class="text-cyan">~6.8 MB (وفرت 85%)</strong></span>
-            </div>
-          </div>
-
         </div>
 
       </div>
     </section>
 
-    <!-- 20 Authentic Islamic Reminders Showcase Section -->
+    <!-- Islamic Reminders Spotlight Section -->
     <section class="reminders-section" id="reminders">
       <div class="container text-center">
-        <span class="sub-badge emerald">قيم إسلامية أصيلة</span>
-        <h2 class="section-title">20 موعظة وتذكير إيماني مبارك 🌿</h2>
+        <span class="sub-badge emerald">قيم إسلامية مباركة</span>
+        <h2 class="section-title">قسم الموعظة والتذكير بالله</h2>
         <p class="section-subtitle">
-          تطبيق "كنز ميديا" يرافقك بنفحات طيبة؛ عند كل تحميل ناجح، يُبشّرك التطبيق بموعظة متجددة تذكرك بالله، وتسأل الله
-          أن يكون ما حملته نافعاً ومباركاً ولا يخالف دينك الحنيف.
+          يرافقك تطبيق كنز ميديا بنفحات إيمانية طيبة؛ يشتمل التطبيق على قسم خاص للموعظة والتذكير بالله والأدعية المباركة
+          عند كل تحميل ناجح، ليكون ما حملته عوناً لك على الخير ونافعاً في دينك ودنياك.
         </p>
 
-        <!-- Interactive Reminder Box -->
+        <!-- Elegant Islamic Reminder Card Highlight -->
         <div class="reminder-card-container">
           <div class="reminder-glass-card" id="reminderBox">
             <div class="card-glass-glow"></div>
-            <div class="reminder-quote-mark">“</div>
-            <p class="reminder-quote-text" id="reminderQuote">
-              اللهم اجعل ما حملته نافعاً لي في ديني ودنياي، ولا تجعل فيه ما يغضبك يا رب العالمين.
-            </p>
-            <div class="reminder-footer">
-              <span class="reminder-counter" id="reminderCounter">تذكير رقم 1 من 20</span>
-              <button class="btn-next-reminder" id="nextReminderBtn" aria-label="عرض التذكير التالي">
-                <span>تذكير آخر ↻</span>
+            
+            <!-- Spiritual Islamic Emblem (Holy Book & Crescent) -->
+            <div class="reminder-emblem-wrap">
+              <div class="reminder-emblem">
+                <svg class="emblem-svg" viewBox="0 0 64 64" fill="none">
+                  <!-- Crescent Moon Aura -->
+                  <path d="M42 10C31 10 22 19 22 30C22 41 31 50 42 50C44.5 50 46.8 49.5 49 48.6C44.5 52.8 38.5 55.4 32 55.4C19 55.4 8.5 44.9 8.5 32C8.5 19.1 19 8.6 32 8.6C35.5 8.6 39 9.5 42 11V10Z" fill="url(#moonGrad)" opacity="0.3"/>
+                  <!-- Holy Book / Quran On Rehal -->
+                  <path d="M32 20C27 16 18 16 12 18V44C18 42 27 42 32 46C37 42 46 42 52 44V18C46 16 37 16 32 20Z" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="32" y1="20" x2="32" y2="46" stroke="#34d399" stroke-width="2.5"/>
+                  <path d="M18 25C22 23.5 27 23.8 32 25.5M18 31C22 29.5 27 29.8 32 31.5M46 25C42 23.5 37 23.8 32 25.5M46 31C42 29.5 37 29.8 32 31.5" stroke="#a7f3d0" stroke-width="1.6" stroke-linecap="round" opacity="0.85"/>
+                  <!-- Sparkle Star -->
+                  <path d="M45 8L46.2 11.8L50 13L46.2 14.2L45 18L43.8 14.2L40 13L43.8 11.8L45 8Z" fill="#fbbf24"/>
+                  <defs>
+                    <linearGradient id="moonGrad" x1="8" y1="8" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#10b981"/>
+                      <stop offset="100%" stop-color="#fbbf24"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div class="reminder-blessing-pill">
+                <span class="blessing-dot"></span>
+                <span>نفحة إيمانية مباركة</span>
+              </div>
+            </div>
+
+            <!-- Authentic Quranic / Prophetic Quote or Dua -->
+            <div class="reminder-quote-container">
+              <span class="quote-bracket start">«</span>
+              <p class="reminder-quote-text" id="reminderQuote">
+                اللهم اجعل ما حملته نافعاً لي في ديني ودنياي، واجعله شاهداً لي لا عليّ
+              </p>
+              <span class="quote-bracket end">»</span>
+            </div>
+            <div class="reminder-context-tag">دعاء مبارك يظهر بعد كل تحميل ناجح</div>
+
+            <!-- Spiritual Pillars / Values -->
+            <div class="reminders-pill-strip">
+              <span class="r-pill"><span class="r-icon">📿</span>ذكر الله ومراقبته</span>
+              <span class="r-pill"><span class="r-icon">👁</span>حفظ السمع والبصر</span>
+              <span class="r-pill"><span class="r-icon">⏳</span>استثمار الوقت بالخير</span>
+              <span class="r-pill"><span class="r-icon">🌱</span>نشر الكلمة الطيبة</span>
+            </div>
+
+            <!-- Interactive Change Reminder Button -->
+            <div class="reminder-action-row">
+              <button type="button" class="btn-change-reminder" id="btnNextReminder">
+                <svg class="change-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>دعاء وموعظة أخرى</span>
               </button>
             </div>
-          </div>
-        </div>
 
-        <div class="reminders-pill-strip">
-          <span class="r-pill">ذكر الله ومراقبته</span>
-          <span class="r-pill">حفظ البصر والسمع</span>
-          <span class="r-pill">استثمار الوقت بما ينفع</span>
-          <span class="r-pill">شهادة الجوارح يوم القيامة</span>
-          <span class="r-pill">نشر الخير والكلمة الطيبة</span>
+          </div>
         </div>
 
       </div>
     </section>
 
-    <!-- Interactive Live Demo & App Preview -->
+    <!-- Interactive Live Demo & App Preview (Exact Parity with Flutter Screen) -->
     <section class="demo-section" id="interactive-demo">
       <div class="container">
         <div class="section-heading text-center">
           <span class="sub-badge cyan">تجربة تفاعلية مباشرة</span>
-          <h2 class="section-title">جرّب سرعة وسلاسة كنز ميديا بنفسك الآن</h2>
-          <p class="section-subtitle">اختر منصة واضغط على فحص الرابط لترى كيف يتعامل التطبيق بذكاء وسرعة فائقة</p>
+          <h2 class="section-title">معاينة بطاقة التحميل الحقيقية</h2>
+          <p class="section-subtitle">اختر منصة واضغط على فحص الرابط لترى بطاقة التحميل مطابقة تماماً لواجهة التطبيق
+            الأصلية</p>
         </div>
 
         <div class="interactive-simulator-card">
           <div class="card-glass-glow"></div>
 
-          <!-- Platform Tabs -->
+          <!-- Platform Tabs (Clean & Monochrome) -->
           <div class="sim-tabs" role="tablist">
-            <button class="sim-tab active" data-sim="instagram" role="tab">📸 إنستغرام ريلز</button>
-            <button class="sim-tab" data-sim="tiktok" role="tab">🎵 تيك توك بدون علامة</button>
-            <button class="sim-tab" data-sim="youtube" role="tab">▶ يوتيوب 4K و MP3</button>
-            <button class="sim-tab" data-sim="whatsapp" role="tab">💬 حالات واتساب</button>
+            <button class="sim-tab active" data-sim="tiktok" role="tab">تيك توك</button>
+            <button class="sim-tab" data-sim="instagram" role="tab">إنستغرام</button>
+            <button class="sim-tab" data-sim="youtube" role="tab">يوتيوب</button>
+            <button class="sim-tab" data-sim="whatsapp" role="tab">حالات واتساب</button>
           </div>
 
           <!-- URL Input Simulator Bar -->
@@ -732,41 +1150,102 @@
                 <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
                 <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
               </svg>
-              <input type="text" id="simUrlInput" value="https://www.instagram.com/reel/C8k9x..." readonly>
+              <input type="text" id="simUrlInput" value="https://www.tiktok.com/@creator/video/73829104928172" readonly dir="auto">
             </div>
-            <button class="btn-hero-cta btn-sim-action" id="simActionBtn">
-              <div class="cta-inner">
-                <span id="simBtnText">فحص الرابط وتنزيله ⚡</span>
-              </div>
+            <button class="app-btn-primary btn-sim-action" id="simActionBtn">
+              <span id="simBtnText">فحص الرابط</span>
             </button>
           </div>
 
-          <!-- Simulated Result Area -->
+          <!-- Authentic Flutter Dialog Preview Card (Matches App Screenshot Exactly) -->
           <div class="sim-results-box" id="simResultsBox">
-            <div class="sim-card-flex">
-              <div class="sim-card-thumb">
-                <img id="simThumbImg" src="assets/icons/app_icon.png" alt="معاينة المقطع">
-                <span class="sim-duration-tag" id="simDuration">01:12</span>
+            <div class="app-confirm-dialog-card">
+              <!-- Dialog Header -->
+              <div class="confirm-card-header">
+                <div class="confirm-header-right">
+                  <div class="confirm-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      style="width: 18px; height: 18px;">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                  </div>
+                  <span class="confirm-title-text">تأكيد التحميل</span>
+                </div>
+                <button class="confirm-close-btn" id="simCancelBtnTop" aria-label="إلغاء">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    style="width: 14px; height: 14px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               </div>
-              <div class="sim-details">
-                <h4 id="simTitle">مقطع ريلز عالي الدقة | استخراج كامل مع الصوت النقي</h4>
-                <div class="sim-meta-tags">
-                  <span class="tag-res" id="simRes">1080p FHD</span>
-                  <span class="tag-size" id="simSize">18.4 MB</span>
-                  <span class="tag-status">تم التحليل في 0.28 ثانية!</span>
+
+              <!-- Inner Media Card -->
+              <div class="confirm-inner-card">
+                <!-- Video Thumbnail Preview (Clean, No Play Button Overlay) -->
+                <div class="confirm-thumb-wrapper">
+                  <img id="simThumbImg" src="assets/og-preview.webp" alt="معاينة الفيديو" class="confirm-thumb-img">
                 </div>
 
-                <!-- Simulated Download Progress -->
-                <div class="sim-progress-block">
-                  <div class="sim-progress-header">
-                    <span id="simProgressStatus">جاهز للتحميل الفوري</span>
-                    <span id="simProgressPercent">100%</span>
+                <!-- 3 Badges In A Single Clean Row -->
+                <div class="confirm-badges-row">
+                  <div class="confirm-pill" id="simDurationPill">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="pill-mini-icon">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span id="simDuration">00:43</span>
                   </div>
-                  <div class="sim-progress-bar">
-                    <div class="sim-fill" id="simFill" style="width: 100%;"></div>
+                  <div class="confirm-pill" id="simSizePill">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="pill-mini-icon">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span id="simSize">1.6 MB</span>
+                  </div>
+                  <div class="confirm-pill" id="simPlatformPill">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="pill-mini-icon" id="simPlatformIcon">
+                      <path
+                        d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+                    </svg>
+                    <span id="simPlatformName">TikTok</span>
                   </div>
                 </div>
 
+                <!-- Ad Caption / Title for the App -->
+                <div class="confirm-desc-box">
+                  <p id="simTitle" class="confirm-desc-text">
+                    تطبيق كنز ميديا: حمّل أي مقطع فيديو أو صوتي بدون علامات مائية وبأعلى دقة مجاناً وبضغطة زر واحدة! 🔥
+                  </p>
+                </div>
+              </div>
+
+              <!-- Simulated Download Progress Bar (When triggered) -->
+              <div class="sim-progress-block" id="simProgressBlock" style="display: none; margin-bottom: 8px;">
+                <div class="sim-progress-header">
+                  <span id="simProgressStatus">جاري التحميل بأقصى سرعة...</span>
+                  <span id="simProgressPercent">0%</span>
+                </div>
+                <div class="sim-progress-bar">
+                  <div class="sim-fill" id="simFill" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Action Buttons (Cancel on Right, Download on Left in RTL) -->
+              <div class="confirm-actions-row">
+                <button class="confirm-btn-cancel" id="simCancelBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" class="btn-action-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span>إلغاء</span>
+                </button>
+                <button class="confirm-btn-primary" id="simDownloadNowBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" class="btn-action-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  <span>تحميل الآن</span>
+                </button>
               </div>
             </div>
           </div>
@@ -785,66 +1264,229 @@
           <p class="section-subtitle">كل ما تود معرفته عن التطبيق، تثبيته، واستخدامه</p>
         </div>
 
-        <div class="accordion">
+                <div class="accordion">
 
+          <!-- Question 1: Security & Ads -->
           <div class="accordion-item">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
-              <span>هل تطبيق كنز ميديا مجاني تماماً وبدون رسوم؟</span>
-              <span class="acc-chevron">▼</span>
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <span class="acc-question">هل تطبيق كنز ميديا مجاني وآمن حقاً؟ وهل يتضمن أي إعلانات؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </button>
             <div class="accordion-body">
-              <p>نعم، تطبيق كنز ميديا مجاني بالكامل 100%، ولا يتطلب أي اشتراكات شهرية، كما أنه نظيف تماماً وخالٍ من أي
-                إعلانات مزعجة تؤثر على تجربتك.</p>
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>نعم، تطبيق كنز ميديا مجاني بالكامل 100% ولا يتطلب أي رسوم أو اشتراكات. وهو <strong>نظيف تماماً وخالٍ كلياً من أي إعلانات</strong> أو نوافذ منبثقة أو أدوات تتبع، ولا يجمع أي بيانات شخصية؛ مما يمنحك تجربة استخدام نقية وسريعة وآمنة.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>أمان وخصوصية 100% • خلو تام من الإعلانات</span>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- Question 2: YouTube 4K & Audio Muxing -->
           <div class="accordion-item">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
-              <span>كيف يمكنني تحميل فيديوهات تيك توك بدون العلامة المائية؟</span>
-              <span class="acc-chevron">▼</span>
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-brands fa-youtube"></i>
+                </div>
+                <span class="acc-question">كيف يحمّل التطبيق فيديوهات يوتيوب بدقة تصل إلى 4K مع الصوت الأصلي؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </button>
             <div class="accordion-body">
-              <p>بكل بساطة! فقط انسخ رابط الفيديو من تيك توك، وافتح تطبيق كنز ميديا؛ سيتعرف التطبيق فوراً على الرابط
-                ويقوم المحرك باستخراج النسخة الأصلية النقية تماماً من أي شعارات أو علامات مائية وبأعلى جودة ممكنة.</p>
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>يعتمد كنز ميديا على تقنية التجزئة المتفجرة (<strong>Burst Range Streaming</strong>) لكسر خنق سرعة سيرفرات يوتيوب واستغلال كامل سرعة اتصالك، مع محرك الدمج العتادي الأصلي (<strong>Native MediaMuxer</strong>) الذي يدمج الفيديو فائق الدقة (1080p وحتى 4K) مع الصوت المنفصل مباشرة على مستوى عتاد الهاتف بدون استنزاف البطارية، مع إمكانية استخراج الصوت النقي بصيغة MP3.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>Burst Range Streaming • دمج عتادي Native MediaMuxer</span>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- Question 3: Video Trimmer -->
           <div class="accordion-item">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
-              <span>كيف أقوم بحفظ حالات واتساب في معرض هاتفي؟</span>
-              <span class="acc-chevron">▼</span>
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-solid fa-scissors"></i>
+                </div>
+                <span class="acc-question">كيف تعمل ميزة اقتطاع وقص الفيديو قبل التنزيل وما الفائدة منها؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </button>
             <div class="accordion-body">
-              <p>يحتوي التطبيق على قسم خاص بحالات واتساب الرسمية؛ بمجرد دخولك إليه ستجد جميع الحالات التي شاهدتها مرتبة
-                ومنظمة، وتستطيع بلمسة زر واحدة حفظ أي صورة أو فيديو مباشرة إلى المعرض دون معرفة صاحب الحالة.</p>
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>تتيح لك ميزة الاقتطاع تحديد وقت البداية والنهاية بالدقيقة والثانية لتحميل الجزء الذي تريده فقط بدلاً من تنزيل مقطع ضخم مدته ساعة كاملة لقطة واحدة منه. وتتم المعالجة عتادياً بدون إعادة ترميز (<strong>Lossless Zero-Reencode</strong>) لتنتهي في ثوانٍ معدودة، مما يوفر باقة الإنترنت لديك ومساحة تخزين الهاتف.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>توفير باقة الإنترنت • معالجة عتادية فائقة السرعة</span>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- Question 4: TikTok & Instagram Reels -->
           <div class="accordion-item">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
-              <span>ماذا تعني ميزة "إلغاء التحميل الفوري" في المرحلة الأولى؟</span>
-              <span class="acc-chevron">▼</span>
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <span class="acc-question">هل يدعم التطبيق تحميل ألبومات تيك توك بدون علامة مائية والريلز من إنستغرام؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </button>
             <div class="accordion-body">
-              <p>إذا وضعت رابطاً بالخطأ أو غيرت رأيك أثناء فحص وتحليل الرابط، يمكنك الضغط على "إلغاء التحميل" ليقوم
-                المحرك فوراً بقتل العملية وإيقاف استهلاك الإنترنت وموارد هاتفك دون أن تظهر لك أي نوافذ تحذيرية أو
-                إشعارات مزعجة.</p>
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>نعم؛ يقوم المحرك باستخراج تيار البث النقي الأصلي مباشرة من السيرفر بدون أي شعار أو علامة مائية وبأعلى معدل إطارات (60fps)، كما يدعم حفظ ألبومات صور تيك توك (Slide Photos) مع الصوت المصاحب، وتنزيل ريلز، قصص، وألبومات الكاروسيل الكاملة من إنستغرام بلمسة واحدة.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>بدون أي علامة مائية • استخراج الألبومات الكاملة</span>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- Question 5: WhatsApp Statuses -->
           <div class="accordion-item">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
-              <span>أين يتم حفظ الملفات بعد تنزيلها؟</span>
-              <span class="acc-chevron">▼</span>
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <span class="acc-question">كيف يقوم التطبيق بحفظ حالات واتساب في المعرض؟ وهل يعلم صاحب الحالة؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </button>
             <div class="accordion-body">
-              <p>تُحفظ كافة المقاطع والصور مباشرة في مجلد التنزيلات الرسمي بجهازك (VideoDownloader) داخل استوديو الصور
-                والفيديوهات، كما يمكنك استعراضها وتشغيلها ومشاركتها مباشرة من داخل سجل التحميلات في التطبيق.</p>
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>يكتشف التطبيق تلقائياً الحالات التي شاهدتها عبر واتساب الرسمي، واتساب الأعمال، والنسخ المزدوجة (Dual Apps)، ويتيح لك حفظ أي فيديو أو صورة فوراً في استوديو هاتفك بشكل دائم؛ وتتم العملية محلياً على جهازك وبسرية تامة <strong>دون إرسال أي إشعار أو علم لصاحب الحالة</strong>.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>حفظ فوري بالمعرض • دون علم صاحب الحالة</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 6: Telegram Restricted Channels -->
+          <div class="accordion-item">
+            <div class="card-glass-glow"></div>
+            <button class="accordion-header" aria-expanded="false">
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-brands fa-telegram"></i>
+                </div>
+                <span class="acc-question">هل يستطيع التطبيق تحميل الملفات والفيديوهات من قنوات تيليجرام المقيدة؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>نعم؛ يحتوي التطبيق على عميل تيليجرام مستقل مبني ببروتوكول MTProto الرسمي ومكتبة Telethon، يتيح لك تسجيل الدخول بحسابك بأمان وتخطي قيود القنوات التي تمنع الحفظ أو إعادة التوجيه (<strong>Restricted Channels</strong>)، مع دعم تنزيل الملفات الضخمة حتى 2GB واستئناف التحميل عند انقطاع الاتصال.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>تخطي حظر الحفظ • ملفات ضخمة حتى 2GB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 7: Background Resilience & Xiaomi/Samsung -->
+          <div class="accordion-item">
+            <div class="card-glass-glow"></div>
+            <button class="accordion-header" aria-expanded="false">
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <span class="acc-question">ماذا أفعل إذا توقف التحميل عند قفل الشاشة في هواتف شاومي أو سامسونج؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>يعتمد كنز ميديا على خدمة الستارة الأمامية المستمرة (<strong>Foreground Service</strong>) لضمان استمرار التحميلات الكبيرة عند قفل الشاشة. ولأجهزة شاومي (<strong>HyperOS / MIUI</strong>) وسامسونج التي تطبق قيوداً صارمة على البطارية، يوفر التطبيق في شاشة الإعدادات دليلاً سريعاً لتفعيل "التشغيل التلقائي" وضبط توفير الطاقة على "بدون قيود" لمنع النظام من إيقاف التنزيل.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>Foreground Service • استمرار التحميل عند قفل الشاشة</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 8: Storage Location & Direct Share -->
+          <div class="accordion-item">
+            <div class="card-glass-glow"></div>
+            <button class="accordion-header" aria-expanded="false">
+              <div class="acc-header-content">
+                <div class="acc-icon-wrap">
+                  <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <span class="acc-question">أين أجد الفيديوهات المحملة في هاتفي وهل يمكن مشاركتها مباشرة؟</span>
+              </div>
+              <div class="acc-chevron-box">
+                <svg class="acc-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="acc-body-divider"></div>
+              <div class="acc-answer-content">
+                <p>تُحفظ كافة المقاطع والصور مباشرة في المجلد الرسمي بجهازك <strong>DCIM/VideoDownloader</strong> و<strong>AudioDownloader</strong> لتظهر فوراً في استوديو المعرض وتطبيق الموسيقى، كما يتضمن التطبيق شاشة "سجل التحميلات" لتشغيل الملفات ومشاركتها مباشرة لواتساب، تيليجرام، أو أي تطبيق آخر دون مغادرة التطبيق.</p>
+                <div class="acc-tag-pill">
+                  <span class="acc-tag-dot"></span>
+                  <span>مجلد DCIM/VideoDownloader • مشاركة فورية بلمسة</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -853,45 +1495,80 @@
       </div>
     </section>
 
-    <!-- Final High-Converting Download Banner -->
+        <!-- Final High-Converting Download Banner -->
     <section class="final-cta-section">
-      <div class="container">
+      <div class="container final-cta-container">
         <div class="final-cta-card text-center">
+          <!-- Glass Reflection & Ambient Glow Meshes -->
           <div class="card-glass-glow"></div>
+          <div class="final-ambient-mesh orb-top-violet"></div>
+          <div class="final-ambient-mesh orb-bottom-cyan"></div>
+          <div class="final-specular-highlight"></div>
+
           <div class="cta-content-wrapper">
-            <div class="final-logo-wrapper">
-              <img src="assets/icons/app_icon.png" alt="شعار كنز ميديا" class="final-logo">
-              <div class="final-logo-glow"></div>
+            <!-- Crown / Release Sparkle Badge -->
+            <div class="final-sparkle-badge">
+              <span class="sparkle-icon">👑</span>
+              <span class="sparkle-text">الإصدار الرسمي v1.0.0 المستقر • متاح للتحميل الفوري</span>
             </div>
-            <h2 class="final-title">جاهز لتجربة تحميل وسائط لا مثيل لها؟</h2>
+
+            <!-- Luxury App Icon Frame & Medallion -->
+            <div class="final-logo-wrapper">
+              <div class="final-logo-pedestal">
+                <div class="final-logo-halo"></div>
+                <img src="assets/icons/app_icon.png" alt="شعار كنز ميديا" class="final-logo">
+              </div>
+            </div>
+
+            <!-- Title with Luxury Gradients -->
+            <h2 class="final-title">
+              جاهز لتجربة <span class="gradient-text-purple">تحميل وسائط</span>
+              <br>
+              <span class="gradient-text-highlight">استثنائية وفائقة السرعة؟</span>
+            </h2>
+
+            <!-- Lead Description -->
             <p class="final-text">
-              انضم إلى آلاف المستخدمين الذين اختاروا السرعة والنقاء والأمان. حمّل التطبيق الآن واستمتع بمميزات لا تنتهي.
+              انضم إلى آلاف المستخدمين الذين اختاروا النقاء التام والسرعة القصوى. اقتطع ما تريد، احفظ الحالات بلمسة واحدة، واستمتع بتطبيق خالٍ تماماً 100% من الإعلانات.
             </p>
 
+            <!-- Ultra-Luxury Flagship Download Button -->
             <div class="final-btn-wrap">
-              <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="btn-hero-cta" target="_blank" rel="noopener">
-                <div class="cta-inner">
-                  <div class="cta-icon-box">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="btn-flagship-cta" target="_blank" rel="noopener">
+                <!-- Shimmer Sheen Light Sweep -->
+                <div class="btn-shimmer-sweep"></div>
+                <div class="flagship-inner">
+                  <div class="flagship-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" class="flagship-download-svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                   </div>
-                  <div class="cta-texts">
-                    <span class="cta-top">تحميل مباشر وسريع مجاناً</span>
-                    <span class="cta-main">تنزيل كنز ميديا (APK) الآن</span>
+                  <div class="flagship-texts">
+                    <span class="flagship-top">تثبيت فوري ومباشر للأندرويد</span>
+                    <span class="flagship-main">تنزيل تطبيق كَنْز المَيديا (APK)</span>
                   </div>
                 </div>
-                <div class="cta-glow"></div>
               </a>
             </div>
 
-            <div class="final-meta">
-              <span>متوافق مع Android 7.0 فما فوق</span>
-              <span>•</span>
-              <span>تحديثات مستمرة وتلقائية</span>
-              <span>•</span>
-              <span>حجم خفيف وسريع</span>
+            <!-- Luxury Trust Spec Pills Strip -->
+            <div class="final-meta-strip">
+              <div class="meta-glass-pill">
+                <i class="fa-brands fa-android"></i>
+                <span>Android 7.0 فما فوق</span>
+              </div>
+              <div class="meta-glass-pill">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span>تحديث هوائي سحابي (R2)</span>
+              </div>
+              <div class="meta-glass-pill">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>فحص نظيف 100%</span>
+              </div>
+              <div class="meta-glass-pill">
+                <i class="fa-solid fa-ban"></i>
+                <span>خالٍ تماماً من الإعلانات</span>
+              </div>
             </div>
           </div>
         </div>
@@ -909,63 +1586,188 @@
         <span class="sticky-desc">تحميل مجاني بدون إعلانات</span>
       </div>
     </div>
-    <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="btn-hero-cta btn-sticky-download" target="_blank"
+    <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="btn-sticky-download" target="_blank"
       rel="noopener">
-      <div class="cta-inner">
-        <span>تثبيت APK</span>
-        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-      </div>
+      <svg class="sticky-download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      <span>تثبيت APK</span>
     </a>
   </aside>
 
-  <!-- Footer -->
+    <!-- Ultra-Luxury Gorilla Glass Footer -->
   <footer class="site-footer">
-    <div class="container footer-container">
-      <div class="footer-brand">
-        <div class="footer-logo-block">
-          <img src="assets/icons/app_icon.png" alt="كنز ميديا" class="footer-icon">
-          <span class="footer-brand-title">كَنْز المَيديا | KANZ MEDIA</span>
+    <!-- Top Laser Illumination Edge -->
+    <div class="footer-laser-edge"></div>
+    <div class="footer-ambient-mesh orb-footer-violet"></div>
+    <div class="footer-ambient-mesh orb-footer-cyan"></div>
+
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Column 1: Brand & Identity -->
+        <div class="footer-col footer-col-brand">
+          <div class="footer-logo-block">
+            <div class="footer-icon-pedestal">
+              <img src="assets/icons/app_icon.png" alt="كنز ميديا" class="footer-icon">
+            </div>
+            <div class="footer-brand-meta">
+              <span class="footer-brand-title">كَنْز المَيديا</span>
+              <span class="footer-status-pill">
+                <span class="status-pulse-dot"></span>
+                <span>v1.0.0 Stable</span>
+              </span>
+            </div>
+          </div>
+          <p class="footer-desc">
+            المنظومة الإعلامية الأسرع والأشمل لتحميل وإدارة الوسائط وحفظ الحالات بجودة فائقة ونقاء تام وخالٍ 100% من الإعلانات.
+          </p>
+          <div class="footer-social-row">
+            <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="footer-social-btn" target="_blank" rel="noopener" title="تحميل التطبيق مباشرة">
+              <i class="fa-solid fa-download"></i>
+            </a>
+            <button type="button" class="footer-social-btn" id="footerShareBtn" title="مشاركة رابط الموقع">
+              <i class="fa-solid fa-share-nodes"></i>
+            </button>
+            <button type="button" class="footer-social-btn" id="footerAboutIconBtn" title="حول المطور والمنظومة">
+              <i class="fa-solid fa-circle-info"></i>
+            </button>
+          </div>
         </div>
-        <p class="footer-desc">
-          تطبيق التحميل الذكي والأشمل لكافة منصات التواصل بجودة فائقة ونقاء تام وخالٍ من الإعلانات.
-        </p>
+
+        <!-- Column 2: System Sections (Navigation) -->
+        <div class="footer-col footer-col-links">
+          <h4 class="footer-col-title">
+            <i class="fa-solid fa-shapes"></i>
+            <span>أقسام المنظومة</span>
+          </h4>
+          <ul class="footer-nav-list">
+            <li><a href="#hero"><span class="nav-dot"></span><span>الرئيسية</span></a></li>
+            <li><a href="#platforms"><span class="nav-dot"></span><span>المنصات المدعومة</span></a></li>
+            <li><a href="#features"><span class="nav-dot"></span><span>المميزات الخارقة</span></a></li>
+            <li><a href="#trimmer"><span class="nav-dot"></span><span>اقتطاع الفيديو الذكي</span></a></li>
+            <li><a href="#reminders"><span class="nav-dot"></span><span>التذكير الإيماني</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Features & Help -->
+        <div class="footer-col footer-col-links">
+          <h4 class="footer-col-title">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>الدعم والمواصفات</span>
+          </h4>
+          <ul class="footer-nav-list">
+            <li><a href="#interactive-demo"><span class="nav-dot"></span><span>المعاينة والتجربة الحية</span></a></li>
+            <li><a href="#faq"><span class="nav-dot"></span><span>الأسئلة الشائعة</span></a></li>
+            <li><a href="javascript:void(0)" id="aboutBtnFooter"><span class="nav-dot"></span><span>حول التطبيق والمطور</span></a></li>
+            <li><a href="javascript:void(0)" id="downloadInfoBtnFooter"><span class="nav-dot"></span><span>تفاصيل حزمة APK</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Direct Download & Copy URL Card -->
+        <div class="footer-col footer-col-download">
+          <div class="footer-download-card">
+            <div class="f-download-header">
+              <div class="f-dl-icon-wrap">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+              </div>
+              <div class="f-dl-texts">
+                <span class="f-dl-title">رابط التنزيل المباشر</span>
+                <span class="f-dl-sub">خوادم Cloudflare R2 فائقة السرعة</span>
+              </div>
+            </div>
+
+            <div class="f-url-box-wrapper">
+              <div class="f-url-display">
+                <span class="f-url-text">kanz.sulaimansho.com/kanz_media.apk</span>
+              </div>
+              <div class="f-url-actions">
+                <button type="button" class="f-action-icon-btn" id="footerCopyUrlBtn" title="نسخ رابط التحميل">
+                  <i class="fa-regular fa-clone"></i>
+                </button>
+                <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="f-action-icon-btn f-btn-open" target="_blank" rel="noopener" title="تحميل مباشر الآن">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="f-download-trust">
+              <span class="trust-item"><i class="fa-solid fa-shield-halved"></i> آمن 100%</span>
+              <span class="trust-sep">•</span>
+              <span class="trust-item"><i class="fa-solid fa-bolt"></i> تنزيل سريع</span>
+              <span class="trust-sep">•</span>
+              <span class="trust-item"><i class="fa-solid fa-infinity"></i> مجاني تماماً</span>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="footer-links-group">
-        <h4>روابط سريعة</h4>
-        <ul>
-          <li><a href="#hero">الرئيسية</a></li>
-          <li><a href="#platforms">المنصات المدعومة</a></li>
-          <li><a href="#features">المميزات الخارقة</a></li>
-          <li><a href="#trimmer">اقتطاع الفيديو</a></li>
-          <li><a href="#reminders">التذكير الإيماني</a></li>
-          <li><a href="#faq">الأسئلة الشائعة</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-download-block">
-        <h4>رابط التنزيل المباشر</h4>
-        <p>احصل على أحدث نسخة مستقرة ومحدثة من التطبيق:</p>
-        <a href="https://kanz.sulaimansho.com/kanz_media.apk" class="footer-url-box" target="_blank" rel="noopener">
-          <span>kanz.sulaimansho.com/kanz_media.apk</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container footer-bottom-flex">
-        <p>© 2026 KANZ MEDIA. ALL RIGHTS RESERVED BY SULAIMAN SHO.</p>
-        <p class="footer-heart">صُنِع بإتقان وشغف بواسطة SULAIMAN SHO 🌿</p>
+      <!-- Footer Bottom Copyright & Credits -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-flex">
+          <div class="footer-cr">
+            <bdi dir="ltr">© 2026 KANZ MEDIA.</bdi>
+            <span>كافة الحقوق محفوظة</span>
+          </div>
+          <div class="footer-blessing">
+            <span class="blessing-leaf">🌱</span>
+            <span>صُنِع ليكون نافعاً ومباركاً في دينك ودنياك</span>
+          </div>
+          <div class="footer-dev">
+            <span>هندسة وتطوير بكل فخر بواسطة</span>
+            <a href="javascript:void(0)" id="footerDevLink" class="dev-author-link">SULAIMAN SHO</a>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
+
+  <!-- Universal Frosted Glass Dialog & Bottom Sheet (AppGlassDialog & AppModalSheet) -->
+  <div class="glass-modal-overlay" id="glassModalOverlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="glass-modal-container" id="glassModalContainer">
+      <!-- Drag handle visible on mobile bottom sheet view -->
+      <div class="modal-drag-handle"></div>
+
+      <!-- Top radial ambient glow (identical to Flutter AppGlassDialog) -->
+      <div class="modal-radial-glow" id="modalRadialGlow"></div>
+      <!-- Specular glass reflection layer -->
+      <div class="modal-specular-sheen"></div>
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-box" id="modalIconBox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="modal-icon-svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+          </div>
+          <div class="modal-title-texts">
+            <h3 class="modal-title" id="modalTitle">عنوان النافذة</h3>
+            <p class="modal-subtitle" id="modalSubtitle">تفاصيل ومعلومات إضافية</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="إغلاق النافذة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Content) -->
+      <div class="modal-body" id="modalBody">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+
+      <!-- Modal Footer (Action Buttons) -->
+      <div class="modal-footer" id="modalFooter">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+    </div>
+  </div>
 
   <!-- JavaScript -->
   <script src="js/main.js"></script>
