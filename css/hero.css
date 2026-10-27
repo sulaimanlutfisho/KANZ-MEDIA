@@ -1,0 +1,1221 @@
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(40px, 6vw, 90px) 0 clamp(60px, 8vw, 110px);
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: clamp(30px, 5vw, 65px);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  padding: 6px 16px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--primary-light);
+}
+
+.hero-title {
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.7;
+  letter-spacing: -1px;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 620px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.hero-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.badge-dot.green {
+  background: var(--emerald);
+  box-shadow: 0 0 8px var(--emerald);
+}
+
+.badge-dot.cyan {
+  background: var(--cyan-light);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+.badge-dot.purple {
+  background: var(--primary-light);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.badge-dot.gold {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+/* ==========================================================================
+   Realistic Titanium Smartphone Mockup
+   ========================================================================== */
+.hero-mockup-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.phone-frame {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 46px;
+  padding: 16px 18px 24px;
+  background: #0d111e;
+  border: 4px solid #282f45;
+  outline: 1px solid rgba(255, 255, 255, 0.16);
+  position: relative;
+  z-index: 2;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.8),
+    0 0 50px rgba(139, 92, 246, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+/* Screen Glass Reflection */
+.phone-glass-reflection {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.01) 35%,
+      transparent 60%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Dynamic Island */
+.phone-island-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.phone-island {
+  width: 90px;
+  height: 22px;
+  background: #000;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.island-camera {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #111a2e;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.island-sensor {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #070a12;
+}
+
+.phone-island-wrapper {
+  display: none !important;
+}
+
+/* Phone Status Bar (Exact Device Screenshot Parity) */
+.phone-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 10px;
+  padding: 2px 2px 0;
+  direction: ltr;
+  /* Time on left, status icons on right */
+}
+
+.status-time {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Network Speed Display */
+.status-net-speed {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  line-height: 0.95;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin-right: 1px;
+}
+
+.status-net-speed .speed-num {
+  font-size: 8px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.status-net-speed .speed-unit {
+  font-size: 6px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* VoLTE Pill Badge - Solid White with Black Text matching Device Screenshot */
+.volte-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 2.5px;
+  padding: 0.5px 2px;
+  line-height: 0.85;
+}
+
+.volte-badge span {
+  font-size: 6px;
+  font-weight: 800;
+  color: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.2px;
+}
+
+/* SIM Group */
+.status-sim-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* 5G + Activity Arrows */
+.net-gen-arrows {
+  display: flex;
+  align-items: center;
+  gap: 1.5px;
+  line-height: 1;
+}
+
+.net-gen {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.net-arrows {
+  font-size: 4px;
+  line-height: 0.8;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Signal Bars - Slim and Crisp */
+.signal-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.2px;
+  height: 10px;
+}
+
+.signal-bars .bar {
+  width: 1.3px;
+  background: #ffffff;
+  border-radius: 0.5px;
+}
+
+.signal-bars .bar-1 {
+  height: 2.8px;
+}
+
+.signal-bars .bar-2 {
+  height: 5px;
+}
+
+.signal-bars .bar-3 {
+  height: 7.5px;
+}
+
+.signal-bars .bar-4 {
+  height: 10px;
+}
+
+/* Battery Group */
+.status-battery-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 2px;
+}
+
+.battery-green-capsule {
+  position: relative;
+  background: #00e676;
+  border-radius: 3.5px;
+  height: 12px;
+  min-width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+.battery-percent-num {
+  font-size: 8px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.battery-cap-tip {
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5px;
+  height: 4.5px;
+  background: #64748b;
+  border-radius: 0 1px 1px 0;
+}
+
+.status-charging-bolt-svg {
+  width: 8px;
+  height: 11px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Real App Phone Screen Mockup (True Flutter Main Screen Replica)
+   ========================================================================== */
+
+/* Top Bar: Menu on Right, Title Beside It (Matching Real Flutter Screen) */
+.mockup-app-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 11px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  padding: 0 2px;
+  direction: rtl;
+}
+
+.mockup-app-title {
+  font-family: var(--font-heading);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  line-height: 1;
+}
+
+.mockup-menu-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 17px;
+  height: 12px;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.mockup-menu-icon:hover {
+  transform: scale(1.08);
+}
+
+.mockup-menu-icon .menu-line {
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+}
+
+/* Screen Body Layout */
+.mockup-screen-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Input Container: Link icon, Placeholder & Paste Button */
+.mockup-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(139, 92, 246, 0.38);
+  border-radius: 16px;
+  padding: 10px 14px;
+  transition: all var(--transition-fast);
+}
+
+.mockup-input-container:hover {
+  border-color: rgba(167, 139, 250, 0.65);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.22);
+}
+
+.mockup-input-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.mockup-link-icon {
+  color: #c4b5fd;
+  font-size: 0.98rem;
+  transform: rotate(-45deg);
+  flex-shrink: 0;
+}
+
+.mockup-input-placeholder {
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mockup-paste-icon-btn {
+  background: transparent;
+  border: none;
+  color: #c4b5fd;
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.mockup-paste-icon-btn:hover {
+  color: #ffffff;
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.5));
+}
+
+/* Quick Action Row (Save Link & Links List) */
+.mockup-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mockup-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 14px;
+  padding: 9px 10px;
+  color: #e2e8f0;
+  font-family: var(--font-heading);
+  font-size: 0.79rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mockup-action-btn:hover {
+  background: rgba(139, 92, 246, 0.16);
+  border-color: rgba(167, 139, 250, 0.48);
+  transform: translateY(-1px);
+}
+
+.mockup-action-btn i {
+  color: #c4b5fd;
+  font-size: 0.88rem;
+}
+
+/* Primary Download Button (Frosted Translucent Violet Glass with Blur) */
+.mockup-download-cta-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.35) 0%, rgba(76, 29, 149, 0.45) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 139, 250, 0.36);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 15px;
+  padding: 7px;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mockup-download-cta-btn:hover {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.48) 0%, rgba(76, 29, 149, 0.58) 100%);
+  border-color: rgba(167, 139, 250, 0.55);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 0 14px rgba(139, 92, 246, 0.22);
+  transform: translateY(-1px);
+}
+
+.mockup-download-cta-btn i {
+  font-size: 1rem;
+}
+
+/* Islamic Reminder Card */
+.mockup-reminder-card {
+  background: rgba(6, 78, 59, 0.24);
+  border: 1px solid rgba(16, 185, 129, 0.38);
+  border-radius: 18px;
+  padding: 11px 14px;
+  transition: all 0.3s ease;
+}
+
+.mockup-reminder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.mockup-reminder-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mockup-reminder-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.22);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #34d399;
+  font-size: 11px;
+}
+
+.mockup-reminder-title {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.mockup-reminder-close {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #94a3b8;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.mockup-reminder-close:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.mockup-reminder-text {
+  font-family: var(--font-body);
+  font-size: 0.77rem;
+  color: #e2e8f0;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Recent Downloaded Video Card */
+.mockup-recent-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(139, 92, 246, 0.26);
+  border-radius: 20px;
+  padding: 13px;
+}
+
+.mockup-recent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.38);
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: #34d399;
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  margin-bottom: 11px;
+
+}
+
+.mockup-recent-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 13px;
+
+}
+
+.mockup-recent-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mockup-recent-title {
+  font-family: var(--font-heading);
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+}
+
+.mockup-recent-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-body);
+  font-size: 0.71rem;
+  color: #94a3b8;
+}
+
+.mockup-recent-thumb {
+  width: 68px;
+  height: 68px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+}
+
+.thumb-black-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: radial-gradient(circle, #1a2035 0%, #080c16 100%);
+  padding: 4px;
+}
+
+.thumb-play-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.6px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 10px;
+  padding-left: 2px;
+}
+
+.thumb-quran-text {
+  font-size: 0.52rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60px;
+}
+
+.mockup-share-heading {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  margin-bottom: 9px;
+}
+
+.mockup-share-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mockup-share-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 4px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.share-wa {
+  background: rgba(37, 211, 102, 0.08);
+  border-color: rgba(37, 211, 102, 0.28);
+}
+
+.share-wa:hover {
+  background: rgba(37, 211, 102, 0.18);
+  transform: translateY(-2px);
+}
+
+.share-tg {
+  background: rgba(0, 136, 204, 0.08);
+  border-color: rgba(0, 136, 204, 0.28);
+}
+
+.share-tg:hover {
+  background: rgba(0, 136, 204, 0.18);
+  transform: translateY(-2px);
+}
+
+.share-ig {
+  background: rgba(225, 48, 108, 0.08);
+  border-color: rgba(225, 48, 108, 0.28);
+}
+
+.share-ig:hover {
+  background: rgba(225, 48, 108, 0.18);
+  transform: translateY(-2px);
+}
+
+.share-icon-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.wa-bg {
+  background: #25d366;
+}
+
+.tg-bg {
+  background: #0088cc;
+}
+
+.ig-bg {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.mockup-share-tile span {
+  font-family: var(--font-heading);
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.mockup-general-share-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 12px;
+  padding: 9px;
+  color: #c4b5fd;
+  font-family: var(--font-heading);
+  font-size: 0.79rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mockup-general-share-btn:hover {
+  background: rgba(139, 92, 246, 0.22);
+  color: #ffffff;
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+/* App Bottom Navigation Bar */
+.mockup-bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(13, 17, 30, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 8px 4px 6px;
+  margin-top: 6px;
+}
+
+.mockup-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #94a3b8;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mockup-nav-item i {
+  font-size: 15px;
+}
+
+.mockup-nav-item:hover {
+  color: #cbd5e1;
+}
+
+.mockup-nav-item.active {
+  color: #ffffff;
+}
+
+.nav-icon-pill {
+  background: rgba(139, 92, 246, 0.35);
+  padding: 3px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1px;
+}
+
+.nav-icon-pill i {
+  color: #ffffff;
+}
+
+.mockup-home-indicator {
+  width: 75px;
+  height: 3.5px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 3px;
+  margin: 6px auto 0;
+}
+
+/* Floating Keyframes for Mockup Badges */
+@keyframes floatBadgeTop {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes floatBadgeBottom {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* Floating Badges Beside Phone */
+.floating-badge {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 15px;
+  background: linear-gradient(135deg,
+      rgba(22, 28, 48, 0.88) 0%,
+      rgba(12, 16, 28, 0.94) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 18px;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.floating-badge:hover {
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.badge-top-left {
+  top: 15%;
+  left: -16px;
+  animation: floatBadgeTop 6s ease-in-out infinite;
+}
+
+.badge-bottom-right {
+  bottom: 18%;
+  right: -16px;
+  animation: floatBadgeBottom 6.5s ease-in-out infinite 0.5s;
+}
+
+.fb-icon {
+  font-size: 1.3rem;
+}
+
+.floating-badge strong {
+  display: block;
+  font-size: 0.82rem;
+  color: #fff;
+}
+
+.floating-badge small {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+/* ==========================================================================
+   Interactive Gorilla Glass Metrics Strip (Stats Counter)
+   Designed & Engineered by SULAIMAN SHO
+   Responsive Parity: Pixel-perfect from 360px to 4K displays
+   ========================================================================== */
+.hero-metrics-container {
+  margin-top: clamp(40px, 6vw, 75px);
+  position: relative;
+  z-index: 5;
+}
+
+.hero-metrics-strip {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  padding: clamp(20px, 3vw, 28px) clamp(22px, 3.5vw, 42px);
+  background: linear-gradient(135deg,
+      rgba(24, 30, 52, 0.65) 0%,
+      rgba(15, 20, 36, 0.75) 45%,
+      rgba(9, 13, 24, 0.86) 100%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  gap: 12px;
+}
+
+.metric-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.metric-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.hero-metrics-strip:hover .metric-icon-wrap {
+  transform: scale(1.05);
+}
+
+.metric-icon-wrap.icon-purple {
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--primary-light);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.2);
+}
+
+.metric-icon-wrap.icon-gold {
+  background: rgba(245, 158, 11, 0.14);
+  color: var(--gold-light);
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.2);
+}
+
+.metric-icon-wrap.icon-emerald {
+  background: rgba(16, 185, 129, 0.14);
+  color: var(--emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.2);
+}
+
+.metric-icon-wrap.icon-cyan {
+  background: rgba(2, 132, 199, 0.14);
+  color: var(--cyan-light);
+  border: 1px solid rgba(2, 132, 199, 0.32);
+  box-shadow: 0 0 18px rgba(2, 132, 199, 0.2);
+}
+
+.metric-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-number-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  line-height: 1.15;
+}
+
+.metric-prefix {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.metric-counter {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 2.5vw, 2.35rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  display: inline-block;
+  min-width: 1.2ch;
+}
+
+.metric-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(139, 92, 246, 0.2);
+  color: var(--primary-light);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  margin-right: 4px;
+}
+
+.metric-badge-clean {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.18);
+  color: var(--emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  margin-right: 4px;
+}
+
+.metric-label {
+  font-size: clamp(0.78rem, 1.1vw, 0.88rem);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.metric-divider {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 100%);
+}
+
+/* Responsive Layout for Metrics Strip */
+@media (max-width: 992px) {
+  .hero-metrics-strip {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 20px;
+    padding: 22px;
+  }
+
+  .metric-divider {
+    display: none;
+  }
+
+  .metric-item {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 550px) {
+  .hero-metrics-container {
+    margin-top: 32px;
+  }
+
+  .hero-metrics-strip {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 10px;
+    padding: 16px 12px;
+    border-radius: 18px;
+  }
+
+  .metric-item {
+    gap: 9px;
+  }
+
+  .metric-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+
+  .metric-prefix {
+    font-size: 1.3rem;
+  }
+
+  .metric-counter {
+    font-size: 1.38rem;
+  }
+
+  .metric-tag,
+  .metric-badge-clean {
+    font-size: 0.64rem;
+    padding: 1px 5px;
+  }
+
+  .metric-label {
+    font-size: 0.72rem;
+    white-space: normal;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-metrics-strip {
+    padding: 14px 8px;
+    gap: 14px 6px;
+  }
+
+  .metric-icon-wrap {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .metric-counter {
+    font-size: 1.22rem;
+  }
+
+  .metric-prefix {
+    font-size: 1.15rem;
+  }
+
+  .metric-label {
+    font-size: 0.67rem;
+  }
+}

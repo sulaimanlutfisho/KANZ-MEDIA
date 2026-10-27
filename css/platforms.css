@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Platforms Section & Brand Icon Styling
+   ========================================================================== */
+.platforms-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(50px, 7vw, 95px) 0;
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(18px, 2.5vw, 26px);
+}
+
+.platform-card {
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+}
+
+/* Platform Icon Wrap: Elegant Frosted Glass Badge with Pure Harmonious White Icon */
+.plat-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: all var(--transition-fast);
+}
+
+.platform-card:hover .plat-icon-wrap {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(167, 139, 250, 0.42);
+  border-top-color: rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(139, 92, 246, 0.28);
+  transform: translateY(-2px);
+}
+
+.plat-icon-wrap i {
+  font-size: 26px;
+  line-height: 1;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: all var(--transition-fast);
+}
+
+.platform-card:hover .plat-icon-wrap i {
+  color: #ffffff !important;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.45));
+}
+
+.plat-name {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.plat-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+.plat-features-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plat-features-tags span {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  color: var(--text-light);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* ==========================================================================
+   FLUTTER THEME PARITY: GORILLA GLASS, BUTTONS & MODALS LOGIC
+   Direct 1:1 Implementation of AppColors, AppTheme, AppButtons,
+   AppGlassCard, AppSubCard, AppGlassDialog, and AppModalSheetLayout
+   ========================================================================== */
+
+/* 1. Interactive Platform Badge */
+.plat-interactive-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  padding: 8px 12px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--primary-light);
+  transition: all var(--transition-fast);
+}
+
+.platform-card:hover .plat-interactive-badge {
+  background: rgba(139, 92, 246, 0.24);
+  border-color: rgba(167, 139, 250, 0.6);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* 2. Navigation About Buttons */

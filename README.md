@@ -245,6 +245,25 @@ flowchart TD
 | **Download Simulation** | محاكاة الفحص وتدفق سرعة التنزيل حتى 100% | `#simActionBtn`, `#simDownloadNowBtn`, `#simProgressBlock` |
 | **FAQ Accordion** | فتح وإغلاق بنود الأسئلة الشائعة مع معايير الوصول (ARIA) | `.accordion-header`, `.accordion-item` |
 | **Universal Glass Modal** | إدارة النوافذ المنبثقة لبيانات المطور، التحميل، ومواصفات المنصات | `openGlassModal()`, `closeGlassModal()`, `#glassModalOverlay` |
+| **Live Cloud Version Sync** | جلب أحدث إصدار ورابط APK وملاحظات الإصدار مباشرة من جدول `app_version_control` في `Supabase` وتحديث شارات وأزرار الموقع تلقائياً | `syncCloudAppVersion()`, `[data-version-badge]`, `[data-apk-download]` |
+| **Real-Time Visitor Telemetry Engine** | فحص عتاد الزائر وكرت الشاشة والمعالج والبطارية ومصدر الدخول وتسجيل الزيارة ونقرات تحميل الـ APK لحظياً في `Supabase` | `collectVisitorHardwareSpecs()`, `detectEntrySource()`, `attachLiveBatterySync()`, `recordWebsiteVisit()`, `recordWebsiteDownloadClick()` |
+
+### 7.1 محرك التحليلات والقياسات الحية لزوار الموقع (`Real-Time Visitor Analytics Engine`)
+
+تم تزويد ملف `js/main.js` بمحرك قياسات متقدم يتصل مباشرة بـ `Supabase` (`website_visitors` & `record_website_visit` RPC) لبث بيانات الزوار في الوقت الفعلي إلى لوحة الإدارة داخل التطبيق:
+
+1. **البصمة الرقمية الموحدة للجهاز (`computeAnonymousDeviceVisitorId`):**
+   - توليد معرّف فريد للجهاز (`DEV-...`) عبر خوارزمية `SHA-256` لخصائص العتاد الثابتة (أبعاد الشاشة، كثافة البكسلات، المنطقة الزمنية، وكرت الشاشة `WebGL Renderer`)، مما يضمن التعرف على نفس الهاتف حتى عند فتح الموقع من متصفح واتساب الداخلي ثم من متصفح `Chrome`.
+2. **التعرف الدقيق على طراز الهاتف والمعالج وكرت الشاشة (`collectVisitorHardwareSpecs`):**
+   - استخدام `navigator.userAgentData.getHighEntropyValues(['model', 'platformVersion', 'architecture'])` لاستخراج رمز الطراز الحقيقي في أندرويد الحديث وترجمته عبر قاموس `KNOWN_ANDROID_MODELS` إلى الاسم التسويقي الكامل (مثل `Xiaomi 14T Pro` أو `Samsung Galaxy S24 Ultra`).
+   - استخراج معالج الرسوميات الحقيقي (`UNMASKED_RENDERER_WEBGL`) واستنتاج اسم المعالج (`SoC`) تلقائياً (`Adreno` ➔ `Snapdragon`، `Immortalis / Mali` ➔ `Dimensity`).
+   - تجاهل الزيارات الوهمية الناتجة عن محاكي الهواتف في متصفحات سطح المكتب (`Chrome DevTools Mobile Emulation`).
+3. **المزامنة اللحظية للبطارية والشحن (`attachLiveBatterySync`):**
+   - قراءة نسبة البطارية وحالة الشحن عبر `navigator.getBattery()` وربط مستمعات حية (`chargingchange` و`levelchange`) ترسل تحديث `PATCH` فوري إلى `Supabase` بمجرد توصيل الشاحن أو تغير نسبة الشحن أثناء تصفح الموقع.
+4. **كشف مصدر قدوم الزائر بدقة (`detectEntrySource`):**
+   - التعرف على الزيارات القادمة من داخل التطبيقات عبر فحص بروتوكولات أندرويد (`android-app://com.whatsapp`، `android-app://org.telegram.messenger`، إنستغرام، فيسبوك، تيك توك)، وفحص بيئة المتصفح الداخلي (`TelegramWebviewProxy`، `WhatsApp`، `; wv)`)، ومعلمات الروابط (`?wa`، `?tg`، `utm_source`)، مع حفظ أول مصدر دخول غير مباشر في `sessionStorage`.
+5. **تتبع موقع زر التحميل المضغوط (`recordWebsiteDownloadClick`):**
+   - رصد النقرات على أي زر تحميل في الصفحة وتحديد موقعه الدقيق (`القسم الرئيسي (الهيرو)`، `الشريط العلوي`، `القائمة الجانبية للموبايل`، `قسم المميزات`، `الفوتر السفلي`) وتحديث حالة `downloaded_apk = true` وعداد النقرات لحظياً.
 
 ---
 

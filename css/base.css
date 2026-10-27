@@ -1,0 +1,417 @@
+/* ==========================================================================
+   Base Architecture, Reset, Living Ambient Space & Gorilla Glass Core
+   Designed & Engineered by SULAIMAN SHO
+   ========================================================================== */
+
+/* Section Layer Isolation & GPU Compositing Optimization (Prevents scroll flickering) */
+section,
+main {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-family: var(--font-body);
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-base);
+}
+
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2842;
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* --- Background Grid Pattern --- */
+.bg-grid-pattern {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+}
+
+/* --- Ambient Keyframes for Living Space Depth --- */
+@keyframes orbFloatPurple {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translate3d(-35px, 45px, 0) scale(1.1);
+    opacity: 0.48;
+  }
+}
+
+@keyframes orbFloatCyan {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.28;
+  }
+
+  50% {
+    transform: translate3d(45px, -35px, 0) scale(1.15);
+    opacity: 0.38;
+  }
+}
+
+@keyframes orbFloatIndigo {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translate3d(-40px, -40px, 0) scale(1.08);
+    opacity: 0.45;
+  }
+}
+
+@keyframes orbFloatEmerald {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.22;
+  }
+
+  50% {
+    transform: translate3d(35px, 30px, 0) scale(1.12);
+    opacity: 0.32;
+  }
+}
+
+/* --- Ambient Glowing Orbs --- */
+.ambient-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout paint;
+  will-change: transform, opacity;
+}
+
+.orb-purple {
+  top: -100px;
+  right: -50px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  animation: orbFloatPurple 14s ease-in-out infinite;
+}
+
+.orb-cyan {
+  top: 36%;
+  left: -120px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+  opacity: 0.28;
+  animation: orbFloatCyan 18s ease-in-out infinite;
+}
+
+.orb-indigo {
+  bottom: 10%;
+  right: 5%;
+  width: 540px;
+  height: 540px;
+  background: radial-gradient(circle, var(--midnight) 0%, transparent 70%);
+  opacity: 0.35;
+  animation: orbFloatIndigo 16s ease-in-out infinite;
+}
+
+.orb-emerald {
+  top: 75%;
+  left: 20%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, var(--emerald) 0%, transparent 70%);
+  opacity: 0.22;
+  animation: orbFloatEmerald 20s ease-in-out infinite;
+}
+
+/* --- Container Utility --- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 3.5vw, 40px);
+  padding-right: clamp(16px, 3.5vw, 40px);
+}
+
+/* --- Typography Helpers --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.brand-title,
+.modal-title,
+.section-title,
+.btn-hero-cta,
+.btn-header,
+.confirm-title-text,
+.confirm-btn-primary,
+.confirm-btn-cancel,
+.app-btn-primary,
+.app-btn-glass,
+.app-btn-outlined,
+.sim-tab {
+  font-family: var(--font-heading);
+}
+
+/* --- Global Interactive Cursors & Affordance --- */
+.platform-card,
+.feature-glass-card,
+.accordion-header,
+.sim-tab,
+.hero-pill,
+.btn-hero-cta,
+.btn-secondary-glass,
+.btn-gorilla,
+.modal-close-btn,
+.confirm-close-btn,
+.confirm-btn-primary,
+.confirm-btn-cancel,
+.app-btn-primary,
+.app-btn-glass,
+.app-btn-outlined,
+.app-btn-circle,
+.app-btn-text,
+.mockup-paste-btn,
+.footer-url-box,
+button,
+a {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-emerald {
+  color: var(--emerald-light) !important;
+}
+
+.text-cyan {
+  color: var(--cyan-light) !important;
+}
+
+.text-gold {
+  color: var(--gold-light) !important;
+}
+
+.gradient-text-purple {
+  background: linear-gradient(135deg,
+      #ffffff 0%,
+      var(--primary-light) 50%,
+      var(--cyan-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg,
+      #fff5d0 0%,
+      var(--gold-light) 55%,
+      var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Section Headings */
+.section-heading {
+  margin-bottom: clamp(36px, 6vw, 68px);
+}
+
+.sub-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--primary-light);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+  backdrop-filter: blur(12px);
+  margin-bottom: 14px;
+}
+
+.sub-badge.gold {
+  color: var(--gold-light);
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
+.sub-badge.emerald {
+  color: var(--emerald-light);
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.32);
+}
+
+.sub-badge.cyan {
+  color: var(--cyan-light);
+  background: rgba(2, 132, 199, 0.12);
+  border-color: rgba(2, 132, 199, 0.32);
+}
+
+.section-title {
+  font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ==========================================================================
+   Gorilla Glass Cards Base
+   ========================================================================== */
+.platform-card,
+.feature-glass-card,
+.trimmer-sheet-wrapper,
+.trimmer-demo-panel,
+.interactive-simulator-card,
+.final-cta-card,
+.accordion-item,
+.reminder-glass-card {
+  position: relative;
+  background: linear-gradient(135deg,
+      rgba(28, 35, 58, 0.62) 0%,
+      rgba(16, 21, 38, 0.72) 45%,
+      rgba(9, 13, 24, 0.84) 100%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-top: 1px solid rgba(255, 255, 255, 0.38);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--gorilla-shadow);
+  overflow: hidden;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.platform-card:hover,
+.feature-glass-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(167, 139, 250, 0.5);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 26px 55px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(139, 92, 246, 0.28);
+}
+
+.card-glass-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 5%,
+      rgba(255, 255, 255, 0.8) 50%,
+      transparent 95%);
+  pointer-events: none;
+  transition: background var(--transition-fast);
+}
+
+.platform-card:hover .card-glass-glow,
+.feature-glass-card:hover .card-glass-glow {
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(167, 139, 250, 0.9) 30%,
+      rgba(56, 189, 248, 0.9) 70%,
+      transparent 100%);
+}
+
+
+
+/* 3. AppSubCard Token (Parity with Flutter AppSubCard) */
+.app-subcard {
+  padding: 14px 16px;
+  background: linear-gradient(135deg,
+      rgba(139, 92, 246, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: 14px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}

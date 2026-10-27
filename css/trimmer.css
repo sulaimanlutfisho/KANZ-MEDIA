@@ -1,0 +1,467 @@
+/* ==========================================================================
+   Video Trimmer Section
+   ========================================================================== */
+.trimmer-spotlight-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(50px, 7vw, 100px) 0;
+}
+
+.trimmer-container {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(30px, 5vw, 65px);
+}
+
+.trimmer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-lead {
+  font-size: 1.05rem;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.trimmer-benefits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 10px 0;
+}
+
+.trimmer-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.94rem;
+  color: var(--text-muted);
+}
+
+.check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: rgba(16, 185, 129, 0.25);
+  color: var(--emerald-light);
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Authentic Flutter App Trimmer Bottom Sheet Mockup
+   ========================================================================== */
+.trimmer-sheet-wrapper {
+  position: relative;
+  background: #0f101d;
+  border: 1.5px solid #3c2f62;
+  border-radius: 26px;
+  padding: 22px 20px 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(124, 58, 237, 0.18);
+  overflow: hidden;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.trimmer-sheet-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.trimmer-sheet-handle {
+  width: 46px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  margin: 0 auto 16px;
+}
+
+/* Video Info Card */
+.trimmer-video-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  padding: 4px 6px 12px;
+}
+
+.trimmer-thumb-wrap {
+  position: relative;
+  width: 68px;
+  height: 50px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trimmer-video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.trimmer-video-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trimmer-video-name {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.trimmer-total-pill {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1e1938;
+  border: 1px solid #43336d;
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 0.76rem;
+  color: #c4b5fd;
+  font-weight: 600;
+}
+
+.pill-clock-icon {
+  color: #a78bfa;
+  flex-shrink: 0;
+}
+
+/* Toggle Switch Row */
+.trimmer-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 12px 6px 16px;
+}
+
+.trimmer-toggle-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.trimmer-scissors-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a78bfa;
+  flex-shrink: 0;
+}
+
+.trimmer-toggle-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.trimmer-toggle-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.trimmer-toggle-subtitle {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+/* Switch Toggle Element */
+.trimmer-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.trimmer-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.trimmer-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #334155;
+  transition: 0.28s ease;
+  border-radius: 34px;
+}
+
+.trimmer-slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.trimmer-switch input:checked+.trimmer-slider {
+  background-color: #8b5cf6;
+}
+
+.trimmer-switch input:checked+.trimmer-slider:before {
+  transform: translateX(22px);
+}
+
+/* Start & End Time Cards (STACKED VERTICALLY) */
+.trimmer-time-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 6px;
+  transition: opacity 0.25s ease;
+}
+
+.trimmer-time-card {
+  background: #111422;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.trimmer-time-card.start-card {
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+}
+
+.trimmer-time-card.end-card {
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
+}
+
+.trimmer-time-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.time-header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.time-header-icon.green {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.time-header-icon.purple {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+}
+
+.trimmer-time-card.start-card .time-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.trimmer-time-card.end-card .time-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #c4b5fd;
+}
+
+.trimmer-digits-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  direction: ltr;
+}
+
+.digit-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.digit-input {
+  width: 58px;
+  height: 48px;
+  background: #080911;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-family: monospace;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.digit-input::-webkit-inner-spin-button,
+.digit-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.digit-input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.28);
+}
+
+.digit-unit {
+  font-size: 0.78rem;
+  color: #8e8ea8;
+  font-weight: 600;
+}
+
+.digit-separator {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.digit-separator.green {
+  color: #10b981;
+}
+
+.digit-separator.purple {
+  color: #a78bfa;
+}
+
+/* Quick Presets (Rows Layout) */
+.trimmer-presets-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  transition: opacity 0.25s ease;
+}
+
+.presets-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #1e1a36;
+  border: 1px solid #3d2f66;
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 0.88rem;
+  color: #ddd6fe;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.preset-chip:hover {
+  background: #272147;
+  border-color: #55418a;
+  color: #ffffff;
+}
+
+.preset-chip.active {
+  background: #2e2354;
+  border-color: #8b5cf6;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.4);
+}
+
+.preset-symbol {
+  font-size: 0.95rem;
+}
+
+/* Result Duration Pill */
+.trimmer-result-pill {
+  margin-top: 18px;
+  background: #151427;
+  border: 1.5px solid #3b2e65;
+  border-radius: 14px;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.result-check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #0b0f19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.result-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.result-value {
+  font-size: 1.05rem;
+  color: #ffffff;
+  font-weight: 800;
+  font-family: monospace;
+}
+

@@ -1,0 +1,112 @@
+/* ==========================================================================
+   كَنْز المَيديا | KANZ MEDIA - Ultra-Luxury Design System & Variables
+   Designed & Engineered by SULAIMAN SHO
+   ========================================================================== */
+
+/* --- Central Design Tokens & Comprehensive Color Palette --- */
+:root {
+  /* Brand Core Dark Palette */
+  --bg-base: #06080f;
+  --bg-deep: #0b0e18;
+  --bg-slate: #0f1424;
+  --bg-surface: #151b2e;
+  --bg-surface-light: #1e2742;
+  --bg-card: #151e2e;
+  --bg-drawer: #141526;
+  --bg-modal: #101224;
+
+  /* Primary Royal Violet */
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --primary-light: #a78bfa;
+  --primary-lighter: #c4b5fd;
+  --primary-soft: #ddd6fe;
+  --primary-glow: rgba(139, 92, 246, 0.4);
+
+  /* Exact Flutter AppColors Parity Tokens */
+  --flutter-background: #0f172a;
+  --flutter-carbon: #070a10;
+  --flutter-surface: #1e293b;
+  --flutter-surface-light: #334155;
+  --flutter-card: #151e2e;
+  --flutter-primary: #8b5cf6;
+  --flutter-primary-dark: #7c3aed;
+  --flutter-primary-light: #a78bfa;
+  --flutter-telegram: #229ed9;
+  --flutter-whatsapp: #25d366;
+  --flutter-whatsapp-business: #128c7e;
+  --flutter-success: #10b981;
+  --flutter-success-alt: #22c55e;
+  --flutter-danger: #ef4444;
+  --flutter-danger-dark: #3b1e1e;
+  --flutter-warning: #f59e0b;
+  --flutter-handle: #757575;
+
+  /* Platforms & Social Brands Colors */
+  --brand-youtube: #ff0000;
+  --brand-tiktok: #00f2fe;
+  --brand-tiktok-accent: #fe0979;
+  --brand-instagram-orange: #f09433;
+  --brand-instagram-red: #e6683c;
+  --brand-instagram-pink: #dc2743;
+  --brand-instagram-purple: #cc2366;
+  --brand-instagram-violet: #bc1888;
+  --brand-whatsapp: #25d366;
+  --brand-whatsapp-business: #128c7e;
+  --brand-telegram: #229ed9;
+  --brand-facebook: #1877f2;
+  --brand-snapchat: #fffc00;
+  --brand-x: #ffffff;
+
+  /* Secondary Crystal Cyan & Azure */
+  --cyan: #0284c7;
+  --cyan-light: #38bdf8;
+  --cyan-glow: rgba(56, 189, 248, 0.35);
+
+  /* Emerald Spiritual Green */
+  --emerald: #10b981;
+  --emerald-alt: #22c55e;
+  --emerald-light: #34d399;
+  --emerald-glow: rgba(16, 185, 129, 0.35);
+
+  /* Warm Golden Treasure */
+  --gold: #f59e0b;
+  --gold-light: #fbbf24;
+  --gold-lighter: #fff5d0;
+  --gold-glow: rgba(245, 158, 11, 0.35);
+
+  /* Deep Midnight Violet */
+  --midnight: #4c1d95;
+
+  /* Gorilla Glass Tokens */
+  --gorilla-bg: linear-gradient(135deg,
+      rgba(28, 33, 54, 0.65) 0%,
+      rgba(15, 19, 34, 0.75) 50%,
+      rgba(9, 12, 22, 0.85) 100%);
+  --gorilla-border: 1px solid rgba(255, 255, 255, 0.12);
+  --gorilla-border-top: 1px solid rgba(255, 255, 255, 0.32);
+  --gorilla-blur: blur(24px) saturate(180%);
+  --gorilla-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+
+  /* Text Colors */
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-light: #f1f5f9;
+  --text-slate: #cbd5e1;
+
+  /* Typography & Structure */
+  --font-body: "Tajawal", system-ui, -apple-system, sans-serif;
+  --font-heading: "Cairo", sans-serif;
+  --font-family: var(--font-body);
+  --container-max: 1400px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}

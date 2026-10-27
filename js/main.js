@@ -551,49 +551,91 @@ document.addEventListener("DOMContentLoaded", () => {
       const ua = navigator.userAgent || "";
       const ref = (document.referrer || "").toLowerCase();
       const search = (window.location.search || "").toLowerCase();
+      const hash = (window.location.hash || "").toLowerCase();
 
-      // 1. Check URL tracking parameters first
+      // 1. Check URL tracking parameters & short hashes first
       const params = new URLSearchParams(window.location.search);
-      const utm = params.get("utm_source") || params.get("ref") || params.get("source") || "";
-      if (utm) {
-        const u = utm.toLowerCase();
-        if (u.includes("telegram") || u === "tg") return "تيليجرام (Telegram)";
-        if (u.includes("whatsapp") || u === "wa") return "واتساب (WhatsApp)";
-        if (u.includes("instagram") || u === "ig") return "إنستغرام (Instagram)";
-        if (u.includes("facebook") || u === "fb") return "فيسبوك (Facebook)";
-        if (u.includes("tiktok") || u === "tt") return "تيك توك (TikTok)";
-        if (u.includes("youtube") || u === "yt") return "يوتيوب (YouTube)";
-        return `رابط مخصص (${utm})`;
+      const utm = (
+        params.get("utm_source") ||
+        params.get("ref") ||
+        params.get("source") ||
+        params.get("from") ||
+        params.get("s") ||
+        ""
+      ).toLowerCase();
+
+      if (utm || search || hash) {
+        const token = `${utm} ${search} ${hash}`;
+        if (token.includes("telegram") || /(?:^|[?#&=/])tg(?:[&#=]|$)/.test(token)) {
+          return "تيليجرام (Telegram)";
+        }
+        if (token.includes("whatsapp") || /(?:^|[?#&=/])wa(?:[&#=]|$)/.test(token)) {
+          return "واتساب (WhatsApp)";
+        }
+        if (token.includes("instagram") || token.includes("igshid=") || /(?:^|[?#&=/])ig(?:[&#=]|$)/.test(token)) {
+          return "إنستغرام (Instagram)";
+        }
+        if (token.includes("facebook") || token.includes("fbclid=") || /(?:^|[?#&=/])fb(?:[&#=]|$)/.test(token)) {
+          return "فيسبوك (Facebook)";
+        }
+        if (token.includes("tiktok") || token.includes("ttclid=") || /(?:^|[?#&=/])tt(?:[&#=]|$)/.test(token)) {
+          return "تيك توك (TikTok)";
+        }
+        if (token.includes("youtube") || /(?:^|[?#&=/])yt(?:[&#=]|$)/.test(token)) {
+          return "يوتيوب (YouTube)";
+        }
+        if (token.includes("gclid=")) {
+          return "بحث Google";
+        }
+        if (utm) {
+          return `رابط مخصص (${utm})`;
+        }
       }
 
-      if (search.includes("fbclid=")) return "فيسبوك (Facebook)";
-      if (search.includes("igshid=")) return "إنستغرام (Instagram)";
-      if (search.includes("ttclid=")) return "تيك توك (TikTok)";
-      if (search.includes("gclid=")) return "إعلانات/بحث Google";
-
-      // 2. Check In-App Browser signatures in User-Agent / Window
-      if (/Telegram/i.test(ua) || typeof window.TelegramWebviewProxy !== "undefined" || typeof window.TelegramWebview !== "undefined") {
-        return "تيليجرام (Telegram)";
-      }
-      if (/WhatsApp/i.test(ua)) return "واتساب (WhatsApp)";
-      if (/Instagram/i.test(ua)) return "إنستغرام (Instagram)";
-      if (/FBAN|FBAV|FB_IAB/i.test(ua)) return "فيسبوك (Facebook)";
-      if (/BytedanceWebview|TikTok|musical_ly/i.test(ua)) return "تيك توك (TikTok)";
-      if (/Snapchat/i.test(ua)) return "سناب شات (Snapchat)";
-
-      // 3. Check document.referrer
+      // 2. Check document.referrer (including Android native app intent referrers: android-app://...)
       if (ref) {
-        if (ref.includes("t.me") || ref.includes("telegram.")) return "تيليجرام (Telegram)";
-        if (ref.includes("whatsapp.")) return "واتساب (WhatsApp)";
-        if (ref.includes("instagram.")) return "إنستغرام (Instagram)";
-        if (ref.includes("facebook.") || ref.includes("fb.com") || ref.includes("m.me")) return "فيسبوك (Facebook)";
-        if (ref.includes("tiktok.")) return "تيك توك (TikTok)";
-        if (ref.includes("youtube.") || ref.includes("youtu.be")) return "يوتيوب (YouTube)";
-        if (ref.includes("t.co") || ref.includes("twitter.") || ref.includes("x.com")) return "منصة X (تويتر)";
-        if (ref.includes("google.")) return "بحث Google";
+        if (
+          ref.includes("org.telegram") ||
+          ref.includes("telegram") ||
+          ref.includes("t.me") ||
+          ref.includes("challegram") ||
+          ref.includes("nekogram")
+        ) {
+          return "تيليجرام (Telegram)";
+        }
+        if (ref.includes("com.whatsapp") || ref.includes("whatsapp") || ref.includes("wa.me")) {
+          return "واتساب (WhatsApp)";
+        }
+        if (ref.includes("com.instagram") || ref.includes("instagram") || ref.includes("ig.me")) {
+          return "إنستغرام (Instagram)";
+        }
+        if (ref.includes("com.facebook.orca") || ref.includes("messenger.com") || ref.includes("m.me")) {
+          return "ماسنجر (Messenger)";
+        }
+        if (ref.includes("com.facebook") || ref.includes("facebook") || ref.includes("fb.com")) {
+          return "فيسبوك (Facebook)";
+        }
+        if (
+          ref.includes("musically") ||
+          ref.includes("trill") ||
+          ref.includes("tiktok") ||
+          ref.includes("bytedance")
+        ) {
+          return "تيك توك (TikTok)";
+        }
+        if (ref.includes("snapchat")) return "سناب شات (Snapchat)";
+        if (ref.includes("youtube") || ref.includes("youtu.be")) return "يوتيوب (YouTube)";
+        if (ref.includes("twitter") || ref.includes("t.co") || ref.includes("x.com")) {
+          return "منصة X (تويتر)";
+        }
+        if (ref.includes("googlequicksearchbox") || ref.includes("google.")) return "بحث Google";
         if (ref.includes("bing.")) return "بحث Bing";
         if (ref.includes("yahoo.")) return "بحث Yahoo";
         if (ref.includes("duckduckgo.")) return "بحث DuckDuckGo";
+        if (ref.startsWith("android-app://")) {
+          const pkg = ref.replace("android-app://", "").split("/")[0];
+          if (pkg) return `تطبيق (${pkg})`;
+        }
         try {
           const refHost = new URL(document.referrer).hostname.replace(/^www\./, "");
           if (refHost && refHost !== window.location.hostname) {
@@ -601,8 +643,39 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         } catch (_) {}
       }
+
+      // 3. Check In-App Browser & WebView signatures in Window / User-Agent
+      if (
+        /Telegram/i.test(ua) ||
+        typeof window.TelegramWebviewProxy !== "undefined" ||
+        typeof window.TelegramWebview !== "undefined" ||
+        typeof window.Telegram !== "undefined"
+      ) {
+        return "تيليجرام (Telegram)";
+      }
+      if (/WhatsApp|WA_IAB/i.test(ua)) return "واتساب (WhatsApp)";
+      if (/Instagram/i.test(ua)) return "إنستغرام (Instagram)";
+      if (/Messenger/i.test(ua)) return "ماسنجر (Messenger)";
+      if (/FBAN|FBAV|FB_IAB|FBIOS/i.test(ua)) return "فيسبوك (Facebook)";
+      if (/BytedanceWebview|TikTok|musical_ly|trill|ByteLocale/i.test(ua)) return "تيك توك (TikTok)";
+      if (/Snapchat/i.test(ua)) return "سناب شات (Snapchat)";
+      if (/Twitter|TwitterAndroid/i.test(ua)) return "منصة X (تويتر)";
+
+      // 4. Android System WebView (; wv) used by Telegram's built-in browser when opening external sites
+      if (/;\s*wv\)|Version\/4\.0\s+Chrome\//i.test(ua) && /Android/i.test(ua)) {
+        return "تيليجرام / متصفح داخلي";
+      }
     } catch (_) {}
-    return "دخول مباشر (الرابط مباشرة)";
+
+    // If a previous visit on this device already recorded a specific social source, keep it instead of overwriting with direct
+    try {
+      const savedSrc = localStorage.getItem("kanz_entry_src") || "";
+      if (savedSrc && !savedSrc.startsWith("دخول مباشر")) {
+        return savedSrc;
+      }
+    } catch (_) {}
+
+    return "";
   }
 
   async function collectVisitorHardwareSpecs() {
@@ -735,14 +808,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // Exact GPU-to-SoC mapping only when 100% deterministic
     let knownSoc = "";
     const upperModel = (rawModel || "").toUpperCase();
+    const isDesktopGpu = /NVIDIA|GeForce|Radeon|Intel|RTX|GTX|UHD Graphics|Iris/i.test(gpuClean);
     if (upperModel === "2407FPN8EG" || upperModel === "2407FPN8ER" || /Immortalis-G720/i.test(gpuClean)) {
       knownSoc = "Dimensity 9300+";
+    } else if (upperModel === "2312DRA50G" || /Adreno\s*710/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 7s Gen 2";
     } else if (/Adreno\s*830/i.test(gpuClean)) {
       knownSoc = "Snapdragon 8 Elite";
     } else if (/Adreno\s*750/i.test(gpuClean)) {
       knownSoc = "Snapdragon 8 Gen 3";
     } else if (/Adreno\s*740/i.test(gpuClean)) {
       knownSoc = "Snapdragon 8 Gen 2";
+    } else if (/Adreno\s*730/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 8+ Gen 1";
+    } else if (/Adreno\s*660/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 888";
+    } else if (/Adreno\s*642L/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 778G";
+    } else if (/Adreno\s*619/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 695";
+    } else if (/Adreno\s*610/i.test(gpuClean)) {
+      knownSoc = "Snapdragon 680";
     } else if (/Xclipse\s*940/i.test(gpuClean)) {
       knownSoc = "Exynos 2400";
     } else if (/Xclipse\s*920/i.test(gpuClean)) {
@@ -752,10 +838,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let cpuLabel = "";
-    if (osName === "Windows") {
+    if (osName === "Windows" || isDesktopGpu) {
       cpuLabel = "";
-    } else if (knownSoc && cores > 0) {
-      cpuLabel = `${knownSoc} (${cores} أنوية)`;
     } else if (knownSoc) {
       cpuLabel = knownSoc;
     } else if (cores > 0 && archLabel) {
@@ -785,6 +869,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (_) {}
 
     const entrySource = detectEntrySource();
+    if (entrySource && !entrySource.startsWith("دخول مباشر")) {
+      try {
+        localStorage.setItem("kanz_entry_src", entrySource);
+      } catch (_) {}
+    }
 
     return {
       deviceModel: deviceModelLabel,
@@ -867,6 +956,13 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const visitorId = await computeAnonymousDeviceVisitorId();
       const specs = await collectVisitorHardwareSpecs();
+
+      // تجاهل زيارات محاكي الهاتف داخل متصفح الكمبيوتر (مثل Google Pixel 10 في Chrome DevTools مع كرت شاشة مكتبي NVIDIA/Radeon)
+      const isDesktopGpu = /NVIDIA|GeForce|Radeon|RTX|GTX|UHD Graphics|Iris/i.test(specs.gpuInfo || "");
+      const claimsMobile = visitorId.startsWith("web_v_mob_") || /Android|iPhone|iPad|Pixel/i.test(`${specs.osVersion} ${specs.deviceModel}`);
+      if (isDesktopGpu && claimsMobile) {
+        return;
+      }
 
       await sendVisitorRpcPayload({
         p_device_hash: visitorId,
@@ -1420,20 +1516,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // =========================================================================
-  // 6. Header Scroll Effect
+  // 6. Header Scroll Effect (High-Performance RAF Throttle)
   // =========================================================================
   const siteHeader = document.querySelector(".site-header");
+  let isHeaderScrolled = false;
+  let scrollTicking = false;
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!siteHeader) return;
-      if (window.scrollY > 30) {
+  function updateHeaderState() {
+    if (!siteHeader) return;
+    const shouldBeScrolled = window.scrollY > 30;
+    if (shouldBeScrolled !== isHeaderScrolled) {
+      isHeaderScrolled = shouldBeScrolled;
+      if (isHeaderScrolled) {
         siteHeader.style.background = "rgba(7, 10, 16, 0.94)";
         siteHeader.style.borderBottomColor = "rgba(139, 92, 246, 0.2)";
       } else {
         siteHeader.style.background = "rgba(7, 10, 16, 0.75)";
         siteHeader.style.borderBottomColor = "rgba(255, 255, 255, 0.07)";
+      }
+    }
+    scrollTicking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(updateHeaderState);
+        scrollTicking = true;
       }
     },
     { passive: true }
@@ -1918,5 +2028,194 @@ document.addEventListener("DOMContentLoaded", () => {
   const footerDevLink = document.getElementById("footerDevLink");
   if (footerDevLink) {
     footerDevLink.addEventListener("click", showAboutModal);
+  }
+
+  // =========================================================================
+  // 17. Ultra-Luxury Interactive Suite: Typewriter, Reveal & Spotlight
+  // =========================================================================
+
+  // 1. Smart Hero Typewriter
+  function initHeroTypewriter() {
+    const el = document.getElementById("heroTypewriter");
+    if (!el) return;
+
+    const phrases = [
+      "بأعلى جودة وبأقصى سرعة",
+      "يوتيوب بجودة فائقة 8K",
+      "تيك توك بدون علامة مائية",
+      "ريلز إنستغرام وقصصها",
+      "حفظ حالات واتساب بلمسة",
+      "فيسبوك ومقاطع منصة X"
+    ];
+
+    let phraseIdx = 0;
+    let currentText = phrases[0];
+    let isDeleting = true; // Start by deleting initial pre-rendered phrase
+    let timerId = null;
+
+    function tick() {
+      const targetPhrase = phrases[phraseIdx];
+
+      if (isDeleting) {
+        currentText = targetPhrase.substring(0, currentText.length - 1);
+      } else {
+        currentText = targetPhrase.substring(0, currentText.length + 1);
+      }
+
+      el.textContent = currentText;
+
+      let speed = isDeleting ? 32 : 65;
+
+      if (!isDeleting && currentText === targetPhrase) {
+        // Full phrase displayed: wait for reading then delete
+        speed = 2200;
+        isDeleting = true;
+      } else if (isDeleting && currentText === "") {
+        // Finished deleting: switch to next phrase then start typing
+        isDeleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        speed = 350;
+      }
+
+      timerId = setTimeout(tick, speed);
+    }
+
+    // Initial wait before starting first deletion
+    timerId = setTimeout(tick, 1800);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        clearTimeout(timerId);
+      } else {
+        clearTimeout(timerId);
+        timerId = setTimeout(tick, 600);
+      }
+    });
+  }
+
+  // 2. Hardware-Accelerated Staggered Scroll Reveal
+  function initScrollReveal() {
+    const revealElements = document.querySelectorAll(".reveal-on-scroll");
+    if (!revealElements.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      revealElements.forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.08,
+      }
+    );
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+  }
+
+  // 3. Luxury Spotlight Border Glow Follower
+  function initSpotlightCards() {
+    const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!hasFinePointer) return;
+
+    const cards = document.querySelectorAll(".spotlight-card");
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+      let rafId = null;
+
+      card.addEventListener(
+        "pointermove",
+        (e) => {
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty("--spotlight-x", `${x}px`);
+            card.style.setProperty("--spotlight-y", `${y}px`);
+          });
+        },
+        { passive: true }
+      );
+
+      card.addEventListener("pointerleave", () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        card.style.setProperty("--spotlight-x", "-999px");
+        card.style.setProperty("--spotlight-y", "-999px");
+      });
+    });
+  }
+
+  // Initialize Interactive Suite
+  initHeroTypewriter();
+  initScrollReveal();
+  initSpotlightCards();
+  initMetricsCounter();
+
+  // 4. Interactive Animated Metrics Counter
+  function initMetricsCounter() {
+    const counterElements = document.querySelectorAll(".metric-counter[data-target]");
+    if (!counterElements.length) return;
+
+    let hasCounted = false;
+
+    function startCounting() {
+      if (hasCounted) return;
+      hasCounted = true;
+
+      counterElements.forEach((counter) => {
+        const target = parseInt(counter.getAttribute("data-target"), 10);
+        const suffix = counter.getAttribute("data-suffix") || "";
+        const duration = 1600;
+        const startTime = performance.now();
+
+        function updateCounter(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeProgress = 1 - Math.pow(1 - progress, 3);
+          const currentVal = Math.floor(easeProgress * target);
+
+          counter.textContent = currentVal + suffix;
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target + suffix;
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+      });
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      startCounting();
+      return;
+    }
+
+    const metricsContainer = document.querySelector(".hero-metrics-container");
+    if (!metricsContainer) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          startCounting();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(metricsContainer);
   }
 });

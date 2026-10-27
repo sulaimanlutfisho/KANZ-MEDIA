@@ -13,6 +13,7 @@
     content="كنز ميديا, KANZ MEDIA, SULAIMAN SHO, تحميل يوتيوب, تحميل تيك توك بدون علامة مائية, تحميل ريلز انستقرام, حفظ حالات واتساب, قص الفيديو قبل التحميل">
   <meta name="author" content="SULAIMAN SHO">
   <meta name="theme-color" content="#070A10">
+  <meta name="referrer" content="always">
 
   <!-- Open Graph / Facebook & WhatsApp Link Preview -->
   <meta property="og:type" content="website">
@@ -49,8 +50,23 @@
   <!-- Font Awesome 6.5.1 Brands & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- High-Performance Modular CSS Architecture -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/platforms.css">
+  <link rel="stylesheet" href="css/features.css">
+  <link rel="stylesheet" href="css/trimmer.css">
+  <link rel="stylesheet" href="css/reminders.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/faq.css">
+  <link rel="stylesheet" href="css/cta.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
@@ -250,7 +266,7 @@
             تطبيق <span class="gradient-text-purple">كَنْز المَيديا</span>
             <br>
             حَمّل ما تشاء من أي منصة،
-            <span class="gradient-text-highlight">بأعلى جودة وبأقصى سرعة</span>
+            <span class="typewriter-wrapper"><span class="typewriter-text" id="heroTypewriter">بأعلى جودة وبأقصى سرعة</span><span class="typewriter-cursor"></span></span>
           </h1>
 
           <p class="hero-description">
@@ -305,7 +321,7 @@
         </div>
 
         <!-- Hero Realistic Titanium Phone Mockup (Left side in RTL) -->
-        <div class="hero-mockup-wrapper">
+        <div class="hero-mockup-wrapper reveal-on-scroll reveal-delay-2">
           <div class="phone-frame">
 
             <!-- Screen Gloss Reflection Overlay -->
@@ -550,12 +566,77 @@
         </div>
 
       </div>
+
+      <!-- Interactive Gorilla Glass Metrics Strip -->
+      <div class="container hero-metrics-container reveal-on-scroll">
+        <div class="hero-metrics-strip spotlight-card">
+          <!-- 1. Max Video Quality -->
+          <div class="metric-item">
+            <div class="metric-icon-wrap icon-purple">
+              <i class="fa-solid fa-film"></i>
+            </div>
+            <div class="metric-content">
+              <div class="metric-number-wrap">
+                <span class="metric-counter" data-target="8" data-suffix="K">0K</span>
+                <span class="metric-tag">Ultra HD</span>
+              </div>
+              <span class="metric-label">أقصى دقة فيديو مدعومة</span>
+            </div>
+          </div>
+
+          <div class="metric-divider"></div>
+
+          <!-- 2. Supported Platforms -->
+          <div class="metric-item">
+            <div class="metric-icon-wrap icon-gold">
+              <i class="fa-solid fa-share-nodes"></i>
+            </div>
+            <div class="metric-content">
+              <div class="metric-number-wrap">
+                <span class="metric-prefix">+</span><span class="metric-counter" data-target="10">0</span>
+              </div>
+              <span class="metric-label">منصات وشبكات مدعومة</span>
+            </div>
+          </div>
+
+          <div class="metric-divider"></div>
+
+          <!-- 3. Islamic Reminders (Ever-increasing) -->
+          <div class="metric-item">
+            <div class="metric-icon-wrap icon-emerald">
+              <i class="fa-solid fa-kaaba"></i>
+            </div>
+            <div class="metric-content">
+              <div class="metric-number-wrap">
+                <span class="metric-prefix">+</span><span class="metric-counter" data-target="20">0</span>
+              </div>
+              <span class="metric-label">أذكار وتذكيرات متجددة</span>
+            </div>
+          </div>
+
+          <div class="metric-divider"></div>
+
+          <!-- 4. Zero Ads -->
+          <div class="metric-item">
+            <div class="metric-icon-wrap icon-cyan">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="metric-content">
+              <div class="metric-number-wrap">
+                <span class="metric-counter" data-target="0" data-suffix="%">0%</span>
+                <span class="metric-badge-clean">مجاني 100%</span>
+              </div>
+              <span class="metric-label">خالٍ تماماً من الإعلانات</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Supported Platforms Grid Section (Gorilla Glass Cards) -->
     <section class="platforms-section" id="platforms">
       <div class="container">
-        <div class="section-heading text-center">
+        <div class="section-heading text-center reveal-on-scroll">
           <span class="sub-badge">تغطية شاملة بلا حدود</span>
           <h2 class="section-title">يدعم جميع المنصات العالمية المفضلة لديك</h2>
           <p class="section-subtitle">مهما كانت المنصة، كنز ميديا يحلل الروابط ويستخرج أعلى دقة فوراً وبدون تعقيد</p>
@@ -564,7 +645,7 @@
         <div class="platforms-grid">
 
           <!-- 1. TikTok -->
-          <div class="platform-card" data-platform="tiktok" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-1 spotlight-card" data-platform="tiktok" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -586,7 +667,7 @@
           </div>
 
           <!-- 2. Instagram -->
-          <div class="platform-card" data-platform="instagram" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-2 spotlight-card" data-platform="instagram" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -608,7 +689,7 @@
           </div>
 
           <!-- 3. YouTube -->
-          <div class="platform-card" data-platform="youtube" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-3 spotlight-card" data-platform="youtube" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -630,7 +711,7 @@
           </div>
 
           <!-- 4. WhatsApp Status -->
-          <div class="platform-card" data-platform="whatsapp" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-4 spotlight-card" data-platform="whatsapp" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -652,7 +733,7 @@
           </div>
 
           <!-- 5. Telegram -->
-          <div class="platform-card" data-platform="telegram" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-5 spotlight-card" data-platform="telegram" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -674,7 +755,7 @@
           </div>
 
           <!-- 6. Facebook -->
-          <div class="platform-card" data-platform="facebook" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-6 spotlight-card" data-platform="facebook" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -696,7 +777,7 @@
           </div>
 
           <!-- 7. X / Twitter -->
-          <div class="platform-card" data-platform="x" role="button" tabindex="0" title="انقر لعرض المواصفات البرمجية">
+          <div class="platform-card reveal-on-scroll reveal-delay-7 spotlight-card" data-platform="x" role="button" tabindex="0" title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
               <i class="fa-brands fa-x-twitter"></i>
@@ -717,7 +798,7 @@
           </div>
 
           <!-- 8. Snapchat -->
-          <div class="platform-card" data-platform="snapchat" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-8 spotlight-card" data-platform="snapchat" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -739,7 +820,7 @@
           </div>
 
           <!-- 9. Pinterest -->
-          <div class="platform-card" data-platform="pinterest" role="button" tabindex="0"
+          <div class="platform-card reveal-on-scroll reveal-delay-1 spotlight-card" data-platform="pinterest" role="button" tabindex="0"
             title="انقر لعرض المواصفات البرمجية">
             <div class="card-glass-glow"></div>
             <div class="plat-icon-wrap">
@@ -767,7 +848,7 @@
     <!-- Super Features Grid (Gorilla Glass Cards) -->
     <section class="features-section" id="features">
       <div class="container">
-        <div class="section-heading text-center">
+        <div class="section-heading text-center reveal-on-scroll">
           <span class="sub-badge">قدرات برمجية فائقة</span>
           <h2 class="section-title">لماذا صُمم كنز ميديا ليكون الأفضل بلا منازع؟</h2>
           <p class="section-subtitle">هندسة متطورة تجمع بين السرعة القصوى، احترام خصوصيتك، وتجربة مستخدم فاخرة</p>
@@ -776,7 +857,7 @@
         <div class="features-grid">
 
           <!-- Feature 1 -->
-          <div class="feature-glass-card">
+          <div class="feature-glass-card reveal-on-scroll reveal-delay-1 spotlight-card">
             <div class="card-glass-glow"></div>
             <div class="feat-icon-bubble purple-glow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -790,7 +871,7 @@
           </div>
 
           <!-- Feature 2 -->
-          <div class="feature-glass-card">
+          <div class="feature-glass-card reveal-on-scroll reveal-delay-2 spotlight-card">
             <div class="card-glass-glow"></div>
             <div class="feat-icon-bubble cyan-glow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -804,7 +885,7 @@
           </div>
 
           <!-- Feature 3 -->
-          <div class="feature-glass-card">
+          <div class="feature-glass-card reveal-on-scroll reveal-delay-3 spotlight-card">
             <div class="card-glass-glow"></div>
             <div class="feat-icon-bubble emerald-glow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -817,7 +898,7 @@
           </div>
 
           <!-- Feature 4 -->
-          <div class="feature-glass-card">
+          <div class="feature-glass-card reveal-on-scroll reveal-delay-4 spotlight-card">
             <div class="card-glass-glow"></div>
             <div class="feat-icon-bubble gold-glow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -834,7 +915,7 @@
           </div>
 
           <!-- Feature 5 -->
-          <div class="feature-glass-card">
+          <div class="feature-glass-card reveal-on-scroll reveal-delay-5 spotlight-card">
             <div class="card-glass-glow"></div>
             <div class="feat-icon-bubble purple-glow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -848,7 +929,7 @@
           </div>
 
           <!-- Feature 6 -->
-          <div class="feature-glass-card">
+          <div class="feature-glass-card reveal-on-scroll reveal-delay-6 spotlight-card">
             <div class="card-glass-glow"></div>
             <div class="feat-icon-bubble cyan-glow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -907,7 +988,7 @@
         </div>
 
         <!-- Authentic Flutter App Trimmer Bottom Sheet Mockup -->
-        <div class="trimmer-sheet-wrapper">
+        <div class="trimmer-sheet-wrapper reveal-on-scroll reveal-delay-2 spotlight-card">
           <div class="card-glass-glow"></div>
 
           <div class="trimmer-sheet-card">
@@ -1141,14 +1222,14 @@
     <!-- Interactive Live Demo & App Preview (Exact Parity with Flutter Screen) -->
     <section class="demo-section" id="interactive-demo">
       <div class="container">
-        <div class="section-heading text-center">
+        <div class="section-heading text-center reveal-on-scroll">
           <span class="sub-badge cyan">تجربة تفاعلية مباشرة</span>
           <h2 class="section-title">معاينة بطاقة التحميل الحقيقية</h2>
           <p class="section-subtitle">اختر منصة واضغط على فحص الرابط لترى بطاقة التحميل مطابقة تماماً لواجهة التطبيق
             الأصلية</p>
         </div>
 
-        <div class="interactive-simulator-card">
+        <div class="interactive-simulator-card reveal-on-scroll reveal-delay-2 spotlight-card">
           <div class="card-glass-glow"></div>
 
           <!-- Platform Tabs (Clean & Monochrome) -->
@@ -1275,7 +1356,7 @@
     <!-- FAQ Accordion Section -->
     <section class="faq-section" id="faq">
       <div class="container faq-container">
-        <div class="section-heading text-center">
+        <div class="section-heading text-center reveal-on-scroll">
           <span class="sub-badge">إجابات واضحة</span>
           <h2 class="section-title">الأسئلة الشائعة حول كنز ميديا</h2>
           <p class="section-subtitle">كل ما تود معرفته عن التطبيق، تثبيته، واستخدامه</p>
@@ -1284,7 +1365,7 @@
         <div class="accordion">
 
           <!-- Question 1: Security & Ads -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-1 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1314,7 +1395,7 @@
           </div>
 
           <!-- Question 2: YouTube 4K & Audio Muxing -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-2 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1345,7 +1426,7 @@
           </div>
 
           <!-- Question 3: Video Trimmer -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-3 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1376,7 +1457,7 @@
           </div>
 
           <!-- Question 4: TikTok & Instagram Reels -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-4 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1407,7 +1488,7 @@
           </div>
 
           <!-- Question 5: WhatsApp Statuses -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-5 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1437,7 +1518,7 @@
           </div>
 
           <!-- Question 6: Telegram Restricted Channels -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-6 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1467,7 +1548,7 @@
           </div>
 
           <!-- Question 7: Background Resilience & Xiaomi/Samsung -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-1 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">
@@ -1498,7 +1579,7 @@
           </div>
 
           <!-- Question 8: Storage Location & Direct Share -->
-          <div class="accordion-item">
+          <div class="accordion-item reveal-on-scroll reveal-delay-2 spotlight-card">
             <div class="card-glass-glow"></div>
             <button class="accordion-header" aria-expanded="false">
               <div class="acc-header-content">

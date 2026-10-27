@@ -1,0 +1,189 @@
+/* ==========================================================================
+   20 Islamic Reminders Section
+   ========================================================================== */
+.reminders-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(50px, 7vw, 100px) 0;
+}
+
+.reminder-card-container {
+  max-width: 580px;
+  margin: 28px auto 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reminder-glass-card {
+  position: relative;
+  background: linear-gradient(150deg,
+      rgba(16, 185, 129, 0.08) 0%,
+      rgba(15, 23, 36, 0.88) 45%,
+      rgba(10, 15, 26, 0.96) 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.32);
+  border-top: 1.5px solid rgba(16, 185, 129, 0.55);
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.12);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.reminder-emblem-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.reminder-emblem {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background: radial-gradient(circle at 50% 35%, rgba(16, 185, 129, 0.28) 0%, rgba(16, 185, 129, 0.06) 70%, transparent 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.28);
+}
+
+.emblem-svg {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+.reminder-blessing-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 999px;
+  padding: 3px 13px;
+  font-size: 0.78rem;
+  color: #6ee7b7;
+  font-weight: 700;
+}
+
+.blessing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.reminder-quote-container {
+  position: relative;
+  max-width: 480px;
+  margin: 6px auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.quote-bracket {
+  font-size: 1.8rem;
+  color: #10b981;
+  font-weight: 800;
+  opacity: 0.6;
+  line-height: 1;
+  user-select: none;
+}
+
+.reminder-quote-text {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.75;
+  margin: 0;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.reminder-context-tag {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-bottom: 18px;
+}
+
+.reminders-pill-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.r-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.r-icon {
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
+.reminder-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.btn-change-reminder {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #6ee7b7;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.btn-change-reminder:hover {
+  background: rgba(16, 185, 129, 0.24);
+  border-color: #10b981;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.28);
+}
+
+.change-icon {
+  transition: transform 0.35s ease;
+}
+
+.btn-change-reminder:hover .change-icon {
+  transform: rotate(180deg);
+}
+
+

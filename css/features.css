@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Features Section
+   ========================================================================== */
+.features-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(50px, 7vw, 95px) 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(18px, 2.5vw, 26px);
+}
+
+.feature-glass-card {
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.feat-icon-bubble {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.feat-icon-bubble svg {
+  width: 26px;
+  height: 26px;
+}
+
+.purple-glow {
+  background: rgba(139, 92, 246, 0.18);
+  color: var(--primary-light);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+}
+
+.cyan-glow {
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--cyan-light);
+  border: 1px solid rgba(2, 132, 199, 0.4);
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+}
+
+.emerald-glow {
+  background: rgba(16, 185, 129, 0.18);
+  color: var(--emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.gold-glow {
+  background: rgba(245, 158, 11, 0.18);
+  color: var(--gold-light);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+}
+
+.feature-glass-card h3 {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.feature-glass-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+

@@ -1,0 +1,449 @@
+/* ==========================================================================
+   Gorilla Glass Button System
+   ========================================================================== */
+
+@keyframes glassShimmerSweep {
+  0% {
+    transform: translateX(140%) rotate(25deg);
+  }
+
+  100% {
+    transform: translateX(-140%) rotate(25deg);
+  }
+}
+
+@keyframes ctaGlowBreathing {
+
+  0%,
+  100% {
+    box-shadow:
+      0 10px 28px rgba(139, 92, 246, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  50% {
+    box-shadow:
+      0 16px 42px rgba(139, 92, 246, 0.58),
+      0 0 24px rgba(56, 189, 248, 0.38);
+  }
+}
+
+/* 1. Hero Main CTA Button */
+.btn-hero-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  height: 56px;
+  box-sizing: border-box;
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  background: linear-gradient(135deg,
+      rgba(167, 139, 250, 0.85) 0%,
+      rgba(56, 189, 248, 0.75) 50%,
+      rgba(52, 211, 153, 0.85) 100%);
+  animation: ctaGlowBreathing 4.5s ease-in-out infinite;
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn-hero-cta .cta-inner,
+.cta-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100% !important;
+  flex: 1 1 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 18px;
+  background: linear-gradient(135deg,
+      rgba(22, 27, 46, 0.88) 0%,
+      rgba(13, 17, 30, 0.94) 100%);
+  border-radius: calc(var(--radius-lg) - 2px);
+  color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+  overflow: hidden;
+}
+
+.btn-hero-cta .cta-inner::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  right: -60%;
+  width: 220%;
+  height: 220%;
+  background: linear-gradient(65deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 65%);
+  transform: translateX(140%) rotate(25deg);
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn-hero-cta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 20px 48px rgba(139, 92, 246, 0.6),
+    0 0 30px rgba(56, 189, 248, 0.4);
+}
+
+.btn-hero-cta:hover .cta-inner {
+  background: linear-gradient(135deg,
+      rgba(30, 37, 64, 0.85) 0%,
+      rgba(18, 24, 42, 0.92) 100%);
+  border-top-color: rgba(255, 255, 255, 0.65);
+}
+
+.btn-hero-cta:hover .cta-inner::before {
+  transform: translateX(-140%) rotate(25deg);
+}
+
+.cta-icon-box {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--cyan) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 16px rgba(139, 92, 246, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: transform var(--transition-fast);
+}
+
+.btn-hero-cta:hover .cta-icon-box {
+  transform: scale(1.06) rotate(-3deg);
+}
+
+/* Explicit SVG sizing for all buttons to completely prevent stretching */
+.btn-hero-cta svg,
+.btn-secondary-glass svg,
+.btn-gorilla svg {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  flex-shrink: 0 !important;
+  display: block;
+}
+
+.cta-icon-box svg {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  stroke: #fff;
+}
+
+.cta-texts {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  line-height: 1.15;
+}
+
+.cta-top {
+  font-size: 0.68rem;
+  line-height: 1.1;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.btn-hero-cta:hover .cta-top {
+  color: var(--primary-light);
+}
+
+.cta-main {
+  font-size: 0.96rem;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* 2. Secondary Gorilla Glass Button */
+.btn-secondary-glass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  box-sizing: border-box;
+  padding: 0 22px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-lg);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: all var(--transition-fast);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn-secondary-glass::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(65deg, transparent 40%, rgba(255, 255, 255, 0.18) 50%, transparent 60%);
+  transform: translateX(-120%) rotate(25deg);
+  transition: transform 0.75s ease;
+  pointer-events: none;
+}
+
+.btn-secondary-glass:hover::before {
+  transform: translateX(120%) rotate(25deg);
+}
+
+.btn-secondary-glass:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(56, 189, 248, 0.45);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    0 10px 28px rgba(6, 182, 212, 0.35);
+  color: #ffffff;
+}
+
+.btn-secondary-play-icon {
+  width: 15px !important;
+  height: 15px !important;
+  fill: #38bdf8;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.btn-secondary-glass:hover .btn-secondary-play-icon {
+  transform: scale(1.15);
+}
+
+/* 3. Header Gorilla Glass Button */
+.btn-gorilla {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 20px;
+  background: linear-gradient(135deg,
+      rgba(139, 92, 246, 0.85) 0%,
+      rgba(124, 58, 237, 0.85) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 6px 20px var(--primary-glow);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+  overflow: hidden;
+}
+
+.btn-gorilla::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  right: -60%;
+  width: 220%;
+  height: 220%;
+  background: linear-gradient(65deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 65%);
+  transform: translateX(140%) rotate(25deg);
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn-gorilla:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg,
+      rgba(167, 139, 250, 0.9) 0%,
+      rgba(139, 92, 246, 0.9) 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.55),
+    0 12px 30px rgba(139, 92, 246, 0.65);
+}
+
+.btn-gorilla:hover::before {
+  transform: translateX(-140%) rotate(25deg);
+}
+
+
+/* Complete Buttons Philosophy (Parity with Flutter AppButtons) */
+.app-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 8px 24px rgba(124, 58, 237, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transition: all var(--transition-fast);
+}
+
+.app-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 30px rgba(124, 58, 237, 0.65),
+    0 0 20px rgba(167, 139, 250, 0.4);
+}
+
+.app-btn-primary:active {
+  transform: scale(0.98);
+}
+
+.app-btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg,
+      rgba(139, 92, 246, 0.26) 0%,
+      rgba(139, 92, 246, 0.12) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 700;
+  border: 1.2px solid rgba(139, 92, 246, 0.55);
+  border-radius: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.28);
+  transition: all var(--transition-fast);
+}
+
+.app-btn-glass:hover {
+  transform: translateY(-2px);
+  border-color: rgba(167, 139, 250, 0.85);
+  box-shadow: 0 8px 26px rgba(139, 92, 246, 0.48);
+}
+
+.app-btn-outlined {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--primary-light);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1.2px solid var(--primary);
+  border-radius: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.app-btn-outlined:hover {
+  background: rgba(139, 92, 246, 0.12);
+  color: #fff;
+  border-color: var(--primary-light);
+}
+
+.app-btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-dark);
+  color: #ffffff;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.app-btn-circle:hover {
+  transform: scale(1.08);
+  background: var(--primary);
+}
+
+.app-btn-text {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 14px;
+  transition: color var(--transition-fast);
+}
+
+.app-btn-text:hover {
+  color: #ffffff;
+}
+
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spinnerRotate 0.7s linear infinite;
+}
+
+@keyframes spinnerRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
